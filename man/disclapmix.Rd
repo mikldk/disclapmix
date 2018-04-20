@@ -5,6 +5,7 @@
 \alias{disclapmix}
 \alias{disclapmix-package}
 \alias{disclapmix}
+\alias{disclapmixfit}
 \title{disclapmix}
 \usage{
 disclapmix(x, clusters, init_y = NULL, iterations = 100L, eps = 0.001,

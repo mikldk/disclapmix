@@ -19,6 +19,8 @@
 #' min(ceiling(nrow(x)/2), 100 + 2*clusters)} and the random number generator
 #' in R is used.
 #' 
+#' @aliases disclapmixfit
+#' 
 #' @param x Dataset.
 #' @param clusters The number of clusters/components to fit the model for.
 #' @param init_y Initial central haplotypes, if NULL, these will be estimated

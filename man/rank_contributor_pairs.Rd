@@ -2,9 +2,6 @@
 % Please edit documentation in R/mixture.R
 \name{rank_contributor_pairs}
 \alias{rank_contributor_pairs}
-\alias{print.ranked_contrib_pairs}
-\alias{plot.ranked_contrib_pairs}
-\alias{get_rank}
 \title{Separate a 2 person mixture}
 \usage{
 rank_contributor_pairs(contrib_pairs, fit, max_rank = NULL)
@@ -16,23 +13,6 @@ rank_contributor_pairs(contrib_pairs, fit, max_rank = NULL)
 \item{fit}{A \code{\link{disclapmixfit}} object.}
 
 \item{max_rank}{Not used. Reserved for future use.}
-
-\item{x}{A \code{ranked_contrib_pairs} object.}
-
-\item{top}{The top ranked number of pairs to print/plot. \code{NULL} for
-all.}
-
-\item{hide_non_varying_loci}{Whether to hide alleles on loci that do not
-vary.}
-
-\item{haplotype}{A haplotype.}
-
-\item{\dots}{Not used, except for \code{plot} where they are delegated to
-the generic \code{\link[graphics]{plot}} function.}
-
-\item{xlab}{Graphical parameter.}
-
-\item{ylab}{Graphical parameter.}
 }
 \value{
 A \code{ranked_contrib_pairs} object that is basically an order

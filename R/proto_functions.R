@@ -368,17 +368,17 @@ predict_with_variance <- function(fit, newdata, nsim = 1000L) {
   for (iter in 1L:nsim) {
     new_beta <- new_betas[iter, , drop = FALSE]
     
-    new_discps <- disclapmix:::convert_coef_to_disclap_parameters_internal(new_beta, nrow(fit$y))
+    new_discps <- convert_coef_to_disclap_parameters_internal(new_beta, nrow(fit$y))
     
-    new_wic <- disclapmix:::rcpp_calculate_wic(fit$x, fit$y, new_discps, fit$tau)
-    new_vic_matrix <- disclapmix:::rcpp_calculate_vic(new_wic)
+    new_wic <- rcpp_calculate_wic(fit$x, fit$y, new_discps, fit$tau)
+    new_vic_matrix <- rcpp_calculate_vic(new_wic)
     
     new_tau_vector <- apply(new_vic_matrix, 2, sum) / nrow(fit$x)
     
-    new_ys <- disclapmix:::move_centers(fit$x, fit$y, new_vic_matrix)
+    new_ys <- move_centers(fit$x, fit$y, new_vic_matrix)
     
     try({
-      ps_new <- disclapmix:::rcpp_calculate_haplotype_probabilities(newdata, new_ys, new_discps, new_tau_vector)
+      ps_new <- rcpp_calculate_haplotype_probabilities(newdata, new_ys, new_discps, new_tau_vector)
       p_sim[, iter] <- ps_new
     })
   }
@@ -408,7 +408,7 @@ predict_with_variance_rnd_ys <- function(fit, newdata, nsim = 1000L) {
   for (iter in 1L:nsim) {
     new_beta <- new_betas[iter, , drop = FALSE]
     
-    new_discps <- disclapmix:::convert_coef_to_disclap_parameters_internal(new_beta, nrow(fit$y))
+    new_discps <- convert_coef_to_disclap_parameters_internal(new_beta, nrow(fit$y))
     
     # new
     new_ys <- fit$y
@@ -418,15 +418,15 @@ predict_with_variance_rnd_ys <- function(fit, newdata, nsim = 1000L) {
       }
     }
     
-    new_wic <- disclapmix:::rcpp_calculate_wic(fit$x, new_ys, new_discps, fit$tau)
-    new_vic_matrix <- disclapmix:::rcpp_calculate_vic(new_wic)
+    new_wic <- rcpp_calculate_wic(fit$x, new_ys, new_discps, fit$tau)
+    new_vic_matrix <- rcpp_calculate_vic(new_wic)
     
     new_tau_vector <- apply(new_vic_matrix, 2, sum) / nrow(fit$x)
     
-    #new_ys <- disclapmix:::move_centers(fit$x, fit$y, new_vic_matrix)
+    #new_ys <- move_centers(fit$x, fit$y, new_vic_matrix)
     
     try({
-      ps_new <- disclapmix:::rcpp_calculate_haplotype_probabilities(newdata, new_ys, new_discps, new_tau_vector)
+      ps_new <- rcpp_calculate_haplotype_probabilities(newdata, new_ys, new_discps, new_tau_vector)
       p_sim[, iter] <- ps_new
     })
   }

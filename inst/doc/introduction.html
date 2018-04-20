@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Mikkel Meyer Andersen" />
+
+
+<title>Introduction</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction</h1>
+<h4 class="author"><em>Mikkel Meyer Andersen</em></h4>
+<h4 class="date"><em>21 April, 2018</em></h4>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This tutorial introduces the discrete Laplace method implemented in this R package (<code>disclapmix</code>) for estimating Y-STR haplotype frequencies as described by <span class="citation">(Andersen, Eriksen, and Morling 2013)</span>.</p>
+<p>First, we demonstrate how to use the open source software for basic tasks as e.g. haplotype frequency estimation and also more advanced tasks as e.g. deconvolution of two person mixtures. First, some packages are loaded <span class="citation">(Andersen and Eriksen 2014)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(disclap)
+<span class="kw">library</span>(disclapmix)</code></pre></div>
+<p>If you do not have installed the <code>disclap</code> package, please visit <a href="http://cran.r-project.org/package=disclap" class="uri">http://cran.r-project.org/package=disclap</a>.</p>
+<p>For reproducibility, the seed for the (pseudo) random number generator is set:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)</code></pre></div>
+</div>
+<div id="sec:disclap" class="section level1">
+<h1>The discrete Laplace distribution</h1>
+<p>The discrete Laplace distribution is a probability distribution like e.g. the binomial distribution or the normal/Gaussian distribution.</p>
+<p>The discrete Laplace distribution has two parameters: a dispersion parameter <span class="math inline">\(0 &lt; p &lt; 1\)</span> and a location parameter <span class="math inline">\(y \in \mathbb{Z} = \{..., -2, -1, 0, 1, 2, ... \}\)</span>.</p>
+Let <span class="math inline">\(X \sim DL(p, y)\)</span> denote that the random variable <span class="math inline">\(X\)</span> follows a discrete Laplace distribution with dispersion parameter <span class="math inline">\(0 &lt; p &lt; 1\)</span> and location parameter <span class="math inline">\(y\)</span>. Then a realisation of the random variable, <span class="math inline">\(X = x\)</span>, can be any integer in <span class="math inline">\(\mathbb{Z}\)</span>. The random variable <span class="math inline">\(X\)</span> has the probability mass function given by
+<span class="math display">\[\begin{align}
+  f(X = x; p, y) = \frac{1-p}{1+p} \cdot p^{\vert x - y \vert} \quad \text{for $x \in \mathbb{Z}$}.
+\end{align}\]</span>
+<p>As seen, only the absolute value of <span class="math inline">\(x - y\)</span> is used. This means that the probability mass function is symmetric around <span class="math inline">\(y\)</span>.</p>
+<p>Let us try to plot the probability mass function <span class="math inline">\(f(X = x; p, y)\)</span> for <span class="math inline">\(p=0.3\)</span> and <span class="math inline">\(y=13\)</span> from <span class="math inline">\(x=8\)</span> to <span class="math inline">\(x=18\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="fl">0.3</span>
+y &lt;-<span class="st"> </span>13L <span class="co"># L for integer type</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(8L, 18L, <span class="dt">by =</span> 1L)
+<span class="kw">barplot</span>(<span class="kw">ddisclap</span>(x -<span class="st"> </span>y, p), <span class="dt">names =</span> x, <span class="dt">xlab =</span> <span class="st">&quot;x, e.g. Y-STR allele&quot;</span>, 
+  <span class="dt">ylab =</span> <span class="kw">paste</span>(<span class="st">&quot;Probability mass, f(X = x; &quot;</span>, p, <span class="st">&quot;, &quot;</span>, y, <span class="st">&quot;)&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</code></pre></div>
+<div class="figure">
+<img src="data:image/png;base64,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" alt="The probability mass function, f(X = x; p, y), for the discrete Laplace distribution with dispersion parameter p=0.3 and location parameter y=13 from x=8 to x=18." />
+<p class="caption">The probability mass function, <span class="math inline">\(f(X = x; p, y)\)</span>, for the discrete Laplace distribution with dispersion parameter <span class="math inline">\(p=0.3\)</span> and location parameter <span class="math inline">\(y=13\)</span> from <span class="math inline">\(x=8\)</span> to <span class="math inline">\(x=18\)</span>.</p>
+</div>
+<p>We plot the distribution for values of <span class="math inline">\(x\)</span> from <span class="math inline">\(8\)</span> to <span class="math inline">\(18\)</span> as there is almost no probability mass outside these values. We can find out how much of the probability mass that we have plotted:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="kw">ddisclap</span>(x -<span class="st"> </span>y, p))</code></pre></div>
+<pre><code>## [1] 0.9988785</code></pre>
+<p>Thus, only 0.0011215 of the probability mass is outside <span class="math inline">\(\{8, 9, ..., 17, 18\}\)</span>.</p>
+If we have a sample of realisations from <span class="math inline">\(X \sim DL(p, y)\)</span> denoted by <span class="math inline">\(\{ x_i \}_{i=1}^n\)</span>, then maximum likelihood estimates are given by the following quantities <span class="citation">(Andersen, Eriksen, and Morling 2013)</span>:
+<span class="math display">\[\begin{align}
+  \hat{y} &amp;= \text{median} \{ x_i \}_{i=1}^n , \\
+  \hat{\mu} &amp;= \frac{1}{n} \sum_{i=1}^n \vert x_i - \hat{y} \vert \, \text{and} \\
+  \hat{p} &amp;= \hat{\mu}^{-1} \left (\sqrt{\hat{\mu}^2 + 1} - 1 \right ) .
+\end{align}\]</span>
+<p>Example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># Makes it possible to reproduce the simulation results</span>
+p &lt;-<span class="st"> </span><span class="fl">0.3</span> <span class="co"># Dispersion parameter </span>
+y &lt;-<span class="st"> </span><span class="dv">13</span> <span class="co"># Location parameter </span>
+x &lt;-<span class="st"> </span><span class="kw">rdisclap</span>(<span class="dv">100</span>, p) +<span class="st"> </span>y <span class="co"># Generate a sample using the rdisclap function</span>
+
+y_hat &lt;-<span class="st"> </span><span class="kw">median</span>(x)
+y_hat</code></pre></div>
+<pre><code>## [1] 13</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu_hat &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">abs</span>(x -<span class="st"> </span>y_hat))
+mu_hat</code></pre></div>
+<pre><code>## [1] 0.57</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_hat &lt;-<span class="st"> </span>mu_hat^(-<span class="dv">1</span>) *<span class="st"> </span>(<span class="kw">sqrt</span>(mu_hat^<span class="dv">2</span> +<span class="st"> </span><span class="dv">1</span>) -<span class="st"> </span><span class="dv">1</span>)
+p_hat <span class="co"># We expect 0.3</span></code></pre></div>
+<pre><code>## [1] 0.2649877</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The observed distribution of d's</span>
+tab &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(x))
+tab</code></pre></div>
+<pre><code>## x
+##   10   11   12   13   14   15   16 
+## 0.01 0.03 0.15 0.55 0.20 0.05 0.01</code></pre>
+<p>This can be plotted against the expected counts as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(1L:<span class="kw">length</span>(tab), <span class="kw">ddisclap</span>(<span class="kw">as.integer</span>(<span class="kw">names</span>(tab)) -<span class="st"> </span>y_hat, p_hat), 
+  <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;#999999&quot;</span>, <span class="dt">lend =</span> <span class="st">&quot;butt&quot;</span>, <span class="dt">lwd =</span> <span class="dv">50</span>, 
+  <span class="dt">xlab =</span> <span class="st">&quot;x, e.g. Y-STR allele&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Probability mass&quot;</span>, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
+<span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at =</span> 1L:<span class="kw">length</span>(tab), <span class="dt">labels =</span> <span class="kw">names</span>(tab))
+<span class="kw">axis</span>(<span class="dv">2</span>)
+<span class="kw">points</span>(1L:<span class="kw">length</span>(tab), tab, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>, 
+  <span class="dt">lend =</span> <span class="st">&quot;butt&quot;</span>, <span class="dt">lwd =</span> <span class="dv">25</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimated distribution&quot;</span>, <span class="st">&quot;Observations&quot;</span>), 
+  <span class="dt">pch =</span> <span class="dv">15</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#000000&quot;</span>))</code></pre></div>
+<div class="figure">
+<img src="data:image/png;base64,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" alt="Observed frequencies of the x’s compared to a discrete Laplace distribution with parameters estimated from the sample." />
+<p class="caption">Observed frequencies of the <span class="math inline">\(x\)</span>’s compared to a discrete Laplace distribution with parameters estimated from the sample.</p>
+</div>
+</div>
+<div id="mixtures-of-discrete-laplace-distributions" class="section level1">
+<h1>Mixtures of discrete Laplace distributions</h1>
+<p>In this section, the method is described. We do this first by a short formulation followed by a longer description with more details.</p>
+<div id="short-model-formulation" class="section level2">
+<h2>Short model formulation</h2>
+Assume that there are <span class="math inline">\(c\)</span> subpopulations and that <span class="math inline">\(\tau_j = P(\text{From subpopulation } j)\)</span> is the a priori probability of a haplotype originated from the <span class="math inline">\(j\)</span>’th subpopulation for <span class="math inline">\(j = 1, 2, ..., c\)</span>. Then
+<span class="math display">\[\begin{align}
+    P(\text{Haplotype} = x \mid \text{From subpopulation } j)
+\end{align}\]</span>
+<p>is modelled by assuming independent discrete Laplace distribtions on loci as just described and by <span class="citation">(Andersen, Eriksen, and Morling 2013)</span>. The parameters of the model can be estimated using this package, <code>disclapmix</code>, as will be shown below.</p>
+The haplotype frequency is obtained by summing the contribution from each subpopulation, such that
+<span class="math display">\[\begin{align}  {#eq:vij}
+    P(\text{Haplotype} = x) 
+    = \sum_{j=1}^c \tau_j P(\text{Haplotype} = x \mid \text{From subpopulation } j) .
+\end{align}\]</span>
+</div>
+<div id="longer-model-formulation" class="section level2">
+<h2>Longer model formulation</h2>
+<p>Assume a very simple ‘haplotype’ with only one locus. Also assume a simple and isolated population. Then, it is reasonable to assume that there is a modal/central Y-STR allele, <span class="math inline">\(y\)</span>, and that all the alleles are distributed around this allele.</p>
+<p>If we go back to Figure~@ref(fig:simple-example), this can be illustrated by <span class="math inline">\(y=13\)</span> as the central Y-STR allele and a distribution around <span class="math inline">\(y=13\)</span> with shorter and longer alleles.</p>
+<p>To begin with, it might seem a bit overwhelming that Y-STR alleles should follow a simple probabiity distribution such as the discrete Laplace distribution. But surprisingly, it is actually a good approximation as demonstrated by <span class="citation">(Andersen, Eriksen, and Morling 2013)</span>.</p>
+<p>We have haplotypes with several loci. When we assess multiple loci haplotypes, we assume that mutations happen independently across loci. Each locus has its own discrete Laplace distribution of allele probabilities, and the probability of a haplotype is the product of probabilities across loci. This gives a multivariate discrete Laplace distribution, where the marginals (that is, at each locus) are independent, discrete Laplace distributions.</p>
+<p>Just as before, for a one locus haplotype, we can assume that there is a modal/central Y-STR profile with <span class="math inline">\(r\)</span> loci, <span class="math inline">\(y=(y_1, y_2, ..., y_r)\)</span>, and all the alleles are distributed around this profile. We also assume that the discrete Laplace distribution at each locus has its own parameter, where <span class="math inline">\(p_k\)</span> is the parameter at the <span class="math inline">\(k\)</span> locus. Normally, the central Y-STR profile, <span class="math inline">\(y\)</span>, would also be regarded as parameters.</p>
+As before, let <span class="math inline">\(f(x; p, y)\)</span> be the probability mass function of a discrete Laplace distribution. We define an observation <span class="math inline">\(X = (X_{1}, X_{2}, ..., X_{r})\)</span> to be from a multivariate distribution of independent, discrete Laplace distributions when the probability of observing <span class="math inline">\(X=x\)</span> is
+<span class="math display">\[\begin{align}  {#eq:disclap-independent}
+  P(X = x) = \prod_{k=1}^r f \left ( x_{k} ; p_{k}, y_{k} \right ).
+\end{align}\]</span>
+<p>This corresponds to that the individual <span class="math inline">\(X\)</span> has mutated away from <span class="math inline">\(y\)</span> independently at each locus.</p>
+Now, we have one more generalisation. A population may have several subpopulations, e.g. introduced by migration or by evolution. This means that we need to have a mixture of multivariate distributions with marginally independent, discrete Laplace distributions. Each component in the mixture represents a subpopulation. We define an observation <span class="math inline">\(X = (X_{1}, X_{2}, ..., X_{r})\)</span> to be from a mixture of multivariate, marginally independent, discrete Laplace distributions, when the probability of observing <span class="math inline">\(X=x\)</span> is
+<span class="math display">\[\begin{align}  {#eq:disclap-mixtures}
+  P(X = x) = \sum_{j=1}^c \tau_j \prod_{k=1}^r f \left ( x_{k} ; p_{jk}, y_{jk} \right ) ,
+\end{align}\]</span>
+<p>where <span class="math inline">\(\tau_j\)</span> is the a priori probability for originating from the <span class="math inline">\(j\)</span>’th subpopulation. Thus, the parameters of this mixture model are <span class="math inline">\(\{ y_j \}_{j=1}^c\)</span> with <span class="math inline">\(y_j = (y_{j1}, y_{j2}, ..., y_{jr})\)</span> as the central haplotype of the <span class="math inline">\(j\)</span> subpopulation, <span class="math inline">\(\{ \tau_j \}_{j=1}^c\)</span> and <span class="math inline">\(\{ p_{jk} \}_{\substack{j\in \{1, 2, ..., c\}\\k \in \{1, 2, ..., r\}}}\)</span> (the parameters for each discrete Laplace distribution).</p>
+<p>We assume that <span class="math inline">\(p_{jk}\)</span> depends on locus and subpopulation, such that <span class="math inline">\(\log p_{jk} = \omega_j + \lambda_k\)</span>. This means that there is an additive effect of locus, <span class="math inline">\(\lambda_k\)</span>, and an additive effect of subpopulation, <span class="math inline">\(\omega_j\)</span>.</p>
+<p>More theory on finite mixture distributions is given by <span class="citation">(<span class="citeproc-not-found" data-reference-id="Titterington1987"><strong>???</strong></span>)</span>.</p>
+</div>
+<div id="haplotype-frequency-prediction" class="section level2">
+<h2>Haplotype frequency prediction</h2>
+<p>When we have estimated the parameters of a mixture of multivariate, marginally independent, discrete Laplace distributions (this will be shown in the next section), we can use these to estimate haplotype frequencies.</p>
+Given estimates of subpopulation central haplotypes <span class="math inline">\(\{ \hat{y}_{j} \}_{j}\)</span>, dispersion parameters <span class="math inline">\(\{ \hat{p}_{jk} \}_{j,k}\)</span> and prior probabilities <span class="math inline">\(\{ \hat{\tau}_{j} \}_{j}\)</span>, the haplotype frequency of a haplotype <span class="math inline">\(x = (x_1, x_2, ..., x_r)\)</span> with <span class="math inline">\(x_k \in \mathbb{Z}\)</span> for <span class="math inline">\(k \in \{1, 2, ..., r\}\)</span> can be estimated as
+<span class="math display">\[\begin{align}  {#eq:disclap-predict}
+   \hat{p}(x) = \sum_{j=1}^c \hat{\tau}_j \prod_{k=1}^r f \left ( x_k ; \hat{p}_{jk}, \hat{y}_{jk} \right ).
+\end{align}\]</span>
+<p>Thus, we simply use the estimated parameters in Equation~ to obtain Equation~@ref(eq:disclap-predict).</p>
+</div>
+</div>
+<div id="estimating-parameters" class="section level1">
+<h1>Estimating parameters</h1>
+<p>In this section we demonstrate how to estimate the parameters in a mixture of multivariate, independent, discrete Laplace distributions. This can for example be used to estimate Y-STR haplotype frequencies.</p>
+<p>First, the <code>R</code> package <code>disclapmix</code> <span class="citation">(Andersen, Eriksen, and Morling 2013)</span> for analysing a mixture of multivariate, independent, discrete Laplace distributions must be loaded:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(disclapmix)</code></pre></div>
+<p>If you do not have the <code>disclapmix</code> package installed, please visit <a href="http://cran.r-project.org/package=disclapmix" class="uri">http://cran.r-project.org/package=disclapmix</a>.</p>
+<p>This package supplies the function <code>disclapmix</code> for estimating the parameters in a mixture of multivariate, marginally independent, discrete Laplace distributions with probability mass function given in Equation~. We will refer to this as ‘the discrete Laplace method’.</p>
+<div id="data-from-marginally-independent-discrete-laplace-distributions" class="section level2">
+<h2>Data from marginally independent, discrete Laplace distributions</h2>
+<p>Now, we revisit the example leading to Figure~@ref(fig:simple-example) and add two more loci with different dispersion and location parameters. We then analyse the randomly generated values from independent, discrete Laplace distributions with a probability mass function as given in Equation~.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+n &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># number of individuals</span>
+
+<span class="co"># Locus 1</span>
+p1 &lt;-<span class="st"> </span><span class="fl">0.3</span> <span class="co"># Dispersion parameter </span>
+m1 &lt;-<span class="st"> </span>13L <span class="co"># Location parameter (L means integer)</span>
+d1 &lt;-<span class="st"> </span><span class="kw">rdisclap</span>(n, p1) +<span class="st"> </span>m1 <span class="co"># Generate a sampling using the rdisclap function</span>
+
+<span class="co"># Locus 2</span>
+p2 &lt;-<span class="st"> </span><span class="fl">0.4</span>
+m2 &lt;-<span class="st"> </span>14L
+d2 &lt;-<span class="st"> </span><span class="kw">rdisclap</span>(n, p2) +<span class="st"> </span>m2
+
+<span class="co"># Locus 3</span>
+p3 &lt;-<span class="st"> </span><span class="fl">0.5</span>
+m3 &lt;-<span class="st"> </span>15L
+d3 &lt;-<span class="st"> </span><span class="kw">rdisclap</span>(n, p3) +<span class="st"> </span>m3
+
+db &lt;-<span class="st"> </span><span class="kw">cbind</span>(d1, d2, d3)
+<span class="kw">head</span>(db)</code></pre></div>
+<pre><code>##      d1 d2 d3
+## [1,] 14 15 16
+## [2,] 12 12 17
+## [3,] 13 13 15
+## [4,] 13 13 15
+## [5,] 14 12 15
+## [6,] 13 15 15</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">disclapmix</span>(db, <span class="dt">clusters =</span> 1L) <span class="co"># L means integer type</span></code></pre></div>
+<p>We can then look at the estimated location parameters, <span class="math inline">\(y=(y_1, y_2, y_3)\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit$y</code></pre></div>
+<pre><code>##      d1 d2 d3
+## [1,] 13 14 15</code></pre>
+<p>And the estimated dispersion parameters, <span class="math inline">\((p_1, p_2, p_3)\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit$disclap_parameters</code></pre></div>
+<pre><code>##                 d1        d2        d3
+## cluster1 0.2649877 0.4369163 0.5167462</code></pre>
+<p>As seen, the estimated dispersion location parameters are well estimated. The dispersion parameters are also quite close to the ones used to generate the data.</p>
+</div>
+<div id="data-from-a-fisher-wright-population" class="section level2">
+<h2>Data from a Fisher-Wright population</h2>
+<p><span class="citation">(Andersen, Eriksen, and Morling 2013)</span> simulated populations following the Fisher-Wright model of evolution <span class="citation">(Fisher 1922; Fisher 1930; Fisher 1958; Wright 1931; <span class="citeproc-not-found" data-reference-id="Ewens2004"><strong>???</strong></span>)</span> with assumptions of primarily neutral, single-step mutations of STRs <span class="citation">(Ohta and Kimura 1973)</span>. From these populations, data sets were sampled. Using the discrete Laplace method for estimating haplotype frequencies, the method worked rather well.</p>
+<p>This is worth highlighting: Data was simulated under a completely different model than that used for inference afterwards. The data was simulated under a population model (Fisher-Wright model of evolution) with a certain mutation model (single-step mutation model). Inference was made assuming that the data was from a mixture of multivariate, marginally independent, discrete Laplace distributions.</p>
+<p>One of the reasons that the discrete Laplace distribution predicts data from a Fisher-Wright model of evolution with a single-step mutation model is due to the fact that it approximates certain properties of this population and mutation model <span class="citation">(A. Caliebe et al. 2010)</span>. This is also explained by <span class="citation">(Andersen, Eriksen, and Morling 2013)</span>.</p>
+<p>Now, let us try simulating a Fisher-Wright population and analyse it with the discrete Laplace method. To simulate the population, the <code>R</code> package <code>fwsim</code> <span class="citation">(Andersen and Eriksen 2015; Andersen and Eriksen 2012)</span> is loaded:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(fwsim)</code></pre></div>
+<p>If you do not have the <code>fwsim</code> package installed, please visit <a href="http://cran.r-project.org/package=fwsim" class="uri">http://cran.r-project.org/package=fwsim</a>.</p>
+<p>We then simulate a population consisting of Y-STR profiles:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+generations &lt;-<span class="st"> </span>100L
+pop_size &lt;-<span class="st"> </span>1e5L
+loci &lt;-<span class="st"> </span>7L
+mutation_rates &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="dt">length.out =</span> loci)
+mutation_rates</code></pre></div>
+<pre><code>## [1] 0.0010 0.0025 0.0040 0.0055 0.0070 0.0085 0.0100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim &lt;-<span class="st"> </span><span class="kw">fwsim</span>(<span class="dt">G =</span> generations, <span class="dt">H0 =</span> <span class="kw">rep</span>(0L, loci), <span class="dt">N0 =</span> pop_size, 
+  <span class="dt">mutmodel =</span> mutation_rates, <span class="dt">progress =</span> <span class="ot">FALSE</span>)
+<span class="kw">summary</span>(sim)</code></pre></div>
+<pre><code>## Fisher-Wright population with stochastic population size.
+## Parameters:
+##   G        = 100
+##   progress = FALSE
+##   trace    = FALSE
+##   alpha    = 1, 1, 1, 1, 1, 1, ...
+## 
+## H0 and N0:
+##   Locus1 Locus2 Locus3 Locus4 Locus5 Locus6 Locus7     N0
+## 1      0      0      0      0      0      0      0 100000
+## 
+## SMM (stepwise mutation model) on 7 loci with parameters:
+##      Locus1  Locus2 Locus3  Locus4 Locus5  Locus6 Locus7
+## mu_d  5e-04 0.00125  0.002 0.00275 0.0035 0.00425  0.005
+## mu_u  5e-04 0.00125  0.002 0.00275 0.0035 0.00425  0.005
+## 
+## Number of saved populations = 0
+## 
+## Final population (size = 101736):
+##   Locus1 Locus2 Locus3 Locus4 Locus5 Locus6 Locus7 N
+## 1      0     -1      1      0      3     -2      0 5
+## 2      0      1      0      3     -1      0     -3 2
+## 3      0      0      1      1      1      2      1 1
+## 4      0     -1      1      1      0      1      1 3
+## 5      0     -1     -1     -1      1      1      0 5
+##  (4383 rows hidden.)
+## 
+## Expected population sizes = 1e+05, 1e+05, 1e+05, 1e+05, 1e+05, 1e+05, ...
+## Actual population sizes   = 99801, 99979, 99613, 99476, 99781, 99764, ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop &lt;-<span class="st"> </span>sim$population</code></pre></div>
+<p>Note, that the mutation rates are different for each locus (ranging from  to ). The location parameter is set to 0 for all loci. This can be changed afterwards without loosing or adding any information. Below, we change it to be <span class="math inline">\(y = (14, 12, 28, 22, 10, 11, 13)\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(14L, 12L, 28L, 22L, 10L, 11L, 13L)
+for (i in 1L:loci) {
+  pop[, i] &lt;-<span class="st"> </span>pop[, i] +<span class="st"> </span>y[i]
+}
+<span class="kw">head</span>(pop)</code></pre></div>
+<pre><code>##   Locus1 Locus2 Locus3 Locus4 Locus5 Locus6 Locus7 N
+## 1     14     11     29     22     13      9     13 5
+## 2     14     13     28     25      9     11     10 2
+## 3     14     12     29     23     11     13     14 1
+## 4     14     11     29     23     10     12     14 3
+## 5     14     11     27     21     11     12     13 5
+## 6     14     12     29     22     11     13     14 3</code></pre>
+<p>Then, <span class="math inline">\(y\)</span> is the most frequent 10 locus Y-STR haplotype in Denmark according to <a href="http://www.yhrd.org" class="uri">http://www.yhrd.org</a> (on March 26, 2013) restricted to the 7 loci minimal haplotype.</p>
+<p>The column <code>N</code> is the number of individuals in the population with that Y-STR haplotype. Summing column <code>N</code> reveals that there is not exactly <code>pop\_size</code> individuals due to that the population size is stochastic (refer to <span class="citation">(<span class="citeproc-not-found" data-reference-id="fwsim2014Arxiv"><strong>???</strong></span>)</span> for the details).</p>
+<p>We can then calculate the population frequency for each haplotype:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop$PopFreq &lt;-<span class="st"> </span>pop$N /<span class="st"> </span><span class="kw">sum</span>(pop$N)</code></pre></div>
+<p>Let us draw a data set where each haplotype is drawn relatively to its population frequency:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+n &lt;-<span class="st"> </span><span class="dv">500</span> <span class="co"># Data set size</span>
+types &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x =</span> 1L:<span class="kw">nrow</span>(pop), <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> pop$N)
+types_table &lt;-<span class="st"> </span><span class="kw">table</span>(types)
+
+alpha &lt;-<span class="st"> </span><span class="kw">sum</span>(types_table ==<span class="st"> </span><span class="dv">1</span>) 
+alpha /<span class="st"> </span>n <span class="co"># Singleton proportion</span></code></pre></div>
+<pre><code>## [1] 0.462</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataset &lt;-<span class="st"> </span>pop[<span class="kw">as.integer</span>(<span class="kw">names</span>(types_table)), ]
+dataset$Ndb &lt;-<span class="st"> </span>types_table
+<span class="kw">head</span>(dataset)</code></pre></div>
+<pre><code>##     Locus1 Locus2 Locus3 Locus4 Locus5 Locus6 Locus7  N      PopFreq Ndb
+## 9       14     12     29     22     10     12     15 15 0.0001474404   2
+## 38      14     12     27     22      9     12     13 94 0.0009239601   1
+## 80      14     11     27     22     10     11     12 40 0.0003931745   1
+## 159     14     12     28     23      9     10     13 73 0.0007175434   2
+## 168     14     12     28     22      9     13     14 60 0.0005897617   1
+## 181     13     12     28     22      9     11     13 67 0.0006585673   1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">db &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(pop[types, 1L:loci])
+<span class="kw">head</span>(db)</code></pre></div>
+<pre><code>##      Locus1 Locus2 Locus3 Locus4 Locus5 Locus6 Locus7
+## 1166     14     11     28     22     10      8     14
+## 3186     14     12     28     21      9     12     12
+## 1763     14     12     28     22     10     10     12
+## 488      14     12     28     22      9     11     13
+## 3794     14     12     28     22     11     12     13
+## 3943     14     12     28     22     10     12     13</code></pre>
+<p>Then, analyse it:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">disclapmix</span>(db, <span class="dt">clusters =</span> 1L)
+
+<span class="co"># Estimated location parameters</span>
+fit$y </code></pre></div>
+<pre><code>##      Locus1 Locus2 Locus3 Locus4 Locus5 Locus6 Locus7
+## [1,]     14     12     28     22     10     11     13</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Estimated dispersion parameters</span>
+fit$disclap_parameters</code></pre></div>
+<pre><code>##              Locus1    Locus2   Locus3    Locus4    Locus5    Locus6
+## cluster1 0.02797808 0.1164012 0.151445 0.2111471 0.2477904 0.2895135
+##             Locus7
+## cluster1 0.3010092</code></pre>
+Let us compare the mutation rates with the dispersion parameters in the discrete Laplace distributions:
+
+</div>
+<div id="data-from-a-mixture-of-two-fisher-wright-populations" class="section level2">
+<h2>Data from a mixture of two Fisher-Wright populations</h2>
+<p>Here, we show how to analyse a dataset from a mixture of two populations. First, we simulate two populations (note the different mutation rates and location parameters, where the location parameters again are changed afterwards without loosing or adding any information):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># Common parameters</span>
+generations &lt;-<span class="st"> </span>100L
+pop_size &lt;-<span class="st"> </span>1e5L
+loci &lt;-<span class="st"> </span>7L
+
+mu1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.005</span>, <span class="dt">length.out =</span> loci)
+sim1 &lt;-<span class="st"> </span><span class="kw">fwsim</span>(<span class="dt">G =</span> generations, <span class="dt">H0 =</span> y, <span class="dt">N0 =</span> pop_size, <span class="dt">mutmodel =</span> mu1, <span class="dt">progress =</span> <span class="ot">FALSE</span>)
+pop1 &lt;-<span class="st"> </span>sim1$population
+
+mu2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.005</span>, <span class="fl">0.01</span>, <span class="dt">length.out =</span> loci)
+sim2 &lt;-<span class="st"> </span><span class="kw">fwsim</span>(<span class="dt">G =</span> generations, <span class="dt">H0 =</span> <span class="kw">c</span>(14L, 13L, 29L, 23L, 11L, 13L, 13L), <span class="dt">N0 =</span> pop_size, <span class="dt">mutmodel =</span> mu2, <span class="dt">progress =</span> <span class="ot">FALSE</span>)
+pop2 &lt;-<span class="st"> </span>sim2$population</code></pre></div>
+<p>Here, just as <code>y</code> are the alleles from most frequent haplotype, then <span class="math inline">\((14, 13, 29, 23, 11, 13, 13)\)</span> are the alleles from the second most frequent haplotype.</p>
+<p>Then we sample a data set with an expected proportion of 20% from the first population and 80% from the second population:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+n &lt;-<span class="st"> </span>500L <span class="co"># Data set size</span>
+
+n1 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1</span>, n, <span class="fl">0.2</span>)
+<span class="kw">c</span>(n1, n1 /<span class="st"> </span>n)</code></pre></div>
+<pre><code>## [1] 102.000   0.204</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n2 &lt;-<span class="st"> </span>n -<span class="st"> </span>n1
+<span class="kw">c</span>(n2, n2 /<span class="st"> </span>n)</code></pre></div>
+<pre><code>## [1] 398.000   0.796</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">types1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x =</span> 1L:<span class="kw">nrow</span>(pop1), <span class="dt">size =</span> n1, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> pop1$N)
+db1 &lt;-<span class="st"> </span>pop1[types1, 1L:loci]
+
+types2 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x =</span> 1L:<span class="kw">nrow</span>(pop2), <span class="dt">size =</span> n2, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> pop2$N)
+db2 &lt;-<span class="st"> </span>pop2[types2, 1L:loci]
+
+db &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">rbind</span>(db1, db2))
+
+<span class="co"># Singleton proportion</span>
+<span class="kw">sum</span>(<span class="kw">table</span>(<span class="kw">apply</span>(db, <span class="dv">1</span>, paste, <span class="dt">collapse =</span> <span class="st">&quot;;&quot;</span>)) ==<span class="st"> </span>1L) /<span class="st"> </span>n</code></pre></div>
+<pre><code>## [1] 0.692</code></pre>
+<p>Now, we analyse the data set trying 1 to 5 subpopulations. Afterwards, we analyse the optimal number of subpopulations using the BIC (Bayesian Information Criteria) by <span class="citation">(<span class="citeproc-not-found" data-reference-id="BIC"><strong>???</strong></span>)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fits &lt;-<span class="st"> </span><span class="kw">lapply</span>(1L:5L, function(clusters) <span class="kw">disclapmix</span>(db, <span class="dt">clusters =</span> clusters, <span class="dt">iterations =</span> 100L))</code></pre></div>
+<p>The BIC values are:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BIC &lt;-<span class="st"> </span><span class="kw">sapply</span>(fits, function(fit) fit$BIC_marginal)</code></pre></div>
+<p>The estimated parameters for this optimal number of subpopulations can be made available in <code>best\_fit</code> as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_fit &lt;-<span class="st"> </span>fits[[<span class="kw">which.min</span>(BIC)]]
+best_fit</code></pre></div>
+<pre><code>## disclapmixfit from 500 observations on 7 loci with 2 clusters.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Estimated a priori probability of originating from each subpopulation</span>
+best_fit$tau </code></pre></div>
+<pre><code>## [1] 0.2190092 0.7809908</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Estimated location parameters</span>
+best_fit$y </code></pre></div>
+<pre><code>##      Locus1 Locus2 Locus3 Locus4 Locus5 Locus6 Locus7
+## [1,]     14     12     28     22     10     11     13
+## [2,]     14     13     29     23     11     13     13</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Estimated dispersion parameters for each subpopulation</span>
+best_fit$disclap_parameters</code></pre></div>
+<pre><code>##              Locus1    Locus2    Locus3    Locus4    Locus5    Locus6
+## cluster1 0.09007892 0.1091864 0.1165970 0.1380979 0.1531467 0.1568696
+## cluster2 0.16811193 0.2037718 0.2176019 0.2577285 0.2858136 0.2927617
+##             Locus7
+## cluster1 0.1806647
+## cluster2 0.3371698</code></pre>
+<p>The estimated location parameters are the same as those used for generating the data. Also, the values of <span class="math inline">\(\tau_j\)</span>, the a priori probability of originating from the <span class="math inline">\(j\)</span> subpopulation, are consistent with the mixture proportions of  and .</p>
+<p>We can also calculate the predicted population frequencies (using the mixture proportions  and ):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop1$PopFreq &lt;-<span class="st"> </span>pop1$N /<span class="st"> </span><span class="kw">sum</span>(pop1$N)
+pop2$PopFreq &lt;-<span class="st"> </span>pop2$N /<span class="st"> </span><span class="kw">sum</span>(pop2$N)
+
+types1.table &lt;-<span class="st"> </span><span class="kw">table</span>(types1)
+types2.table &lt;-<span class="st"> </span><span class="kw">table</span>(types2)
+
+dataset1 &lt;-<span class="st"> </span>pop1[<span class="kw">as.integer</span>(<span class="kw">names</span>(types1.table)), ]
+dataset1$Ndb &lt;-<span class="st"> </span>types1.table
+<span class="kw">sum</span>(dataset1$Ndb)</code></pre></div>
+<pre><code>## [1] 102</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataset2 &lt;-<span class="st"> </span>pop2[<span class="kw">as.integer</span>(<span class="kw">names</span>(types2.table)), ]
+dataset2$Ndb &lt;-<span class="st"> </span>types2.table
+<span class="kw">sum</span>(dataset2$Ndb)</code></pre></div>
+<pre><code>## [1] 398</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataset &lt;-<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> dataset1, <span class="dt">y =</span> dataset2, <span class="dt">by =</span> <span class="kw">colnames</span>(db), <span class="dt">all =</span> <span class="ot">TRUE</span>)
+dataset[<span class="kw">is.na</span>(dataset)] &lt;-<span class="st"> </span><span class="dv">0</span>
+
+dataset$MixPopFreq &lt;-<span class="st"> </span>(n1/n) *<span class="st"> </span>dataset$PopFreq.x +<span class="st"> </span>(n2/n) *<span class="st"> </span>dataset$PopFreq.y
+
+dataset$Type &lt;-<span class="st"> &quot;Only from pop1&quot;</span>
+dataset$Type[dataset$Ndb.y &gt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> &quot;Only from pop2&quot;</span>
+dataset$Type[dataset$Ndb.x &gt;<span class="st"> </span><span class="dv">0</span> &amp;<span class="st"> </span>dataset$Ndb.y &gt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> &quot;Occurred in both&quot;</span>
+dataset$Type &lt;-<span class="st"> </span><span class="kw">factor</span>(dataset$Type)</code></pre></div>
+We can now compare the predicted frequencies with the population frequency:
+
+</div>
+</div>
+<div id="advanced-topics" class="section level1">
+<h1>Advanced topics</h1>
+<p>In this section, more advanced topics are demonstrated.</p>
+<div id="database-spectrum" class="section level2">
+<h2>Database spectrum</h2>
+<p>The spectrum of a database is the number of haplotypes occuring once, the number occuring twice etc. Here, we investigate how subsampling can be used to assess the variability of the database spectrum. We use <code>best\_fit</code> from the mixture of two Fisher-Wright populations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_fit</code></pre></div>
+<pre><code>## disclapmixfit from 500 observations on 7 loci with 2 clusters.</code></pre>
+<p>Let us simulate 100 more databases from the fitted discrete Laplace model and see the number of singletons (other aspects of the database spectrum are interesting, too, but here we focus on the number of singletons):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+sim_dbs &lt;-<span class="st"> </span><span class="kw">lapply</span>(1L:100L, function(i) {
+  <span class="kw">simulate</span>(best_fit, <span class="dt">nsim =</span> <span class="kw">nrow</span>(db))
+})
+<span class="kw">head</span>(sim_dbs[[<span class="dv">1</span>]])</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]   14   13   29   23    9   14   14
+## [2,]   14   13   29   23   10   10   13
+## [3,]   14   14   29   24   12   13   13
+## [4,]   12   13   29   23    9   14   13
+## [5,]   14   14   28   23   11   13   12
+## [6,]   14   13   29   22   11   13   12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num_singletons &lt;-<span class="st"> </span>function(d) {
+  <span class="kw">sum</span>(<span class="kw">table</span>(<span class="kw">apply</span>(d, <span class="dv">1</span>, paste, <span class="dt">collapse =</span> <span class="st">&quot;;&quot;</span>)) ==<span class="st"> </span>1L)
+}
+
+sim_dbs_singletons &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(sim_dbs, function(sim_db) { 
+  <span class="kw">num_singletons</span>(sim_db)
+}))
+
+<span class="kw">summary</span>(sim_dbs_singletons)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   325.0   342.8   351.0   351.5   360.0   379.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">num_singletons</span>(db)</code></pre></div>
+<pre><code>## [1] 346</code></pre>
+</div>
+<div id="simulating-more-advanced-populations" class="section level2">
+<h2>Simulating more advanced populations</h2>
+<p>We can simulate more advanced populations by 1) using a more sophisticated mutation model and 2) having more than one initial haplotype. Here, we use the logistic mutation model introduced by <span class="citation">(A. Jochens et al. 2011)</span>. First, let us inspect the stationary distribution (how the allele distribution would look like in the limit of an infinite number of generations):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mutpars.locus1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.149</span>,   <span class="fl">2.08</span>,    <span class="fl">18.3</span>,   <span class="fl">0.149</span>,   <span class="fl">0.374</span>,   <span class="fl">27.4</span>) <span class="co"># DYS19</span>
+mutpars.locus2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.500</span>,   <span class="fl">1.18</span>,    <span class="fl">18.0</span>,   <span class="fl">0.500</span>,   <span class="fl">0.0183</span>,  <span class="dv">349</span>)  <span class="co"># DYS389I</span>
+mutpars.locus3 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.0163</span>,  <span class="fl">17.7</span>,    <span class="fl">11.1</span>,   <span class="fl">0.0163</span>,  <span class="fl">0.592</span>,   <span class="fl">14.1</span>)  <span class="co"># DYS391</span>
+mutpars &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(mutpars.locus1, mutpars.locus2, mutpars.locus3), <span class="dt">ncol =</span> <span class="dv">3</span>)
+<span class="kw">colnames</span>(mutpars) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;DYS19&quot;</span>, <span class="st">&quot;DYS389I&quot;</span>, <span class="st">&quot;DYS391&quot;</span>)
+mutmodel &lt;-<span class="st"> </span><span class="kw">init_mutmodel</span>(<span class="dt">modeltype =</span> 2L, <span class="dt">mutpars =</span> mutpars)
+
+<span class="kw">mutmodel_not_mut</span>(mutmodel, <span class="dt">locus =</span> 1L, <span class="dt">alleles =</span> 5L:20L)</code></pre></div>
+<pre><code>##         5         6         7         8         9        10        11 
+## 0.9999657 0.9999502 0.9999276 0.9998948 0.9998472 0.9997780 0.9996775 
+##        12        13        14        15        16        17        18 
+## 0.9995315 0.9993180 0.9989947 0.9984159 0.9966968 0.9876656 0.9437162 
+##        19        20 
+## 0.8730008 0.8464115</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutmodel_dw_mut</span>(mutmodel, <span class="dt">locus =</span> 1L, <span class="dt">alleles =</span> 5L:20L)</code></pre></div>
+<pre><code>##            5            6            7            8            9 
+## 1.441663e-13 1.153975e-12 9.236954e-12 7.393691e-11 5.918257e-10 
+##           10           11           12           13           14 
+## 4.737250e-09 3.791916e-08 3.035222e-07 2.429500e-06 1.944463e-05 
+##           15           16           17           18           19 
+## 1.555018e-04 1.235677e-03 9.347923e-03 5.198197e-02 1.208271e-01 
+##           20 
+## 1.447825e-01</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutmodel_up_mut</span>(mutmodel, <span class="dt">locus =</span> 1L, <span class="dt">alleles =</span> 5L:20L)</code></pre></div>
+<pre><code>##            5            6            7            8            9 
+## 3.425634e-05 4.978767e-05 7.235726e-05 1.051508e-04 1.527917e-04 
+##           10           11           12           13           14 
+## 2.219852e-04 3.224458e-04 4.682274e-04 6.796174e-04 9.858098e-04 
+##           15           16           17           18           19 
+## 1.428624e-03 2.067568e-03 2.986491e-03 4.301870e-03 6.172108e-03 
+##           20 
+## 8.805949e-03</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">statdists &lt;-<span class="st"> </span><span class="kw">approx_stationary_dist</span>(mutmodel, <span class="dt">alleles =</span> 5L:20L)
+bp &lt;-<span class="st"> </span><span class="kw">barplot</span>(statdists, <span class="dt">beside =</span> <span class="ot">TRUE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.1</span>*<span class="kw">max</span>(statdists)))
+<span class="kw">axis</span>(<span class="dv">3</span>, bp, <span class="kw">rep</span>(<span class="kw">rownames</span>(statdists), <span class="kw">ncol</span>(mutmodel$mutpars)), <span class="dt">cex.axis =</span> <span class="dv">1</span>, <span class="dt">las =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" width="\textwidth" /> Next, let us simulate a population with two starting haplotypes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rare_haplotype &lt;-<span class="st"> </span><span class="kw">c</span>(12L, 9L, 9L) <span class="co"># 0/126931 at yhrd.org r46</span>
+common_haplotype &lt;-<span class="st"> </span><span class="kw">c</span>(14L, 12L, 10L) <span class="co"># 8541/126931 at yhrd.org r46</span>
+H0 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(rare_haplotype, common_haplotype), <span class="dv">2</span>, <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+sim &lt;-<span class="st"> </span><span class="kw">fwsim</span>(<span class="dt">G =</span> 5000L, <span class="dt">H0 =</span> H0, <span class="dt">N0 =</span> <span class="kw">c</span>(1e6L, 1e6L), 
+  <span class="dt">mutmodel =</span> mutmodel, <span class="dt">progress =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Let us inspect the simulation and the 10 most common haplotypes in the final population</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim$population[<span class="kw">order</span>(sim$population$N, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)[1L:10L], ]</code></pre></div>
+<pre><code>##     DYS19 DYS389I DYS391      N
+## 596    16      12     10 157909
+## 598    15      12     10 157669
+## 589    16      13     10 116830
+## 594    15      13     10 111012
+## 430    15      12     11  88089
+## 432    16      12     11  87543
+## 462    16      11     10  69504
+## 460    15      11     10  69212
+## 506    15      13     11  64630
+## 592    16      13     11  63882</code></pre>
+<p>Let us compare the mutation probabilities for the initial haplotypes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>-<span class="kw">sapply</span>(1L:<span class="kw">ncol</span>(mutmodel$mutpars), function(locus) {
+  <span class="kw">mutmodel_not_mut</span>(mutmodel, <span class="dt">locus =</span> locus, <span class="dt">alleles =</span> rare_haplotype[locus])
+})</code></pre></div>
+<pre><code>##           12            9            9 
+## 0.0004685310 0.0010028796 0.0007590255</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>-<span class="kw">sapply</span>(1L:<span class="kw">ncol</span>(mutmodel$mutpars), function(locus) {
+  <span class="kw">mutmodel_not_mut</span>(mutmodel, <span class="dt">locus =</span> locus, <span class="dt">alleles =</span> common_haplotype[locus])
+})</code></pre></div>
+<pre><code>##          14          12          10 
+## 0.001005254 0.001466993 0.001322288</code></pre>
+<p>As seen, the rare haplotype is almost not mutating. The rationale is that the alleles should mutate up before reaching as low as the alleles of the rare haplotype:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(1L:<span class="kw">ncol</span>(mutmodel$mutpars), function(locus) <span class="kw">mutmodel_dw_mut</span>(mutmodel, <span class="dt">locus =</span> locus, <span class="dt">alleles =</span> rare_haplotype[locus]))</code></pre></div>
+<pre><code>##           12            9            9 
+## 3.035222e-07 1.221102e-05 1.173442e-18</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(1L:<span class="kw">ncol</span>(mutmodel$mutpars), function(locus) <span class="kw">mutmodel_up_mut</span>(mutmodel, <span class="dt">locus =</span> locus, <span class="dt">alleles =</span> rare_haplotype[locus]))</code></pre></div>
+<pre><code>##           12            9            9 
+## 0.0004682274 0.0009906686 0.0007590255</code></pre>
+<p>Let us check how many close to the rare haplotype that are left:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dists &lt;-<span class="st"> </span><span class="kw">apply</span>(sim$population[, -<span class="kw">ncol</span>(sim$population)], <span class="dv">1</span>, function(h) {
+  <span class="kw">sum</span>(<span class="kw">abs</span>(h -<span class="st"> </span>rare_haplotype))
+})
+dists_order &lt;-<span class="st"> </span><span class="kw">order</span>(dists, <span class="dt">decreasing =</span> <span class="ot">FALSE</span>)[1L:10L]
+<span class="kw">data.frame</span>(sim$population[dists_order, ], 
+  <span class="dt">DistanceToRare =</span> dists[dists_order])</code></pre></div>
+<pre><code>##     DYS19 DYS389I DYS391    N DistanceToRare
+## 57     12      10      9 1350              1
+## 86     12       9     10  688              1
+## 7      13       9     10  345              2
+## 34     12       8     10  163              2
+## 56     12      11      9  703              2
+## 58     12       9     11  162              2
+## 62     12      10     10 4885              2
+## 128    13      10      9  754              2
+## 3      14      10      9  419              3
+## 9      13      10     10 6009              3</code></pre>
+</div>
+</div>
+<div id="concluding-remarks" class="section level1">
+<h1>Concluding remarks</h1>
+<p>We have shown how to analyse Y-STR population data using the discrete Laplace method described by <span class="citation">(Andersen, Eriksen, and Morling 2013)</span>. This was done using the freely available and open source <code>R</code> packages <code>disclap</code>, <code>fwsim</code> and <code>disclapmix</code> that are supported on Linux, MacOS and MS Windows.</p>
+<p>One key point made is worth repeating: Data simulated under a population model (e.g. the Fisher-Wright model of evolution) with a certain mutation model (e.g. the single-step mutation model) can be successfully analysed using the discrete Laplace method making inference assuming that the data is from a mixture of multivariate, independent, discrete Laplace distributions.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-fwsimArxiv">
+<p>Andersen, Mikkel Meyer, and Poul Svante Eriksen. 2012. “Efficient Forward Simulation of Fisher-Wright Populations with Stochastic Population Size and Neutral Single Step Mutations in Haplotypes.” <em>Preprint, ArXiv:1210.1773</em>.</p>
+</div>
+<div id="ref-disclap">
+<p>———. 2014. <em>disclap: Discrete Laplace Exponential Family</em>. <a href="http://CRAN.R-project.org/package=disclap" class="uri">http://CRAN.R-project.org/package=disclap</a>.</p>
+</div>
+<div id="ref-fwsim">
+<p>———. 2015. <em>Fwsim: Fisher-Wright Population Simulation</em>. <a href="http://CRAN.R-project.org/package=fwsim" class="uri">http://CRAN.R-project.org/package=fwsim</a>.</p>
+</div>
+<div id="ref-AndersenDisclap2013">
+<p>Andersen, Mikkel Meyer, Poul Svante Eriksen, and Niels Morling. 2013. “The discrete Laplace exponential family and estimation of Y-STR haplotype frequencies.” <em>Journal of Theoretical Biology</em> 329: 39–51.</p>
+</div>
+<div id="ref-Caliebe2010">
+<p>Caliebe, Amke, Arne Jochens, Michael Krawczak, and Uwe Rösler. 2010. “A Markov Chain Description of the Stepwise Mutation Model: Local and Global Behaviour of the Allele Process.” <em>Journal of Theoretical Biology</em> 266 (2): 336–42.</p>
+</div>
+<div id="ref-Fisher1922">
+<p>Fisher, R. A. 1922. “On the Dominance Ratio.” <em>Proc. Roy. Soc. Edin.</em> 42: 321–41.</p>
+</div>
+<div id="ref-Fisher1930">
+<p>———. 1930. <em>The Genetical Theory of Natural Selection</em>. Oxford: Clarendon Press.</p>
+</div>
+<div id="ref-Fisher1958">
+<p>———. 1958. <em>The Genetical Theory of Natural Selection</em>. 2nd revised. New York: Dover.</p>
+</div>
+<div id="ref-Jochens2011">
+<p>Jochens, A., A. Caliebe, U. Rösler, and M. Krawczak. 2011. “Empirical Evaluation Reveals Best Fit of a Logistic Mutation Model for Human Y-chromosomal Microsatellites.” <em>Genetics</em>.</p>
+</div>
+<div id="ref-OhtaKimura1973">
+<p>Ohta, T., and M. Kimura. 1973. “A Model of Mutation Appropriate to Estimate the Number of Electrophoretically Detectable Alleles in a Finite Population.” <em>Genet. Res.</em> 22: 201–4.</p>
+</div>
+<div id="ref-Wright1931">
+<p>Wright, S. 1931. “Evolution in Mendelian populations.” <em>Genetics</em> 16: 97–159.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

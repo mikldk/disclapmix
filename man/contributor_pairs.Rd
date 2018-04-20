@@ -2,7 +2,6 @@
 % Please edit documentation in R/mixture.R
 \name{contributor_pairs}
 \alias{contributor_pairs}
-\alias{print.contrib_pairs}
 \title{Contributor pairs from a 2 person mixture}
 \usage{
 contributor_pairs(mixture)

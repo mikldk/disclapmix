@@ -1,7 +1,7 @@
 Package: disclapmix
 Type: Package
 Title: Discrete Laplace Mixture Inference using the EM Algorithm
-Version: 1.6.4
+Version: 1.7
 Date: 2018-04-20
 Authors@R: c(
     person(given = "Mikkel Meyer", family = "Andersen", 
@@ -15,8 +15,10 @@ Description: Make inference in a mixture of discrete Laplace distributions using
 License: GPL (>= 2) | file LICENSE
 LinkingTo: Rcpp, RcppProgress
 Imports: Rcpp (>= 0.11), disclap (>= 1.4), cluster (>= 1.14.4), MASS, stats, graphics, methods, utils
-Suggests: ggplot2, gridExtra, ggdendro, scales, seriation
+Suggests: knitr, ggplot2, gridExtra, ggdendro, scales, seriation
 LazyLoad: yes
+BugReports: https://github.com/mikldk/disclapmix/issues
+VignetteBuilder: knitr
 SystemRequirements: C++11
 URL: http://dx.doi.org/10.1016/j.jtbi.2013.03.009 http://arxiv.org/abs/1304.2129
 Roxygen: list(markdown = FALSE, roclets = c("rd", "collate", "namespace"))

@@ -83,8 +83,6 @@ generate_mixture <- function(profiles) {
 #' 
 #' Get all possible contributor pairs from a 2 person mixture
 #' 
-#' 
-#' @aliases contributor_pairs print.contrib_pairs
 #' @param mixture A list of integer vectors. The k'th element in the list is an
 #' integer vector with the alleles in the mixture at locus k.
 #' @return A \code{contrib_pairs} object that is a unordered list of pairs.
@@ -156,23 +154,10 @@ contributor_pairs <- function(mixture) {
 #' 
 #' Separate a 2 person mixture by ranking the possible contributor pairs.
 #' 
-#' 
-#' @aliases rank_contributor_pairs print.ranked_contrib_pairs
-#' plot.ranked_contrib_pairs get_rank
 #' @param contrib_pairs A \code{contrib_pairs} object obtained from
 #' \code{\link{contributor_pairs}}.
 #' @param fit A \code{\link{disclapmixfit}} object.
 #' @param max_rank Not used. Reserved for future use.
-#' @param x A \code{ranked_contrib_pairs} object.
-#' @param top The top ranked number of pairs to print/plot. \code{NULL} for
-#' all.
-#' @param hide_non_varying_loci Whether to hide alleles on loci that do not
-#' vary.
-#' @param haplotype A haplotype.
-#' @param \dots Not used, except for \code{plot} where they are delegated to
-#' the generic \code{\link[graphics]{plot}} function.
-#' @param xlab Graphical parameter.
-#' @param ylab Graphical parameter.
 #' @return A \code{ranked_contrib_pairs} object that is basically an order
 #' vector and the probabilities for each pair (in the same order as given in
 #' \code{contrib_pairs}), found by using \code{fit}. Note, that contributor
@@ -276,6 +261,11 @@ rank_contributor_pairs <- function(contrib_pairs, fit, max_rank = NULL) {
   return(ans)
 }
 
+#' Print contributor pairs
+#' 
+#' @param x A \code{contrib_pairs} object.
+#' @param \dots Ignored
+#' 
 #' @export
 print.contrib_pairs <- function(x, ...) {
   if (!is(x, "contrib_pairs")) stop("x must be a contrib_pairs")
@@ -289,6 +279,15 @@ print.contrib_pairs <- function(x, ...) {
   return(invisible(NULL))
 }
 
+#' Print ranked contributor pairs
+#' 
+#' @param x A \code{ranked_contrib_pairs} object.
+#' @param top The top ranked number of pairs to print/plot. \code{NULL} for
+#' all.
+#' @param hide_non_varying_loci Whether to hide alleles on loci that do not
+#' vary.
+#' @param \dots Ignored
+#' 
 #' @export
 print.ranked_contrib_pairs <- function(x, top = 5L, hide_non_varying_loci = TRUE, ...) {
 
@@ -306,7 +305,7 @@ print.ranked_contrib_pairs <- function(x, top = 5L, hide_non_varying_loci = TRUE
   
   not_printed <- NA
   top <- min(top, x$info$pairs_count)
-  
+    
   if (x$info$pairs_count > top) {
     not_printed <- x$info$pairs_count - top
   }
@@ -361,6 +360,14 @@ print.ranked_contrib_pairs <- function(x, top = 5L, hide_non_varying_loci = TRUE
   return(invisible(NULL))
 }
 
+#' Plot ranked contributor pairs
+#' 
+#' @param x A \code{ranked_contrib_pairs} object.
+#' @param top The top ranked number of pairs to print. \code{NULL} for
+#' all.
+#' @param \dots Delegated to the generic \code{\link[graphics]{plot}} function.
+#' @param xlab Graphical parameter.
+#' @param ylab Graphical parameter.
 #' @export
 plot.ranked_contrib_pairs <- function(x, top = NULL, ..., xlab = "Rank", ylab = "P(H1)P(H2)") {
 
@@ -388,6 +395,10 @@ plot.ranked_contrib_pairs <- function(x, top = NULL, ..., xlab = "Rank", ylab = 
   return(plot(xs, ys, xlab = xlab, ylab = ylab, ...))
 }
 
+#' Get rank of pair
+#' 
+#' @param x A \code{ranked_contrib_pairs} object.
+#' @param haplotype A haplotype.
 #' @export
 get_rank <- function(x, haplotype) {
   if (!is(x, "ranked_contrib_pairs")) stop("x must be a ranked_contrib_pairs")

@@ -4,4 +4,6 @@
 ^.git$
 ^.gitignore$
 ^docs
-^NAMESPACE_old$
+paper.html
+paper.bib
+paper.md

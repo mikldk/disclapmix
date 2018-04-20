@@ -1,2 +1,37 @@
 # disclapmix
-Discrete Laplace Mixture Inference using the EM Algorithm
+
+An R package (<https://www.r-project.org/>) to perform inference in a mixture of discrete Laplace distributions using the EM algorithm.
+Intended for forensic Y chromosomal STR (Y-STR) haplotype analyses. 
+
+See documentation included in package (vignettes and manual) at <https://mikldk.github.io/disclapmix/>.
+
+## Installation
+
+You first need `R` (<https://www.r-project.org/>). 
+Then you can install `disclapmix` from CRAN using
+
+```r
+install.packages("disclapmix")
+```
+
+You can also install the development version from GitHub by using the `remotes` package (<https://CRAN.R-project.org/package=remotes>):
+
+```r
+# install.packages("remotes")
+remotes::install_github("mikldk/disclapmix")
+```
+
+## References
+
+Andersen MM, PS Eriksen, N Morling (2013). 
+*The discrete Laplace exponential family and estimation of Y-STR haplotype frequencies*.  
+Journal of Theoretical Biology 329.
+
+## Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## License
+
+License: GPL (>= 2).
+
