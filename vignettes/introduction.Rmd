@@ -251,7 +251,7 @@ head(pop)
 ```
 Then, $y$ is the most frequent 10 locus Y-STR haplotype in Denmark according to <http://www.yhrd.org> (on March 26, 2013) restricted to the 7 loci minimal haplotype.
 
-The column `N` is the number of individuals in the population with that Y-STR haplotype. Summing column `N` reveals that there is not exactly `pop\_size` individuals due to that the population size is stochastic (refer to [@fwsim2014Arxiv] for the details).
+The column `N` is the number of individuals in the population with that Y-STR haplotype. Summing column `N` reveals that there is not exactly `pop\_size` individuals due to that the population size is stochastic (refer to [@fwsimArxiv] for the details).
 
 We can then calculate the population frequency for each haplotype:
 ```{r } 

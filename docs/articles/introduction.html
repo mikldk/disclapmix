@@ -324,7 +324,7 @@ for (i in 1L:loci) {
 ## 5     14     11     27     21     11     12     13 5
 ## 6     14     12     29     22     11     13     14 3</code></pre>
 <p>Then, <span class="math inline">\(y\)</span> is the most frequent 10 locus Y-STR haplotype in Denmark according to <a href="http://www.yhrd.org" class="uri">http://www.yhrd.org</a> (on March 26, 2013) restricted to the 7 loci minimal haplotype.</p>
-<p>The column <code>N</code> is the number of individuals in the population with that Y-STR haplotype. Summing column <code>N</code> reveals that there is not exactly <code>pop\_size</code> individuals due to that the population size is stochastic (refer to <span class="citation">(<span class="citeproc-not-found" data-reference-id="fwsim2014Arxiv"><strong>???</strong></span>)</span> for the details).</p>
+<p>The column <code>N</code> is the number of individuals in the population with that Y-STR haplotype. Summing column <code>N</code> reveals that there is not exactly <code>pop\_size</code> individuals due to that the population size is stochastic (refer to <span class="citation">(Andersen and Eriksen 2012)</span> for the details).</p>
 <p>We can then calculate the population frequency for each haplotype:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop$PopFreq &lt;-<span class="st"> </span>pop$N /<span class="st"> </span><span class="kw">sum</span>(pop$N)</code></pre></div>
 <p>Let us draw a data set where each haplotype is drawn relatively to its population frequency:</p>
