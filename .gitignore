@@ -28,6 +28,14 @@ vignettes/*.pdf
 /*_cache/
 /cache/
 
+# o files
+src/*.o
+src/*.so
+
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+.Rproj.user
+
+#
+paper.html
