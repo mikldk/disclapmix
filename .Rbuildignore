@@ -3,6 +3,7 @@
 ^\.travis\.yml$
 ^.git$
 ^.gitignore$
+^tic\.R$
 ^docs
 paper.html
 paper.bib
