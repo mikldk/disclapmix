@@ -74,122 +74,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_calculate_haplotype_probabilities_sum_CLASS
-List rcpp_calculate_haplotype_probabilities_sum_CLASS(List fits, IntegerMatrix allele_range);
-RcppExport SEXP _disclapmix_rcpp_calculate_haplotype_probabilities_sum_CLASS(SEXP fitsSEXP, SEXP allele_rangeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type fits(fitsSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type allele_range(allele_rangeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_haplotype_probabilities_sum_CLASS(fits, allele_range));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_calculate_haplotype_probabilities_sum_CLASS_Cache
-List rcpp_calculate_haplotype_probabilities_sum_CLASS_Cache(List fits, IntegerMatrix allele_range);
-RcppExport SEXP _disclapmix_rcpp_calculate_haplotype_probabilities_sum_CLASS_Cache(SEXP fitsSEXP, SEXP allele_rangeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type fits(fitsSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type allele_range(allele_rangeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_haplotype_probabilities_sum_CLASS_Cache(fits, allele_range));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_calculate_haplotype_probabilities_sum_binomial
-List rcpp_calculate_haplotype_probabilities_sum_binomial(List dbs);
-RcppExport SEXP _disclapmix_rcpp_calculate_haplotype_probabilities_sum_binomial(SEXP dbsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type dbs(dbsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_haplotype_probabilities_sum_binomial(dbs));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_calculate_haplotype_probabilities_sum_binomial_compact_dbs
-List rcpp_calculate_haplotype_probabilities_sum_binomial_compact_dbs(List compact_dbs, List counts);
-RcppExport SEXP _disclapmix_rcpp_calculate_haplotype_probabilities_sum_binomial_compact_dbs(SEXP compact_dbsSEXP, SEXP countsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type compact_dbs(compact_dbsSEXP);
-    Rcpp::traits::input_parameter< List >::type counts(countsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_haplotype_probabilities_sum_binomial_compact_dbs(compact_dbs, counts));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_calculate_haplotype_probabilities_sum_pedigrees_compact_dbs
-List rcpp_calculate_haplotype_probabilities_sum_pedigrees_compact_dbs(List compact_dbs, List counts);
-RcppExport SEXP _disclapmix_rcpp_calculate_haplotype_probabilities_sum_pedigrees_compact_dbs(SEXP compact_dbsSEXP, SEXP countsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type compact_dbs(compact_dbsSEXP);
-    Rcpp::traits::input_parameter< List >::type counts(countsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_haplotype_probabilities_sum_pedigrees_compact_dbs(compact_dbs, counts));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_hapsums_disclap_normalised
-List rcpp_hapsums_disclap_normalised(List fits, IntegerMatrix haplotypes);
-RcppExport SEXP _disclapmix_rcpp_hapsums_disclap_normalised(SEXP fitsSEXP, SEXP haplotypesSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type fits(fitsSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type haplotypes(haplotypesSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_hapsums_disclap_normalised(fits, haplotypes));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_calculate_haplotype_probabilities_sum
-NumericVector rcpp_calculate_haplotype_probabilities_sum(IntegerMatrix allele_range, IntegerMatrix y, NumericMatrix p, NumericVector tau);
-RcppExport SEXP _disclapmix_rcpp_calculate_haplotype_probabilities_sum(SEXP allele_rangeSEXP, SEXP ySEXP, SEXP pSEXP, SEXP tauSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix >::type allele_range(allele_rangeSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type y(ySEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type p(pSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type tau(tauSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_haplotype_probabilities_sum(allele_range, y, p, tau));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_calculate_haplotype_probabilities_sum_between
-NumericVector rcpp_calculate_haplotype_probabilities_sum_between(IntegerMatrix allele_range, IntegerMatrix y1, IntegerMatrix y2, NumericMatrix p1, NumericMatrix p2, NumericVector tau1, NumericVector tau2);
-RcppExport SEXP _disclapmix_rcpp_calculate_haplotype_probabilities_sum_between(SEXP allele_rangeSEXP, SEXP y1SEXP, SEXP y2SEXP, SEXP p1SEXP, SEXP p2SEXP, SEXP tau1SEXP, SEXP tau2SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix >::type allele_range(allele_rangeSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type y1(y1SEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type y2(y2SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type p1(p1SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type p2(p2SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type tau1(tau1SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type tau2(tau2SEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_haplotype_probabilities_sum_between(allele_range, y1, y2, p1, p2, tau1, tau2));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_match_quantities
-NumericVector rcpp_match_quantities(IntegerMatrix allele_range, IntegerMatrix y, NumericMatrix p, NumericVector tau);
-RcppExport SEXP _disclapmix_rcpp_match_quantities(SEXP allele_rangeSEXP, SEXP ySEXP, SEXP pSEXP, SEXP tauSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix >::type allele_range(allele_rangeSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type y(ySEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type p(pSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type tau(tauSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_match_quantities(allele_range, y, p, tau));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_create_design_matrix
 IntegerMatrix rcpp_create_design_matrix(IntegerMatrix x, int clusters);
 RcppExport SEXP _disclapmix_rcpp_create_design_matrix(SEXP xSEXP, SEXP clustersSEXP) {
@@ -329,15 +213,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_disclapmix_disclapglm_varfunc", (DL_FUNC) &_disclapmix_disclapglm_varfunc, 1},
     {"_disclapmix_disclapglm_loglikeh", (DL_FUNC) &_disclapmix_disclapglm_loglikeh, 2},
     {"_disclapmix_disclapglm_deviance", (DL_FUNC) &_disclapmix_disclapglm_deviance, 3},
-    {"_disclapmix_rcpp_calculate_haplotype_probabilities_sum_CLASS", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_sum_CLASS, 2},
-    {"_disclapmix_rcpp_calculate_haplotype_probabilities_sum_CLASS_Cache", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_sum_CLASS_Cache, 2},
-    {"_disclapmix_rcpp_calculate_haplotype_probabilities_sum_binomial", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_sum_binomial, 1},
-    {"_disclapmix_rcpp_calculate_haplotype_probabilities_sum_binomial_compact_dbs", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_sum_binomial_compact_dbs, 2},
-    {"_disclapmix_rcpp_calculate_haplotype_probabilities_sum_pedigrees_compact_dbs", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_sum_pedigrees_compact_dbs, 2},
-    {"_disclapmix_rcpp_hapsums_disclap_normalised", (DL_FUNC) &_disclapmix_rcpp_hapsums_disclap_normalised, 2},
-    {"_disclapmix_rcpp_calculate_haplotype_probabilities_sum", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_sum, 4},
-    {"_disclapmix_rcpp_calculate_haplotype_probabilities_sum_between", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_sum_between, 7},
-    {"_disclapmix_rcpp_match_quantities", (DL_FUNC) &_disclapmix_rcpp_match_quantities, 4},
     {"_disclapmix_rcpp_create_design_matrix", (DL_FUNC) &_disclapmix_rcpp_create_design_matrix, 2},
     {"_disclapmix_rcpp_create_new_weight_vector", (DL_FUNC) &_disclapmix_rcpp_create_new_weight_vector, 2},
     {"_disclapmix_rcpp_create_response_vector", (DL_FUNC) &_disclapmix_rcpp_create_response_vector, 2},

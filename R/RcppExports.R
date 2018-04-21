@@ -25,42 +25,6 @@ disclapglm_deviance <- function(y, mu, wt) {
     .Call('_disclapmix_disclapglm_deviance', PACKAGE = 'disclapmix', y, mu, wt)
 }
 
-rcpp_calculate_haplotype_probabilities_sum_CLASS <- function(fits, allele_range) {
-    .Call('_disclapmix_rcpp_calculate_haplotype_probabilities_sum_CLASS', PACKAGE = 'disclapmix', fits, allele_range)
-}
-
-rcpp_calculate_haplotype_probabilities_sum_CLASS_Cache <- function(fits, allele_range) {
-    .Call('_disclapmix_rcpp_calculate_haplotype_probabilities_sum_CLASS_Cache', PACKAGE = 'disclapmix', fits, allele_range)
-}
-
-rcpp_calculate_haplotype_probabilities_sum_binomial <- function(dbs) {
-    .Call('_disclapmix_rcpp_calculate_haplotype_probabilities_sum_binomial', PACKAGE = 'disclapmix', dbs)
-}
-
-rcpp_calculate_haplotype_probabilities_sum_binomial_compact_dbs <- function(compact_dbs, counts) {
-    .Call('_disclapmix_rcpp_calculate_haplotype_probabilities_sum_binomial_compact_dbs', PACKAGE = 'disclapmix', compact_dbs, counts)
-}
-
-rcpp_calculate_haplotype_probabilities_sum_pedigrees_compact_dbs <- function(compact_dbs, counts) {
-    .Call('_disclapmix_rcpp_calculate_haplotype_probabilities_sum_pedigrees_compact_dbs', PACKAGE = 'disclapmix', compact_dbs, counts)
-}
-
-rcpp_hapsums_disclap_normalised <- function(fits, haplotypes) {
-    .Call('_disclapmix_rcpp_hapsums_disclap_normalised', PACKAGE = 'disclapmix', fits, haplotypes)
-}
-
-rcpp_calculate_haplotype_probabilities_sum <- function(allele_range, y, p, tau) {
-    .Call('_disclapmix_rcpp_calculate_haplotype_probabilities_sum', PACKAGE = 'disclapmix', allele_range, y, p, tau)
-}
-
-rcpp_calculate_haplotype_probabilities_sum_between <- function(allele_range, y1, y2, p1, p2, tau1, tau2) {
-    .Call('_disclapmix_rcpp_calculate_haplotype_probabilities_sum_between', PACKAGE = 'disclapmix', allele_range, y1, y2, p1, p2, tau1, tau2)
-}
-
-rcpp_match_quantities <- function(allele_range, y, p, tau) {
-    .Call('_disclapmix_rcpp_match_quantities', PACKAGE = 'disclapmix', allele_range, y, p, tau)
-}
-
 rcpp_create_design_matrix <- function(x, clusters) {
     .Call('_disclapmix_rcpp_create_design_matrix', PACKAGE = 'disclapmix', x, clusters)
 }
