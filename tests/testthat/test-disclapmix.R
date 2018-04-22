@@ -32,6 +32,18 @@ test_that("disclapmix 1 center 1 locus", {
   expect_equal(as.integer(fit$y), y)
   expect_equal(c(fit$disclap_parameters), p, tol = ESTIMATION_TOL_DUE_TO_SAMPLING)
   expect_equal(c(fit$disclap_parameters), p_hat)
+  expect_output(print(fit), "disclapmixfit from 1000 observations on 1 loci with 1 clusters.", 
+                fixed = TRUE)
+  expect_output(summary(fit), "disclapmixfit from 1000 observations on 1 loci with 1 clusters.
+
+EM converged:                                                       FALSE
+Number of central haplotype changes:                                0
+Total number of EM iterations:                                      2
+Model observations (n*loci*clusters):                               1000
+Model parameters ((clusters*loci)+(loci+clusters-1)+(clusters-1)):  2
+GLM method:                                                         internal_coef
+Initial central haplotypes supplied:                                TRUE", 
+                fixed = TRUE)
 })
 
 clusprob <- clusterprob(fit, xmat)

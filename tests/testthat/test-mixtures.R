@@ -31,5 +31,12 @@ p_p2 <- predict(fit, t(as.matrix(p2)))
 test_that("rank_contributor_pairs", {
   expect_equal(which.min(abs(rnk$probs_person1 - p_p1)),
                which.min(abs(rnk$probs_person2 - p_p2)))
+  expect_equal(get_rank(rnk, p1), get_rank(rnk, p2))
+})
+
+prt <- capture.output(print(rnk, 1L))
+test_that("print.rank_contributor_pairs", {
+  expect_output(cat(prt[3]), "1 13,14   12,13    28,29  22,23     10  11,15  13,15  14,16  10,11  11,12", 
+                fixed = TRUE)
 })
 
