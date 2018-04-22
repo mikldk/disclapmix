@@ -39,7 +39,7 @@ vignette("introduction", package = "disclapmix")
 ## References
 
 Andersen MM, PS Eriksen, N Morling (2013). 
-*The discrete Laplace exponential family and estimation of Y-STR haplotype frequencies*.  
+*The discrete Laplace exponential family and estimation of Y-STR haplotype frequencies*.
 Journal of Theoretical Biology 329.
 
 ## Disclaimer
@@ -49,4 +49,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ## License
 
 License: GPL (>= 2).
+
+## Build status
+
+Travis CI:
+
+[![Travis-CI Build Status](https://travis-ci.org/mikldk/disclapmix.svg?branch=master)](https://travis-ci.org/mikldk/disclapmix)
 

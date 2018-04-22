@@ -1,7 +1,8 @@
 Changes in version 1.7
-  * Moving to Github.
+  * Moving to Github
   * Roxygen
   * testthat
+  * Travis CI
   
 Changes in version 1.6.3
   * Avoid two centers being equal (mainly a problem for very few loci)

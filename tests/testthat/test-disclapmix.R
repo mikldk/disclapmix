@@ -220,7 +220,6 @@ test_that("convert_to_compact_db", {
   expect_equal(nrow(x), sum(convert_to_compact_db(x)$Ndb))
 })
 
-
 ##################################################
 # Errors
 ##################################################
@@ -233,7 +232,16 @@ test_that("disclapmix should give error", {
   expect_error(disclapmix(x, clusters = NULL))
   expect_error(disclapmix(x, clusters = -1))
   expect_error(disclapmix(x, clusters = 2.1))
+  
   expect_error(simulate(fit_std_int_coef, 100))
+  
   expect_error(convert_to_compact_db(c()))
+  
+  expect_error(check_x(data.frame(x = 1:10)))
+  expect_error(check_x(matrix(1L:10L, nrow = 1L)))
+  
+  expect_error(check_y(data.frame(x = 1:10), clusters = 0L, loci = 10L))
+  expect_error(check_y(matrix(1L:10L, nrow = 1L), clusters = 0L, loci = 10L))
+  expect_error(check_y(matrix(1L:10L, nrow = 1L), clusters = 0L, loci = 2L))
 })
 
