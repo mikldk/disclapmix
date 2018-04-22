@@ -1,0 +1,23 @@
+{
+  "@context": "https://raw.githubusercontent.com/codemeta/codemeta/master/codemeta.jsonld",
+  "@type": "Code",
+  "author": [
+    {
+      "@id": "https://orcid.org/0000-0002-0234-0266",
+      "@type": "Person",
+      "email": "mikl@math.aau.dk",
+      "name": "Mikkel Meyer Andersen",
+      "affiliation": "Department of Mathematical Sciences, Aalborg University, Denmark"
+    }
+  ],
+  "identifier": "",
+  "codeRepository": "https://github.com/mikldk/disclapmix",
+  "datePublished": "2018-04-23",
+  "dateModified": "2018-04-23",
+  "dateCreated": "2018-04-23",
+  "description": "An R package to perform inference in a mixture of discrete Laplace distributions using the EM algorithm. This can e.g. be used in forensic genetics to evaluate the evidential strength of a Y chromosomal match by modelling the distribution of Y chromosomal haplotypes.",
+  "keywords": "forensic genetics, STR loci, Y-chromosome, population genetics",
+  "license": "GPL v2.0",
+  "title": "Discrete Laplace mixture model with applications in forensic genetics",
+  "version": ""
+}

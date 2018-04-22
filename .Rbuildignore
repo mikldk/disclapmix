@@ -5,6 +5,8 @@
 ^.gitignore$
 ^tic\.R$
 ^docs
+^codemeta\.json$
+#paper:
 paper.html
 paper.bib
 paper.md
