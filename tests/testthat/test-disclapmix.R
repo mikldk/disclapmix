@@ -19,8 +19,10 @@ test_that("rdisclap", {
   expect_equal(p_hat, p, tol = ESTIMATION_TOL_DUE_TO_SAMPLING)
 })
 
+xmat <- as.matrix(as.integer(x))
+
 init_y <- 12L
-fit <- disclapmix(x = as.matrix(as.integer(x)), 
+fit <- disclapmix(x = xmat, 
                   clusters = 1L, 
                   init_y = matrix(init_y), 
                   init_y_method = NULL)
@@ -32,6 +34,15 @@ test_that("disclapmix 1 center 1 locus", {
   expect_equal(c(fit$disclap_parameters), p_hat)
 })
 
+clusprob <- clusterprob(fit, xmat)
+test_that("clusterprob", {
+  expect_equal(1L, length(unique(clusprob)))
+  expect_equal(rep(0, nrow(xmat)), c(abs(clusprob - 1)))
+})
+
+test_that("clusterdist", {
+  expect_error(clusterdist(fit))
+})
 
 ##################################################
 # Multiple centres, multiple loci -- some overlap
@@ -68,6 +79,12 @@ test_that("disclapmix multiple centers multiple loci", {
 })
 
 
+test_that("clusterprob", {
+  expect_equal(clusterprob(fit, x), fit$v_matrix, tol = 1e-3)
+})
+
+
+
 ##################################################
 # Estimation methods
 ##################################################
@@ -95,10 +112,12 @@ test_that("disclapmix multiple centers multiple loci", {
 
 
 
-clusterwise_probs <- disclapmix:::rcpp_calculate_haplotype_probabilities_clusterwise(new_data = x,
-                                                                                     y = fit$y,
-                                                                                     p = fit$disclap_parameters,
-                                                                                     tau = fit$tau)
+test_that("clusterdist", {
+  expect_equal(clusterdist(fit_std_int_coef), clusterdist(fit_std_int_dev), tol = 1e-6)
+})
+
+
+clusterwise_probs <- predict_clusterwise(fit, newdata = x)
 
 pred_man <- apply(clusterwise_probs, 1, function(p) sum(fit$tau*p))
 
@@ -170,6 +189,27 @@ test_that("disclapmix v matrix", {
 
 
 ##################################################
+# Others
+##################################################
+
+test_that("rcpp_find_haplotype_in_matrix", {
+  expect_equal(1L, find_haplotype_in_matrix(x, x[1L, ]))
+  expect_equal(33L, find_haplotype_in_matrix(x, x[33L, ]))
+  expect_null(find_haplotype_in_matrix(x, rep(1000L, ncol(x))))
+})
+
+test_that("disclapglm_linkfun/disclapglm_mu_eta", {
+  expect_true(disclapglm_linkfun(0.1) < 0)
+  expect_true(disclapglm_mu_eta(-2) < 1)
+  expect_equal(0.1, disclapglm_mu_eta(disclapglm_linkfun(0.1)), tol = 1e-3)
+})
+
+test_that("convert_to_compact_db", {
+  expect_equal(nrow(x), sum(convert_to_compact_db(x)$Ndb))
+})
+
+
+##################################################
 # Errors
 ##################################################
 
@@ -182,5 +222,6 @@ test_that("disclapmix should give error", {
   expect_error(disclapmix(x, clusters = -1))
   expect_error(disclapmix(x, clusters = 2.1))
   expect_error(simulate(fit_std_int_coef, 100))
+  expect_error(convert_to_compact_db(c()))
 })
 

@@ -82,6 +82,9 @@
     <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
+    <li>
+      <a href="../articles/mixtures.html">Mixtures</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -153,7 +156,7 @@ and locus. Side effect: A plot.</p>
 <span class='fu'>data</span>(<span class='no'>danes</span>)
 <span class='no'>db</span> <span class='kw'>&lt;-</span> <span class='fu'>as.matrix</span>(<span class='no'>danes</span>[<span class='fu'>rep</span>(<span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>danes</span>), <span class='no'>danes</span>$<span class='no'>n</span>), <span class='fl'>1</span>:(<span class='fu'>ncol</span>(<span class='no'>danes</span>)-<span class='fl'>1</span>)])
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>disclapmix</span>(<span class='no'>db</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='fl'>4L</span>)
-<span class='fu'>plot</span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.disclapmixfit-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt; <span class='error'>Error in .Call("order_optimal", dist, merge): "order_optimal" not resolved from current namespace (seriation)</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

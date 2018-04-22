@@ -11,525 +11,96 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(fig.width = 7)
+knitr::opts_chunk$set(fig.width = 5, fig.height = 5)
 ```
 
 # Introduction
 
-This tutorial introduces the discrete Laplace method implemented in this R package (`disclapmix`) for estimating Y-STR haplotype frequencies as described by [@AndersenDisclap2013].
+This vignette shows how to use the R package `disclapmix` that implements the method described in [@AndersenDisclap2013]. For a more gentle introduction to the method, refer to [@AndersenDisclapIntroduction2013].
 
-First, we demonstrate how to use the open source software for basic tasks as e.g. haplotype frequency estimation and also more advanced tasks as e.g. deconvolution of two person mixtures. First, some packages are loaded [@disclap]:
-```{r, message = FALSE}
-library(disclap)
-library(disclapmix)
-``` 
-If you do not have installed the `disclap` package, please visit <http://cran.r-project.org/package=disclap>.
+# Analysis
 
-For reproducibility, the seed for the (pseudo) random number generator is set:
+A Danish reference database [@Hallenberg2005YchromosomeSH] with $n = 185$ observations (male Y-STR haplotypes) at $r=10$ loci is available in the `dane` dataset. 
+Let us load the package as well as the data:
+
 ```{r}
-set.seed(1)
-```
-
-# The discrete Laplace distribution {#sec:disclap}
-
-The discrete Laplace distribution is a probability distribution like e.g. the binomial distribution or the normal/Gaussian distribution.
-
-The discrete Laplace distribution has two parameters: a dispersion parameter $0 < p < 1$ and a location parameter $y \in \mathbb{Z} = \{..., -2, -1, 0, 1, 2, ... \}$.
-
-Let $X \sim DL(p, y)$ denote that the random variable $X$ follows a discrete Laplace distribution with dispersion parameter $0 < p < 1$ and location parameter $y$. Then a realisation of the random variable, $X = x$, can be any integer in $\mathbb{Z}$. The random variable $X$ has the probability mass function given by
-\begin{align}
-  f(X = x; p, y) = \frac{1-p}{1+p} \cdot p^{\vert x - y \vert} \quad \text{for $x \in \mathbb{Z}$}.
-\end{align}
-
-As seen, only the absolute value of $x - y$ is used. This means that the probability mass function is symmetric around $y$.
-
-Let us try to plot the probability mass function $f(X = x; p, y)$ for $p=0.3$ and $y=13$ from $x=8$ to $x=18$:
-```{r, fig.keep = 'high', fig.cap="The probability mass function, $f(X = x; p, y)$, for the discrete Laplace distribution with dispersion parameter $p=0.3$ and location parameter $y=13$ from $x=8$ to $x=18$."}
-p <- 0.3
-y <- 13L # L for integer type
-x <- seq(8L, 18L, by = 1L)
-barplot(ddisclap(x - y, p), names = x, xlab = "x, e.g. Y-STR allele", 
-  ylab = paste("Probability mass, f(X = x; ", p, ", ", y, ")", sep = ""))
-```
-
-We plot the distribution for values of $x$ from $8$ to $18$ as there is almost no probability mass outside these values. We can find out how much of the probability mass that we have plotted:
-```{r}
-sum(ddisclap(x - y, p))
-``` 
-Thus, only `r 1-sum(ddisclap(x - y, p))` of the probability mass is outside $\{8, 9, ..., 17, 18\}$.
-
-If we have a sample of realisations from $X \sim DL(p, y)$ denoted by $\{ x_i \}_{i=1}^n$, then maximum likelihood estimates are given by the following quantities [@AndersenDisclap2013]:
-\begin{align}
-  \hat{y} &= \text{median} \{ x_i \}_{i=1}^n , \\
-  \hat{\mu} &= \frac{1}{n} \sum_{i=1}^n \vert x_i - \hat{y} \vert \, \text{and} \\
-  \hat{p} &= \hat{\mu}^{-1} \left (\sqrt{\hat{\mu}^2 + 1} - 1 \right ) .
-\end{align}
-
-Example:
-```{r } 
-set.seed(1) # Makes it possible to reproduce the simulation results
-p <- 0.3 # Dispersion parameter 
-y <- 13 # Location parameter 
-x <- rdisclap(100, p) + y # Generate a sample using the rdisclap function
-
-y_hat <- median(x)
-y_hat
-mu_hat <- mean(abs(x - y_hat))
-mu_hat
-p_hat <- mu_hat^(-1) * (sqrt(mu_hat^2 + 1) - 1)
-p_hat # We expect 0.3
-
-# The observed distribution of d's
-tab <- prop.table(table(x))
-tab
-```
-
-This can be plotted against the expected counts as follows:
-```{r, fig.keep = 'high', fig.cap = "Observed frequencies of the $x$'s compared to a discrete Laplace distribution with parameters estimated from the sample."} 
-plot(1L:length(tab), ddisclap(as.integer(names(tab)) - y_hat, p_hat), 
-  type = "h", col = "#999999", lend = "butt", lwd = 50, 
-  xlab = "x, e.g. Y-STR allele", ylab = "Probability mass", axes = FALSE)
-axis(1, at = 1L:length(tab), labels = names(tab))
-axis(2)
-points(1L:length(tab), tab, type = "h", col = "#000000", 
-  lend = "butt", lwd = 25)
-legend("topright", c("Estimated distribution", "Observations"), 
-  pch = 15, col = c("#999999", "#000000"))
-```
-
-
-# Mixtures of discrete Laplace distributions
-
-In this section, the method is described. We do this first by a short formulation followed by a longer description with more details.
-
-## Short model formulation
-
-Assume that there are $c$ subpopulations and that $\tau_j = P(\text{From subpopulation } j)$ is the a priori probability of a haplotype originated from the $j$'th subpopulation for $j = 1, 2, ..., c$. Then 
-\begin{align}
-	P(\text{Haplotype} = x \mid \text{From subpopulation } j)
-\end{align}
-is modelled by assuming independent discrete Laplace distribtions on loci as just described and by [@AndersenDisclap2013]. The parameters of the model can be estimated using this package, `disclapmix`, as will be shown below.
-
-The haplotype frequency is obtained by summing the contribution from each subpopulation, such that
-\begin{align}  {#eq:vij}
-	P(\text{Haplotype} = x) 
-	= \sum_{j=1}^c \tau_j P(\text{Haplotype} = x \mid \text{From subpopulation } j) .
-\end{align}
-
-## Longer model formulation
-
-Assume a very simple 'haplotype' with only one locus. Also assume a simple and isolated population. Then, it is reasonable to assume that there is a modal/central Y-STR allele, $y$, and that all the alleles are distributed around this allele.
-
-If we go back to Figure~\@ref(fig:simple-example), this can be illustrated by $y=13$ as the central Y-STR allele and a distribution around $y=13$ with shorter and longer alleles. 
-
-To begin with, it might seem a bit overwhelming that Y-STR alleles should follow a simple probabiity distribution such as the discrete Laplace distribution. But surprisingly, it is actually a good approximation as demonstrated by [@AndersenDisclap2013].
-
-We have haplotypes with several loci. When we assess multiple loci haplotypes, we assume that mutations happen independently across loci. Each locus has its own discrete Laplace distribution of allele probabilities, and the probability of a haplotype is the product of probabilities across loci. This gives a multivariate discrete Laplace distribution, where the marginals (that is, at each locus) are independent, discrete Laplace distributions.
-
-Just as before, for a one locus haplotype, we can assume that there is a modal/central Y-STR profile with $r$ loci, $y=(y_1, y_2, ..., y_r)$, and all the alleles are distributed around this profile. We also assume that the discrete Laplace distribution at each locus has its own parameter, where $p_k$ is the parameter at the $k$\textsuperscript{th} locus. Normally, the central Y-STR profile, $y$, would also be regarded as parameters.
-
-As before, let $f(x; p, y)$ be the probability mass function of a discrete Laplace distribution. We define an observation $X = (X_{1}, X_{2}, ..., X_{r})$ to be from a multivariate distribution of independent, discrete Laplace distributions when the probability of observing $X=x$ is
-\begin{align}  {#eq:disclap-independent}
-  P(X = x) = \prod_{k=1}^r f \left ( x_{k} ; p_{k}, y_{k} \right ).
-\end{align}
-This corresponds to that the individual $X$ has mutated away from $y$ independently at each locus. 
-
-Now, we have one more generalisation. A population may have several subpopulations, e.g.\ introduced by migration or by evolution. This means that we need to have a mixture of multivariate distributions with marginally independent, discrete Laplace distributions. Each component in the mixture represents a subpopulation. We define an observation $X = (X_{1}, X_{2}, ..., X_{r})$ to be from a mixture of multivariate, marginally independent, discrete Laplace distributions, when the probability of observing $X=x$ is
-\begin{align}  {#eq:disclap-mixtures}
-  P(X = x) = \sum_{j=1}^c \tau_j \prod_{k=1}^r f \left ( x_{k} ; p_{jk}, y_{jk} \right ) ,
-\end{align}
-where $\tau_j$ is the a priori probability for originating from the $j$'th subpopulation. Thus, the parameters of this mixture model are $\{ y_j \}_{j=1}^c$ with $y_j = (y_{j1}, y_{j2}, ..., y_{jr})$ as the central haplotype of the $j$\textsuperscript{th} subpopulation, $\{ \tau_j \}_{j=1}^c$ and $\{ p_{jk} \}_{\substack{j\in \{1, 2, ..., c\}\\k \in \{1, 2, ..., r\}}}$ (the parameters for each discrete Laplace distribution).
-
-We assume that $p_{jk}$ depends on locus and subpopulation, such that $\log p_{jk} = \omega_j + \lambda_k$. This means that there is an additive effect of locus, $\lambda_k$, and an additive effect of subpopulation, $\omega_j$.
-
-More theory on finite mixture distributions is given by [@Titterington1987].
-
-
-## Haplotype frequency prediction
-
-When we have estimated the parameters of a mixture of multivariate, marginally independent, discrete Laplace distributions (this will be shown in the next section), we can use these to estimate haplotype frequencies.
-
-Given estimates of subpopulation central haplotypes $\{ \hat{y}_{j} \}_{j}$, dispersion parameters $\{ \hat{p}_{jk} \}_{j,k}$ and prior probabilities $\{ \hat{\tau}_{j} \}_{j}$, the haplotype frequency of a haplotype $x = (x_1, x_2, ..., x_r)$ with $x_k \in \mathbb{Z}$ for $k \in \{1, 2, ..., r\}$ can be estimated as
-\begin{align}  {#eq:disclap-predict}
-   \hat{p}(x) = \sum_{j=1}^c \hat{\tau}_j \prod_{k=1}^r f \left ( x_k ; \hat{p}_{jk}, \hat{y}_{jk} \right ).
-\end{align}
-
-Thus, we simply use the estimated parameters in Equation~\eqref{eq:disclap-mixtures} to obtain Equation~\@ref(eq:disclap-predict).
-
-
-
-# Estimating parameters
-
-In this section we demonstrate how to estimate the parameters in a mixture of multivariate, independent, discrete Laplace distributions. This can for example be used to estimate Y-STR haplotype frequencies.
-
-First, the `R` package `disclapmix` [@AndersenDisclap2013] for analysing a mixture of multivariate, independent, discrete Laplace distributions must be loaded:
-```{r message = FALSE} 
 library(disclapmix)
-```
-If you do not have the `disclapmix` package installed, please visit <http://cran.r-project.org/package=disclapmix>.
-
-This package supplies the function `disclapmix` for estimating the parameters in a mixture of multivariate, marginally independent, discrete Laplace distributions with probability mass function given in Equation~\eqref{eq:disclap-mixtures}. We will refer to this as 'the discrete Laplace method'.
-
-
-## Data from marginally independent, discrete Laplace distributions
-
-Now, we revisit the example leading to Figure~\@ref(fig:simple-example) and add two more loci with different dispersion and location parameters. We then analyse the randomly generated values from independent, discrete Laplace distributions with a probability mass function as given in Equation~\eqref{eq:disclap-independent}.
-```{r message = FALSE, warning = FALSE} 
-set.seed(1)
-n <- 100 # number of individuals
-
-# Locus 1
-p1 <- 0.3 # Dispersion parameter 
-m1 <- 13L # Location parameter (L means integer)
-d1 <- rdisclap(n, p1) + m1 # Generate a sampling using the rdisclap function
-
-# Locus 2
-p2 <- 0.4
-m2 <- 14L
-d2 <- rdisclap(n, p2) + m2
-
-# Locus 3
-p3 <- 0.5
-m3 <- 15L
-d3 <- rdisclap(n, p3) + m3
-
-db <- cbind(d1, d2, d3)
-head(db)
-
-fit <- disclapmix(db, clusters = 1L) # L means integer type
+data(danes)
 ```
 
-We can then look at the estimated location parameters, $y=(y_1, y_2, y_3)$:
-```{r } 
-fit$y
+The database is in compact format, i.e. one unique haplotype per row.
+To fit the model, we need one observation per row. 
+This is done for example like this:
+
+```{r}
+db <- as.matrix(danes[rep(1:nrow(danes), danes$n), 1:(ncol(danes)-1)])
+str(db)
 ```
 
-And the estimated dispersion parameters, $(p_1, p_2, p_3)$:
-```{r } 
-fit$disclap_parameters
+Also, note that the database is now an integer matrix.
+
+To fit a model using 2 clusters, the following command can be used (note the `L` postfix to emphasize that the number is an integer):
+
+```{r, eval=FALSE}
+fit <- disclapmix(x = db, clusters = 2L)
 ```
 
-As seen, the estimated dispersion location parameters are well estimated. The dispersion parameters are also quite close to the ones used to generate the data.
+The number of clusters is not known beforehand. 
+Here, the numbers 1 through 5 are tried and the best one according to the BIC criteria [@BIC] is taken:
 
-
-## Data from a Fisher-Wright population
-
-[@AndersenDisclap2013] simulated populations following the Fisher-Wright model of evolution [@Fisher1922; @Fisher1930; @Fisher1958; @Wright1931; @Ewens2004] with assumptions of primarily neutral, single-step mutations of STRs [@OhtaKimura1973]. From these populations, data sets were sampled. Using the discrete Laplace method for estimating haplotype frequencies, the method worked rather well.
-
-This is worth highlighting: Data was simulated under a completely different model than that used for inference afterwards. The data was simulated under a population model (Fisher-Wright model of evolution) with a certain mutation model (single-step mutation model). Inference was made assuming that the data was from a mixture of multivariate, marginally independent, discrete Laplace distributions.
-
-One of the reasons that the discrete Laplace distribution predicts data from a Fisher-Wright model of evolution with a single-step mutation model is due to the fact that it approximates certain properties of this population and mutation model [@Caliebe2010]. This is also explained by [@AndersenDisclap2013].
-
-Now, let us try simulating a Fisher-Wright population and analyse it with the discrete Laplace method. To simulate the population, the `R` package `fwsim` [@fwsim; @fwsimArxiv] is loaded:
-```{r message = FALSE} 
-library(fwsim)
-```
-
-If you do not have the `fwsim` package installed, please visit <http://cran.r-project.org/package=fwsim>.
-
-We then simulate a population consisting of Y-STR profiles:
-```{r cache = TRUE, tidy = FALSE} 
-set.seed(1)
-generations <- 100L
-pop_size <- 1e5L
-loci <- 7L
-mutation_rates <- seq(0.001, 0.01, length.out = loci)
-mutation_rates
-sim <- fwsim(G = generations, H0 = rep(0L, loci), N0 = pop_size, 
-  mutmodel = mutation_rates, progress = FALSE)
-summary(sim)
-pop <- sim$population
-```
-
-Note, that the mutation rates are different for each locus (ranging from \Sexpr{min(mutation_rates)} to \Sexpr{max(mutation_rates)}). The location parameter is set to 0 for all loci. This can be changed afterwards without loosing or adding any information. Below, we change it to be $y = (14, 12, 28, 22, 10, 11, 13)$:
-```{r } 
-y <- c(14L, 12L, 28L, 22L, 10L, 11L, 13L)
-for (i in 1L:loci) {
-  pop[, i] <- pop[, i] + y[i]
-}
-head(pop)
-```
-Then, $y$ is the most frequent 10 locus Y-STR haplotype in Denmark according to <http://www.yhrd.org> (on March 26, 2013) restricted to the 7 loci minimal haplotype.
-
-The column `N` is the number of individuals in the population with that Y-STR haplotype. Summing column `N` reveals that there is not exactly `pop\_size` individuals due to that the population size is stochastic (refer to [@fwsim2014Arxiv] for the details).
-
-We can then calculate the population frequency for each haplotype:
-```{r } 
-pop$PopFreq <- pop$N / sum(pop$N)
-```
-
-Let us draw a data set where each haplotype is drawn relatively to its population frequency:
-```{r warning = FALSE} 
-set.seed(1)
-n <- 500 # Data set size
-types <- sample(x = 1L:nrow(pop), size = n, replace = TRUE, prob = pop$N)
-types_table <- table(types)
-
-alpha <- sum(types_table == 1) 
-alpha / n # Singleton proportion
-
-dataset <- pop[as.integer(names(types_table)), ]
-dataset$Ndb <- types_table
-head(dataset)
-
-db <- as.matrix(pop[types, 1L:loci])
-head(db)
-```
-
-Then, analyse it:
-```{r cache = TRUE} 
-fit <- disclapmix(db, clusters = 1L)
-
-# Estimated location parameters
-fit$y 
-
-# Estimated dispersion parameters
-fit$disclap_parameters
-```
-
-Let us compare the mutation rates with the dispersion parameters in the discrete Laplace distributions:
-\begin{figure}[H]
-\begin{center}
-```{r fig.keep = 'high', fig.height = 5, fig.width = 5}
-plot(mutation_rates, fit$disclap_parameters, xlab = "Mutation rate", ylab = "Estimated dispersion parameter")
-```
-\caption{The relationship between the mutation rate in a Fisher-Wright population and the estimated dispersion parameters using the discrete Laplace method.}
-\end{center}
-\end{figure}
-As expected, there is a connection between the mutation rate and the dispersion parameter (the exact connection is not known).
-
-It is possible to predict a population frequency with the `predict` function as shown in Equation~\eqref{eq:disclap-predict}. This can be used to see how well the population frequency is predicted for each unique haplotype in the dataset (obtained by using `dataset` instead of `db`):
-\begin{figure}[H]
-\begin{center}
-```{r fig.keep = 'high', fig.height = 5, fig.width = 5, tidy = FALSE}
-pred_popfreqs <- predict(fit, newdata = as.matrix(dataset[, 1L:loci]))
-plot(dataset$PopFreq, pred_popfreqs, log = "xy", 
-  xlab = "True population frequency", 
-  ylab = "Estimated population frequency")
-abline(a = 0, b = 1, lty = 1)
-legend("bottomright", "y = x (predicted = true)", lty = 1)
-```
-\caption{The relationship between the true population frequency and the predicted population frequency using the discrete Laplace method.}
-\end{center}
-\end{figure}
-
-
-## Data from a mixture of two Fisher-Wright populations
-
-Here, we show how to analyse a dataset from a mixture of two populations. First, we simulate two populations (note the different mutation rates and location parameters, where the location parameters again are changed afterwards without loosing or adding any information):
-```{r cache = TRUE} 
-set.seed(1)
-
-# Common parameters
-generations <- 100L
-pop_size <- 1e5L
-loci <- 7L
-
-mu1 <- seq(0.001, 0.005, length.out = loci)
-sim1 <- fwsim(G = generations, H0 = y, N0 = pop_size, mutmodel = mu1, progress = FALSE)
-pop1 <- sim1$population
-
-mu2 <- seq(0.005, 0.01, length.out = loci)
-sim2 <- fwsim(G = generations, H0 = c(14L, 13L, 29L, 23L, 11L, 13L, 13L), N0 = pop_size, mutmodel = mu2, progress = FALSE)
-pop2 <- sim2$population
-```
-Here, just as `y` are the alleles from most frequent haplotype, then $(14, 13, 29, 23, 11, 13, 13)$ are the alleles from the second most frequent haplotype.
-
-Then we sample a data set with an expected proportion of 20\% from the first population and 80\% from the second population:
-```{r warning = FALSE} 
-set.seed(1)
-n <- 500L # Data set size
-
-n1 <- rbinom(1, n, 0.2)
-c(n1, n1 / n)
-
-n2 <- n - n1
-c(n2, n2 / n)
-
-types1 <- sample(x = 1L:nrow(pop1), size = n1, replace = TRUE, prob = pop1$N)
-db1 <- pop1[types1, 1L:loci]
-
-types2 <- sample(x = 1L:nrow(pop2), size = n2, replace = TRUE, prob = pop2$N)
-db2 <- pop2[types2, 1L:loci]
-
-db <- as.matrix(rbind(db1, db2))
-
-# Singleton proportion
-sum(table(apply(db, 1, paste, collapse = ";")) == 1L) / n
-```
-
-Now, we analyse the data set trying 1 to 5 subpopulations. Afterwards, we analyse the optimal number of subpopulations using the BIC (Bayesian Information Criteria) by [@BIC]:
-```{r message = FALSE, warning = FALSE, cache = TRUE} 
-fits <- lapply(1L:5L, function(clusters) disclapmix(db, clusters = clusters, iterations = 100L))
-```
-
-The BIC values are:
-```{r } 
-BIC <- sapply(fits, function(fit) fit$BIC_marginal)
-```
-
-The estimated parameters for this optimal number of subpopulations can be made available in `best\_fit` as follows:
-```{r } 
-best_fit <- fits[[which.min(BIC)]]
-best_fit
-
-# Estimated a priori probability of originating from each subpopulation
-best_fit$tau 
-
-# Estimated location parameters
-best_fit$y 
-
-# Estimated dispersion parameters for each subpopulation
-best_fit$disclap_parameters
-```
-
-The estimated location parameters are the same as those used for generating the data. Also, the values of $\tau_j$, the a priori probability of originating from the $j$\textsuperscript{th} subpopulation, are consistent with the mixture proportions of \Sexpr{formatC(n1 / n)} and \Sexpr{formatC(n2 / n)}.
-
-We can also calculate the predicted population frequencies (using the mixture proportions \Sexpr{formatC(n1 / n)} and \Sexpr{formatC(n2 / n)}):
-```{r } 
-pop1$PopFreq <- pop1$N / sum(pop1$N)
-pop2$PopFreq <- pop2$N / sum(pop2$N)
-
-types1.table <- table(types1)
-types2.table <- table(types2)
-
-dataset1 <- pop1[as.integer(names(types1.table)), ]
-dataset1$Ndb <- types1.table
-sum(dataset1$Ndb)
-
-dataset2 <- pop2[as.integer(names(types2.table)), ]
-dataset2$Ndb <- types2.table
-sum(dataset2$Ndb)
-
-dataset <- merge(x = dataset1, y = dataset2, by = colnames(db), all = TRUE)
-dataset[is.na(dataset)] <- 0
-
-dataset$MixPopFreq <- (n1/n) * dataset$PopFreq.x + (n2/n) * dataset$PopFreq.y
-
-dataset$Type <- "Only from pop1"
-dataset$Type[dataset$Ndb.y > 0] <- "Only from pop2"
-dataset$Type[dataset$Ndb.x > 0 & dataset$Ndb.y > 0] <- "Occurred in both"
-dataset$Type <- factor(dataset$Type)
-```
-
-We can now compare the predicted frequencies with the population frequency:
-\begin{figure}[H]
-\begin{center}
-```{r fig.keep = 'high', fig.height = 5, fig.width = 5, tidy = FALSE}
-pred_popfreqs <- predict(best_fit, newdata = as.matrix(dataset[, 1L:loci]))
-plot(dataset$MixPopFreq, pred_popfreqs, log = "xy", 
-  col = c("black", "#666666", "#cccccc")[dataset$Type], 
-  pch = c(3, 0, 1)[dataset$Type],
-  xlab = "True population frequency", 
-  ylab = "Estimated population frequency")
-abline(a = 0, b = 1, lty = 1)
-legend("bottomright", c("y = x (predicted = true)", levels(dataset$Type)), 
-  lty = c(1, rep(-1, 3)), 
-  col = c("black", "black", "#666666", "#cccccc"), 
-  pch = c(-1, 3, 0, 1))
-```
-\caption{The relationship between the true population frequency and the predicted population frequency using the discrete Laplace method.}
-\end{center}
-\end{figure}
-
-
-# Advanced topics
-
-In this section, more advanced topics are demonstrated.
-
-## Database spectrum
-
-The spectrum of a database is the number of haplotypes occuring once, the number occuring twice etc. Here, we investigate how subsampling can be used to assess the variability of the database spectrum. We use `best\_fit` from the mixture of two Fisher-Wright populations:
-```{r } 
-best_fit
-```
-
-Let us simulate 100 more databases from the fitted discrete Laplace model and see the number of singletons (other aspects of the database spectrum are interesting, too, but here we focus on the number of singletons):
-```{r tidy = FALSE} 
-set.seed(1)
-sim_dbs <- lapply(1L:100L, function(i) {
-  simulate(best_fit, nsim = nrow(db))
-})
-head(sim_dbs[[1]])
-
-num_singletons <- function(d) {
-  sum(table(apply(d, 1, paste, collapse = ";")) == 1L)
-}
-
-sim_dbs_singletons <- unlist(lapply(sim_dbs, function(sim_db) { 
-  num_singletons(sim_db)
-}))
-
-summary(sim_dbs_singletons)
-num_singletons(db)
-```
-
-
-## Simulating more advanced populations
-
-We can simulate more advanced populations by 1) using a more sophisticated mutation model and 2) having more than one initial haplotype. Here, we use the logistic mutation model introduced by [@Jochens2011]. First, let us inspect the stationary distribution (how the allele distribution would look like in the limit of an infinite number of generations):
-```{r out.width = "\\textwidth", fig.width = 12, fig.height = 5} 
-mutpars.locus1 <- c(0.149,   2.08,    18.3,   0.149,   0.374,   27.4) # DYS19
-mutpars.locus2 <- c(0.500,   1.18,    18.0,   0.500,   0.0183,  349)  # DYS389I
-mutpars.locus3 <- c(0.0163,  17.7,    11.1,   0.0163,  0.592,   14.1)  # DYS391
-mutpars <- matrix(c(mutpars.locus1, mutpars.locus2, mutpars.locus3), ncol = 3)
-colnames(mutpars) <- c("DYS19", "DYS389I", "DYS391")
-mutmodel <- init_mutmodel(modeltype = 2L, mutpars = mutpars)
-
-mutmodel_not_mut(mutmodel, locus = 1L, alleles = 5L:20L)
-mutmodel_dw_mut(mutmodel, locus = 1L, alleles = 5L:20L)
-mutmodel_up_mut(mutmodel, locus = 1L, alleles = 5L:20L)
-
-statdists <- approx_stationary_dist(mutmodel, alleles = 5L:20L)
-bp <- barplot(statdists, beside = TRUE, ylim = c(0, 1.1*max(statdists)))
-axis(3, bp, rep(rownames(statdists), ncol(mutmodel$mutpars)), cex.axis = 1, las = 3)
-```
-Next, let us simulate a population with two starting haplotypes:
-```{r tidy = FALSE, cache = TRUE}
-rare_haplotype <- c(12L, 9L, 9L) # 0/126931 at yhrd.org r46
-common_haplotype <- c(14L, 12L, 10L) # 8541/126931 at yhrd.org r46
-H0 <- matrix(c(rare_haplotype, common_haplotype), 2, 3, byrow = TRUE)
-set.seed(1)
-sim <- fwsim(G = 5000L, H0 = H0, N0 = c(1e6L, 1e6L), 
-  mutmodel = mutmodel, progress = FALSE)
-```
-
-Let us inspect the simulation and the 10 most common haplotypes in the final population
-```{r tidy = FALSE}
-sim$population[order(sim$population$N, decreasing = TRUE)[1L:10L], ]
-```
-Let us compare the mutation probabilities for the initial haplotypes:
-```{r tidy = FALSE}
-1-sapply(1L:ncol(mutmodel$mutpars), function(locus) {
-  mutmodel_not_mut(mutmodel, locus = locus, alleles = rare_haplotype[locus])
+```{r}
+clusters <- 1L:5L
+fits <- lapply(clusters, function(clusters) {
+  fit <- disclapmix(x = db, clusters = clusters)
+  return(fit)
 })
 
-1-sapply(1L:ncol(mutmodel$mutpars), function(locus) {
-  mutmodel_not_mut(mutmodel, locus = locus, alleles = common_haplotype[locus])
+marginalBICs <- sapply(res, function(fit) {
+  fit$BIC_marginal
 })
+
+bestfit <- res[[which.min(marginalBICs)]]
 ```
 
-As seen, the rare haplotype is almost not mutating. The rationale is that the alleles should mutate up before reaching as low as the alleles of the rare haplotype:
-```{r }
-sapply(1L:ncol(mutmodel$mutpars), function(locus) mutmodel_dw_mut(mutmodel, locus = locus, alleles = rare_haplotype[locus]))
-sapply(1L:ncol(mutmodel$mutpars), function(locus) mutmodel_up_mut(mutmodel, locus = locus, alleles = rare_haplotype[locus]))
+The best fit is now in the `bestfit` that can be inspected by `print` (default method called when the variable is just written) or `summary`: 
+
+```{r}
+bestfit
+summary(bestfit)
 ```
 
-Let us check how many close to the rare haplotype that are left:
-```{r tidy = FALSE}
-dists <- apply(sim$population[, -ncol(sim$population)], 1, function(h) {
-  sum(abs(h - rare_haplotype))
-})
-dists_order <- order(dists, decreasing = FALSE)[1L:10L]
-data.frame(sim$population[dists_order, ], 
-  DistanceToRare = dists[dists_order])
+We can also plot the fitted model:
+
+```{r, fig.width=10}
+plot(bestfit)
 ```
 
+There are important information returned by `disclapmix`, e.g. the central haplotypes and the dispersion parameters for the discrete Laplace distributions:
 
-# Concluding remarks
+```{r}
+bestfit$y
+bestfit$disclap_parameters
+```
 
-We have shown how to analyse Y-STR population data using the discrete Laplace method described by [@AndersenDisclap2013]. This was done using the freely available and open source `R` packages `disclap`, `fwsim` and `disclapmix` that are supported on Linux, MacOS and MS Windows.
+The returned object is described in `?disclapmix` and objects can be inspected using e.g. `str()`.
 
-One key point made is worth repeating: Data simulated under a population model (e.g.\ the Fisher-Wright model of evolution) with a certain mutation model (e.g.\ the single-step mutation model) can be successfully analysed using the discrete Laplace method making inference assuming that the data is from a mixture of multivariate, independent, discrete Laplace distributions.
+
+Haplotype frequencies can be obtained using the `predict` function. Note, that this is done per haplotype (`danes`) and not per observation (`db`):
+
+```{r}
+disclap_estimates <- predict(bestfit, newdata = as.matrix(danes[, 1:(ncol(danes) - 1)]))
+```
+
+These can be compared to the database frequencies:
+
+```{r}
+plot(x = danes$n/sum(danes$n), 
+     y = disclap_estimates, 
+     xlab = "Observed frequency",
+     ylab = "Predicted frequency (discrete Laplace)",
+     log = "xy")
+abline(0, 1)
+```
+
 
 # References

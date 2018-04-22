@@ -9,41 +9,26 @@ data(danes)
 db <- as.matrix(danes[rep(1:nrow(danes), danes$n), 1:(ncol(danes)-1)])
 str(db)
 
-## ---- eval=FALSE---------------------------------------------------------
-#  fit <- disclapmix(x = db, clusters = 2L)
+## ------------------------------------------------------------------------
+donor1 <- db[1, ]
+donor2 <- db[20, ]
+refdb <- db[-c(1, 20), ]
 
 ## ------------------------------------------------------------------------
-clusters <- 1L:5L
-fits <- lapply(clusters, function(clusters) {
-  fit <- disclapmix(x = db, clusters = clusters)
-  return(fit)
-})
-
-marginalBICs <- sapply(res, function(fit) {
-  fit$BIC_marginal
-})
-
-bestfit <- res[[which.min(marginalBICs)]]
+mix <- generate_mixture(list(donor1, donor2))
 
 ## ------------------------------------------------------------------------
-bestfit
-summary(bestfit)
-
-## ---- fig.width=10-------------------------------------------------------
-plot(bestfit)
+pairs <- contributor_pairs(mix)
+pairs
 
 ## ------------------------------------------------------------------------
-bestfit$y
-bestfit$disclap_parameters
+fit <- disclapmix(x = refdb, clusters = 4L)
 
 ## ------------------------------------------------------------------------
-disclap_estimates <- predict(bestfit, newdata = as.matrix(danes[, 1:(ncol(danes) - 1)]))
+ranked_pairs <- rank_contributor_pairs(pairs, fit)
+ranked_pairs
 
 ## ------------------------------------------------------------------------
-plot(x = danes$n/sum(danes$n), 
-     y = disclap_estimates, 
-     xlab = "Observed frequency",
-     ylab = "Predicted frequency (discrete Laplace)",
-     log = "xy")
-abline(0, 1)
+get_rank(ranked_pairs, donor1)
+get_rank(ranked_pairs, donor2)
 

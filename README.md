@@ -22,6 +22,20 @@ You can also install the development version from GitHub by using the `remotes` 
 remotes::install_github("mikldk/disclapmix")
 ```
 
+## Getting started
+
+Refer to the included vignettes. You can get an overview of the included vignettes by the following `R` command:
+
+```r
+vignette(package = "disclapmix")
+```
+
+To read a vignette, type:
+
+```r
+vignette("introduction", package = "disclapmix")
+```
+
 ## References
 
 Andersen MM, PS Eriksen, N Morling (2013). 

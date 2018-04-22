@@ -16,7 +16,13 @@
 #' @keywords distance clusters
 #' @export
 clusterdist <- function(fit, ...) {
-  if (!is(fit, "disclapmixfit")) stop("fit must be a disclapmixfit")
+  if (!is(fit, "disclapmixfit")) {
+    stop("fit must be a disclapmixfit")
+  }
+  
+  if (nrow(fit$y) < 2L) {
+    stop("Fit must have at least two clusters") 
+  }
   
   symDist <- function(p1, z1, p2, z2) {
       KL <- function(p1, p2, m) {
