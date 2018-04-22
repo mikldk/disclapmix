@@ -9,7 +9,7 @@ Authors@R: c(
     person(given = "Poul Svante", family = "Eriksen", 
         email = "svante@math.aau.dk", role = c("aut"))
   )
-Author: Mikkel Meyer Andersen and Poul Svante Eriksen
+Author: Mikkel Meyer Andersen [aut, cre], Poul Svante Eriksen [aut]
 Maintainer: Mikkel Meyer Andersen <mikl@math.aau.dk>
 Description: Make inference in a mixture of discrete Laplace distributions using the EM algorithm. This can e.g. be used for modelling the distribution of Y chromosomal haplotypes as described in [1, 2] (refer to the URL section).
 License: GPL (>= 2) | file LICENSE

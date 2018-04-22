@@ -7,13 +7,13 @@ bibentry(bibtype = "article",
 
 bibentry(bibtype = "manual", 
   title = "{{disclapmix: Discrete Laplace Mixture Inference using the EM Algorithm}}",
-  url = "http://CRAN.R-project.org/package=disclapmix",
+  url = "https://CRAN.R-project.org/package=disclapmix",
   author = person("MM", "Andersen"),
   year = "2018")
   
 bibentry(bibtype = "manual", 
   title = "{{disclap: Discrete Laplace Exponential Family}}",
-  url = "http://CRAN.R-project.org/package=disclap",
+  url = "https://CRAN.R-project.org/package=disclap",
   author = person("MM", "Andersen"),
   year = "2014")
   
