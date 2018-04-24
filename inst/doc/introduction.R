@@ -19,11 +19,11 @@ fits <- lapply(clusters, function(clusters) {
   return(fit)
 })
 
-marginalBICs <- sapply(res, function(fit) {
+marginalBICs <- sapply(fits, function(fit) {
   fit$BIC_marginal
 })
 
-bestfit <- res[[which.min(marginalBICs)]]
+bestfit <- fits[[which.min(marginalBICs)]]
 
 ## ------------------------------------------------------------------------
 bestfit

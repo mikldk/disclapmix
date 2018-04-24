@@ -6,7 +6,7 @@ author: Mikkel Meyer Andersen
 bibliography: refs.bib
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Introduction}
+  %\VignetteIndexEntry{Mixtures}
   %\VignetteEncoding{UTF-8}
 ---
 

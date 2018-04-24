@@ -55,11 +55,11 @@ fits <- lapply(clusters, function(clusters) {
   return(fit)
 })
 
-marginalBICs <- sapply(res, function(fit) {
+marginalBICs <- sapply(fits, function(fit) {
   fit$BIC_marginal
 })
 
-bestfit <- res[[which.min(marginalBICs)]]
+bestfit <- fits[[which.min(marginalBICs)]]
 ```
 
 The best fit is now in the `bestfit` that can be inspected by `print` (default method called when the variable is just written) or `summary`: 

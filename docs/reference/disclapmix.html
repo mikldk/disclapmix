@@ -273,60 +273,60 @@ in R is used.</p>
 #&gt; [4,]   15   15   16   15
 #&gt; [5,]   18   16   18   16
 #&gt; [6,]   14   15   16   17</div><div class='input'>
-<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'>disclapmix</span>(<span class='no'>db</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>glm_method</span> <span class='kw'>=</span> <span class='st'>"glm.fit"</span>)</div><div class='output co'>#&gt; 2018-04-23 09:37:20: Starting estimation for 1 clusters.
-#&gt; 2018-04-23 09:37:20: Estimating initial central haplotypes, y, using pam.
-#&gt; 2018-04-23 09:37:20: Initial central haplotypes, y, estimated.
-#&gt; 2018-04-23 09:37:20: Starting to generate model matrix.
-#&gt; 2018-04-23 09:37:20: Model matrix generated.
-#&gt; 2018-04-23 09:37:20: Starting to generate initial response vector.
-#&gt; 2018-04-23 09:37:20: Initial response vector done.
-#&gt; 2018-04-23 09:37:20: Model matrix and initial vectors has been generated.
-#&gt; 2018-04-23 09:37:20: Starting the EM algorithm using glm.fit IRLS method.
-#&gt; 2018-04-23 09:37:20: Iteration 1, max|vic - vic_old| / max(vic_old) = 0 / 0 = NaN (eps = 0.001)
-#&gt; 2018-04-23 09:37:20: Checking if the central haplotypes, y, are optimal.
-#&gt; 2018-04-23 09:37:20: Central haplotypes, y, were optimal, no need to more EM iterations.
-#&gt; 2018-04-23 09:37:20: Done.</div><div class='input'><span class='no'>fit1</span>$<span class='no'>disclap_parameters</span></div><div class='output co'>#&gt;            locus1    locus2    locus3    locus4
+<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'>disclapmix</span>(<span class='no'>db</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>glm_method</span> <span class='kw'>=</span> <span class='st'>"glm.fit"</span>)</div><div class='output co'>#&gt; 2018-04-24 16:44:49: Starting estimation for 1 clusters.
+#&gt; 2018-04-24 16:44:49: Estimating initial central haplotypes, y, using pam.
+#&gt; 2018-04-24 16:44:49: Initial central haplotypes, y, estimated.
+#&gt; 2018-04-24 16:44:49: Starting to generate model matrix.
+#&gt; 2018-04-24 16:44:49: Model matrix generated.
+#&gt; 2018-04-24 16:44:49: Starting to generate initial response vector.
+#&gt; 2018-04-24 16:44:49: Initial response vector done.
+#&gt; 2018-04-24 16:44:49: Model matrix and initial vectors has been generated.
+#&gt; 2018-04-24 16:44:49: Starting the EM algorithm using glm.fit IRLS method.
+#&gt; 2018-04-24 16:44:49: Iteration 1, max|vic - vic_old| / max(vic_old) = 0 / 0 = NaN (eps = 0.001)
+#&gt; 2018-04-24 16:44:49: Checking if the central haplotypes, y, are optimal.
+#&gt; 2018-04-24 16:44:49: Central haplotypes, y, were optimal, no need to more EM iterations.
+#&gt; 2018-04-24 16:44:49: Done.</div><div class='input'><span class='no'>fit1</span>$<span class='no'>disclap_parameters</span></div><div class='output co'>#&gt;            locus1    locus2    locus3    locus4
 #&gt; cluster1 0.276984 0.3152222 0.2941409 0.3254467</div><div class='input'><span class='no'>fit1</span>$<span class='no'>y</span></div><div class='output co'>#&gt;      locus1 locus2 locus3 locus4
 #&gt; [1,]     14     15     16     17</div><div class='input'>
-<span class='no'>fit1b</span> <span class='kw'>&lt;-</span> <span class='fu'>disclapmix</span>(<span class='no'>db</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>glm_method</span> <span class='kw'>=</span> <span class='st'>"internal_coef"</span>)</div><div class='output co'>#&gt; 2018-04-23 09:37:20: Starting estimation for 1 clusters.
-#&gt; 2018-04-23 09:37:20: Estimating initial central haplotypes, y, using pam.
-#&gt; 2018-04-23 09:37:20: Initial central haplotypes, y, estimated.
-#&gt; 2018-04-23 09:37:20: No need to generate model matrix when using internal_coef.
-#&gt; 2018-04-23 09:37:20: Starting to generate initial response vector.
-#&gt; 2018-04-23 09:37:20: Initial response vector done.
-#&gt; 2018-04-23 09:37:20: Model matrix and initial vectors has been generated.
-#&gt; 2018-04-23 09:37:20: Starting the EM algorithm using internal_coef IRLS method.
-#&gt; 2018-04-23 09:37:20: Iteration 1, max|vic - vic_old| / max(vic_old) = 0 / 0 = NaN (eps = 0.001)
-#&gt; 2018-04-23 09:37:20: Checking if the central haplotypes, y, are optimal.
-#&gt; 2018-04-23 09:37:20: Central haplotypes, y, were optimal, no need to more EM iterations.
-#&gt; 2018-04-23 09:37:20: Done.</div><div class='input'><span class='no'>fit1b</span>$<span class='no'>disclap_parameters</span></div><div class='output co'>#&gt;            locus1    locus2    locus3    locus4
+<span class='no'>fit1b</span> <span class='kw'>&lt;-</span> <span class='fu'>disclapmix</span>(<span class='no'>db</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>glm_method</span> <span class='kw'>=</span> <span class='st'>"internal_coef"</span>)</div><div class='output co'>#&gt; 2018-04-24 16:44:49: Starting estimation for 1 clusters.
+#&gt; 2018-04-24 16:44:49: Estimating initial central haplotypes, y, using pam.
+#&gt; 2018-04-24 16:44:49: Initial central haplotypes, y, estimated.
+#&gt; 2018-04-24 16:44:49: No need to generate model matrix when using internal_coef.
+#&gt; 2018-04-24 16:44:49: Starting to generate initial response vector.
+#&gt; 2018-04-24 16:44:49: Initial response vector done.
+#&gt; 2018-04-24 16:44:49: Model matrix and initial vectors has been generated.
+#&gt; 2018-04-24 16:44:49: Starting the EM algorithm using internal_coef IRLS method.
+#&gt; 2018-04-24 16:44:49: Iteration 1, max|vic - vic_old| / max(vic_old) = 0 / 0 = NaN (eps = 0.001)
+#&gt; 2018-04-24 16:44:49: Checking if the central haplotypes, y, are optimal.
+#&gt; 2018-04-24 16:44:49: Central haplotypes, y, were optimal, no need to more EM iterations.
+#&gt; 2018-04-24 16:44:49: Done.</div><div class='input'><span class='no'>fit1b</span>$<span class='no'>disclap_parameters</span></div><div class='output co'>#&gt;            locus1    locus2    locus3    locus4
 #&gt; cluster1 0.276984 0.3152222 0.2941409 0.3254467</div><div class='input'><span class='no'>fit1b</span>$<span class='no'>y</span></div><div class='output co'>#&gt;      locus1 locus2 locus3 locus4
 #&gt; [1,]     14     15     16     17</div><div class='input'>
 <span class='fu'>max</span>(<span class='fu'>abs</span>(<span class='no'>fit1</span>$<span class='no'>disclap_parameters</span> - <span class='no'>fit1b</span>$<span class='no'>disclap_parameters</span>))</div><div class='output co'>#&gt; [1] 1.585204e-11</div><div class='input'>
 <span class='co'># Generate another type of database</span>
 <span class='no'>db2</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='kw pkg'>disclap</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/disclap/topics/ddisclap'>rdisclap</a></span>(<span class='fl'>2000</span>, <span class='fl'>0.1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 <span class='no'>db2</span> <span class='kw'>&lt;-</span> <span class='fu'>sapply</span>(<span class='fl'>1</span>:<span class='fu'>ncol</span>(<span class='no'>db2</span>), <span class='kw'>function</span>(<span class='no'>i</span>) <span class='fu'>as.integer</span>(<span class='no'>db2</span>[, <span class='no'>i</span>]+<span class='fl'>14</span>+<span class='no'>i</span>))
-<span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'>disclapmix</span>(<span class='fu'>rbind</span>(<span class='no'>db</span>, <span class='no'>db2</span>), <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</div><div class='output co'>#&gt; 2018-04-23 09:37:20: Starting estimation for 2 clusters.
-#&gt; 2018-04-23 09:37:20: Estimating initial central haplotypes, y, using pam.
-#&gt; 2018-04-23 09:37:20: Initial central haplotypes, y, estimated.
-#&gt; 2018-04-23 09:37:20: No need to generate model matrix when using internal_coef.
-#&gt; 2018-04-23 09:37:20: Starting to generate initial response vector.
-#&gt; 2018-04-23 09:37:20: Initial response vector done.
-#&gt; 2018-04-23 09:37:20: Model matrix and initial vectors has been generated.
-#&gt; 2018-04-23 09:37:20: Starting the EM algorithm using internal_coef IRLS method.
-#&gt; 2018-04-23 09:37:20: Iteration 1, max|vic - vic_old| / max(vic_old) = 0.4995725 / 0 = Inf (eps = 0.001)
-#&gt; 2018-04-23 09:37:20: Iteration 2, max|vic - vic_old| / max(vic_old) = 0.3976106 / 0.9995725 = 0.3977806 (eps = 0.001)
-#&gt; 2018-04-23 09:37:20: Iteration 3, max|vic - vic_old| / max(vic_old) = 0.09065252 / 0.9999994 = 0.09065258 (eps = 0.001)
-#&gt; 2018-04-23 09:37:20: Iteration 4, max|vic - vic_old| / max(vic_old) = 0.02714588 / 0.9999998 = 0.02714589 (eps = 0.001)
-#&gt; 2018-04-23 09:37:20: Iteration 5, max|vic - vic_old| / max(vic_old) = 0.007961174 / 0.9999999 = 0.007961175 (eps = 0.001)
-#&gt; 2018-04-23 09:37:20: Iteration 6, max|vic - vic_old| / max(vic_old) = 0.002298016 / 0.9999999 = 0.002298016 (eps = 0.001)
-#&gt; 2018-04-23 09:37:20: Iteration 7, max|vic - vic_old| / max(vic_old) = 0.0006605518 / 0.9999999 = 0.0006605519 (eps = 0.001)
+<span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'>disclapmix</span>(<span class='fu'>rbind</span>(<span class='no'>db</span>, <span class='no'>db2</span>), <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</div><div class='output co'>#&gt; 2018-04-24 16:44:49: Starting estimation for 2 clusters.
+#&gt; 2018-04-24 16:44:49: Estimating initial central haplotypes, y, using pam.
+#&gt; 2018-04-24 16:44:49: Initial central haplotypes, y, estimated.
+#&gt; 2018-04-24 16:44:49: No need to generate model matrix when using internal_coef.
+#&gt; 2018-04-24 16:44:49: Starting to generate initial response vector.
+#&gt; 2018-04-24 16:44:49: Initial response vector done.
+#&gt; 2018-04-24 16:44:49: Model matrix and initial vectors has been generated.
+#&gt; 2018-04-24 16:44:49: Starting the EM algorithm using internal_coef IRLS method.
+#&gt; 2018-04-24 16:44:49: Iteration 1, max|vic - vic_old| / max(vic_old) = 0.4995725 / 0 = Inf (eps = 0.001)
+#&gt; 2018-04-24 16:44:49: Iteration 2, max|vic - vic_old| / max(vic_old) = 0.3976106 / 0.9995725 = 0.3977806 (eps = 0.001)
+#&gt; 2018-04-24 16:44:49: Iteration 3, max|vic - vic_old| / max(vic_old) = 0.09065252 / 0.9999994 = 0.09065258 (eps = 0.001)
+#&gt; 2018-04-24 16:44:49: Iteration 4, max|vic - vic_old| / max(vic_old) = 0.02714588 / 0.9999998 = 0.02714589 (eps = 0.001)
+#&gt; 2018-04-24 16:44:49: Iteration 5, max|vic - vic_old| / max(vic_old) = 0.007961174 / 0.9999999 = 0.007961175 (eps = 0.001)
+#&gt; 2018-04-24 16:44:49: Iteration 6, max|vic - vic_old| / max(vic_old) = 0.002298016 / 0.9999999 = 0.002298016 (eps = 0.001)
+#&gt; 2018-04-24 16:44:49: Iteration 7, max|vic - vic_old| / max(vic_old) = 0.0006605518 / 0.9999999 = 0.0006605519 (eps = 0.001)
 #&gt; 
-#&gt; 2018-04-23 09:37:20: Stopping after 7 iterations due to convergence, 0.001 &gt; 0.0006605519
+#&gt; 2018-04-24 16:44:49: Stopping after 7 iterations due to convergence, 0.001 &gt; 0.0006605519
 #&gt; 
-#&gt; 2018-04-23 09:37:20: Checking if the central haplotypes, y, are optimal.
-#&gt; 2018-04-23 09:37:20: Central haplotypes, y, were optimal, no need to more EM iterations.
-#&gt; 2018-04-23 09:37:20: Done.</div><div class='input'><span class='no'>fit2</span>$<span class='no'>disclap_parameters</span></div><div class='output co'>#&gt;              locus1     locus2     locus3    locus4
+#&gt; 2018-04-24 16:44:49: Checking if the central haplotypes, y, are optimal.
+#&gt; 2018-04-24 16:44:49: Central haplotypes, y, were optimal, no need to more EM iterations.
+#&gt; 2018-04-24 16:44:49: Done.</div><div class='input'><span class='no'>fit2</span>$<span class='no'>disclap_parameters</span></div><div class='output co'>#&gt;              locus1     locus2     locus3    locus4
 #&gt; cluster1 0.29381493 0.30891980 0.29228155 0.3103804
 #&gt; cluster2 0.09484327 0.09971911 0.09434829 0.1001906</div><div class='input'><span class='no'>fit2</span>$<span class='no'>y</span></div><div class='output co'>#&gt;      locus1 locus2 locus3 locus4
 #&gt; [1,]     14     15     16     17

@@ -36,6 +36,13 @@ To read a vignette, type:
 vignette("introduction", package = "disclapmix")
 ```
 
+## Contribute, issues, and support
+
+Please use the issue tracker at <https://github.com/mikldk/disclapmix/issues> 
+if you want to notify us of an issue or need support.
+If you want to contribute, please either create an issue or make a pull request.
+
+
 ## References
 
 Andersen MM, PS Eriksen, N Morling (2013). 
