@@ -31,9 +31,9 @@ cache: packages
 
 matrix:
   include:
-    - os: linux
-      dist: trusty
-      r: oldrel
+#    - os: linux
+#      dist: trusty
+#      r: oldrel
     - os: linux
       dist: trusty
       r: release
