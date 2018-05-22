@@ -80,7 +80,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 License: GPL (>= 2).
 
-## Build status
+
+## Badges
+
+Zenodo: 
+
+[![DOI](https://zenodo.org/badge/130306482.svg)](https://zenodo.org/badge/latestdoi/130306482)
 
 Travis CI:
 
