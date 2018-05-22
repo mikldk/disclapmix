@@ -36,6 +36,23 @@ To read a vignette, type:
 vignette("introduction", package = "disclapmix")
 ```
 
+### Running tests
+
+Note that to also install the tests, you need to install the package as follows:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("mikldk/disclapmix", INSTALL_opts="--install-tests")
+```
+
+You can now run the tests:
+
+``` r
+library(disclapmix)
+library(testthat)
+test_package('disclapmix')
+```
+
 ## Contribute, issues, and support
 
 Please use the issue tracker at <https://github.com/mikldk/disclapmix/issues> 
