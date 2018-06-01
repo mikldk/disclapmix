@@ -6,7 +6,7 @@ library(disclapmix)
 data(danes)
 
 ## ------------------------------------------------------------------------
-db <- as.matrix(danes[rep(1:nrow(danes), danes$n), 1:(ncol(danes)-1)])
+db <- as.matrix(danes[rep(seq_len(nrow(danes)), danes$n), seq_len(ncol(danes)-1)])
 str(db)
 
 ## ------------------------------------------------------------------------

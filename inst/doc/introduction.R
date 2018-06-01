@@ -2,11 +2,13 @@
 knitr::opts_chunk$set(fig.width = 5, fig.height = 5)
 
 ## ------------------------------------------------------------------------
+library(ggplot2)
+
 library(disclapmix)
 data(danes)
 
 ## ------------------------------------------------------------------------
-db <- as.matrix(danes[rep(1:nrow(danes), danes$n), 1:(ncol(danes)-1)])
+db <- as.matrix(danes[rep(seq_len(nrow(danes)), danes$n), seq_len(ncol(danes)-1)])
 str(db)
 
 ## ---- eval=FALSE---------------------------------------------------------
@@ -37,13 +39,16 @@ bestfit$y
 bestfit$disclap_parameters
 
 ## ------------------------------------------------------------------------
-disclap_estimates <- predict(bestfit, newdata = as.matrix(danes[, 1:(ncol(danes) - 1)]))
+disclap_estimates <- predict(bestfit, 
+                             newdata = as.matrix(danes[, 1:(ncol(danes) - 1)]))
 
 ## ------------------------------------------------------------------------
-plot(x = danes$n/sum(danes$n), 
-     y = disclap_estimates, 
-     xlab = "Observed frequency",
-     ylab = "Predicted frequency (discrete Laplace)",
-     log = "xy")
-abline(0, 1)
+ggplot() +
+  geom_abline(intercept = 0, slope = 1) +
+  geom_point(aes(x = danes$n/sum(danes$n), y = disclap_estimates)) +
+  labs(x = "Observed frequency",
+       y = "Predicted frequency (discrete Laplace)") +
+  theme_bw() +
+  scale_x_log10() +
+  scale_y_log10()
 

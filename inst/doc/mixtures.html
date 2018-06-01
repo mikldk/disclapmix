@@ -69,7 +69,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Mixtures</h1>
 <h4 class="author"><em>Mikkel Meyer Andersen</em></h4>
-<h4 class="date"><em>24 April, 2018</em></h4>
+<h4 class="date"><em>01 June, 2018</em></h4>
 
 
 
@@ -79,11 +79,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="mixture-analysis" class="section level1">
 <h1>Mixture analysis</h1>
-<p>We again use the Danish reference database <span class="citation">(Hallenberg et al. 2005)</span> with <span class="math inline">\(n = 185\)</span> observations (male Y-STR haplotypes) at <span class="math inline">\(r=10\)</span> loci is available in the <code>dane</code> dataset. Let us load the package as well as the data:</p>
+<p>We again use the Danish reference database <span class="citation">(Hallenberg et al. 2005)</span> with <span class="math inline">\(n = 185\)</span> observations (male Y-STR haplotypes) at <span class="math inline">\(r=10\)</span> loci is available in the <code>danes</code> dataset. Let us load the package as well as the data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(disclapmix)
 <span class="kw">data</span>(danes)</code></pre></div>
 <p>The database is in compact format, i.e. one unique haplotype per row. To fit the model, we need one observation per row. This is done for example like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">db &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(danes[<span class="kw">rep</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(danes), danes$n), <span class="dv">1</span>:(<span class="kw">ncol</span>(danes)-<span class="dv">1</span>)])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">db &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(danes[<span class="kw">rep</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(danes)), danes$n), <span class="kw">seq_len</span>(<span class="kw">ncol</span>(danes)-<span class="dv">1</span>)])
 <span class="kw">str</span>(db)</code></pre></div>
 <pre><code>##  int [1:185, 1:10] 13 13 13 13 13 13 14 14 14 14 ...
 ##  - attr(*, &quot;dimnames&quot;)=List of 2
@@ -173,10 +173,10 @@ ranked_pairs</code></pre></div>
 <p>Andersen, Mikkel Meyer, Poul Svante Eriksen, and Niels Morling. 2013a. “A gentle introduction to the discrete Laplace method for estimating Y-STR haplotype frequencies.” <em>Preprint, ArXiv:1304.2129</em>.</p>
 </div>
 <div id="ref-AndersenDisclap2013">
-<p>———. 2013b. “The discrete Laplace exponential family and estimation of Y-STR haplotype frequencies.” <em>Journal of Theoretical Biology</em> 329: 39–51.</p>
+<p>———. 2013b. “The discrete Laplace exponential family and estimation of Y-STR haplotype frequencies.” <em>Journal of Theoretical Biology</em> 329: 39–51. doi:<a href="https://doi.org/10.1016/j.jtbi.2013.03.009">10.1016/j.jtbi.2013.03.009</a>.</p>
 </div>
 <div id="ref-AndersenDisclapMixture2015">
-<p>Andersen, Mikkel Meyer, Poul Svante Eriksen, Helle Smidt Mogensen, and Niels Morling. 2015. “Identifying the most likely contributors to a Y-STR mixture using the discrete Laplace method.” <em>Forensic Science International: Genetics</em> 15: 76–83.</p>
+<p>Andersen, Mikkel Meyer, Poul Svante Eriksen, Helle Smidt Mogensen, and Niels Morling. 2015. “Identifying the most likely contributors to a Y-STR mixture using the discrete Laplace method.” <em>Forensic Science International: Genetics</em> 15: 76–83. doi:<a href="https://doi.org/10.1016/j.fsigen.2014.09.011">10.1016/j.fsigen.2014.09.011</a>.</p>
 </div>
 <div id="ref-Hallenberg2005YchromosomeSH">
 <p>Hallenberg, Charlotte, Karsten Nielsen, Bo Simonsen, Juan Sanchez, and Niels Morling. 2005. “Y-Chromosome Str Haplotypes in Danes.” <em>Forensic Science International</em> 155 2-3: 205–10.</p>

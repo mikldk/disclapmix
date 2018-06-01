@@ -20,10 +20,12 @@ This vignette shows how to use the R package `disclapmix` that implements the me
 
 # Analysis
 
-A Danish reference database [@Hallenberg2005YchromosomeSH] with $n = 185$ observations (male Y-STR haplotypes) at $r=10$ loci is available in the `dane` dataset. 
+A Danish reference database [@Hallenberg2005YchromosomeSH] with $n = 185$ observations (male Y-STR haplotypes) at $r=10$ loci is available in the `danes` dataset. 
 Let us load the package as well as the data:
 
 ```{r}
+library(ggplot2)
+
 library(disclapmix)
 data(danes)
 ```
@@ -33,7 +35,7 @@ To fit the model, we need one observation per row.
 This is done for example like this:
 
 ```{r}
-db <- as.matrix(danes[rep(1:nrow(danes), danes$n), 1:(ncol(danes)-1)])
+db <- as.matrix(danes[rep(seq_len(nrow(danes)), danes$n), seq_len(ncol(danes)-1)])
 str(db)
 ```
 
@@ -62,7 +64,7 @@ marginalBICs <- sapply(fits, function(fit) {
 bestfit <- fits[[which.min(marginalBICs)]]
 ```
 
-The best fit is now in the `bestfit` that can be inspected by `print` (default method called when the variable is just written) or `summary`: 
+The best fit is now in the `bestfit` that can be inspected by `print` (default method called when the variable is just written) or `summary` which (currently) give the same output: 
 
 ```{r}
 bestfit
@@ -88,18 +90,21 @@ The returned object is described in `?disclapmix` and objects can be inspected u
 Haplotype frequencies can be obtained using the `predict` function. Note, that this is done per haplotype (`danes`) and not per observation (`db`):
 
 ```{r}
-disclap_estimates <- predict(bestfit, newdata = as.matrix(danes[, 1:(ncol(danes) - 1)]))
+disclap_estimates <- predict(bestfit, 
+                             newdata = as.matrix(danes[, 1:(ncol(danes) - 1)]))
 ```
 
 These can be compared to the database frequencies:
 
 ```{r}
-plot(x = danes$n/sum(danes$n), 
-     y = disclap_estimates, 
-     xlab = "Observed frequency",
-     ylab = "Predicted frequency (discrete Laplace)",
-     log = "xy")
-abline(0, 1)
+ggplot() +
+  geom_abline(intercept = 0, slope = 1) +
+  geom_point(aes(x = danes$n/sum(danes$n), y = disclap_estimates)) +
+  labs(x = "Observed frequency",
+       y = "Predicted frequency (discrete Laplace)") +
+  theme_bw() +
+  scale_x_log10() +
+  scale_y_log10()
 ```
 
 

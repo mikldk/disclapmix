@@ -243,7 +243,6 @@ function(object, newdata, ...) {
 #' 
 #' Prints a \code{\link{disclapmixfit}} object.
 #' 
-#' 
 #' @param x a \code{\link{disclapmixfit}} object, usually from a result of a
 #' call to \code{disclapmix}.
 #' @param ... not used
@@ -257,10 +256,7 @@ print.disclapmixfit <-
 function(x, ...) {
   if (!is(x, "disclapmixfit")) stop("x must be a disclapmixfit")
   
-  cat("disclapmixfit from ", 
-    formatC(nrow(x$v_matrix)), " observations on ", 
-    formatC(ncol(x$y)), " loci with ", 
-    formatC(nrow(x$y)), " clusters.\n", sep = "")
+  summary.disclapmixfit(x)
   
   return(invisible(x))
 }
@@ -270,7 +266,6 @@ function(x, ...) {
 #' Summary of a disclapmixfit
 #' 
 #' Summary of a \code{\link{disclapmixfit}} object.
-#' 
 #' 
 #' @param object a \code{\link{disclapmixfit}} object, usually from a result of
 #' a call to \code{disclapmix}.
@@ -285,7 +280,10 @@ summary.disclapmixfit <-
 function(object, ...) {
   if (!is(object, "disclapmixfit")) stop("object must be a disclapmixfit")
   
-  print(object)
+  cat("disclapmixfit from ", 
+    formatC(nrow(object$v_matrix)), " observations on ", 
+    formatC(ncol(object$y)), " loci with ", 
+    formatC(nrow(object$y)), " clusters.\n", sep = "")
   
   cat("\n")
   cat("EM converged:                                                       ", object$converged, "\n", sep = "")

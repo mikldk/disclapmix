@@ -183,7 +183,16 @@ not twice as would be the case if taking order into consideration).</p>
 <span class='no'>fits</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fl'>1L</span>:<span class='fl'>5L</span>, <span class='kw'>function</span>(<span class='no'>clus</span>) <span class='fu'>disclapmix</span>(<span class='no'>db_ref</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='no'>clus</span>))
 
 <span class='no'>best_fit_BIC</span> <span class='kw'>&lt;-</span> <span class='no'>fits</span><span class='kw'>[[</span><span class='fu'>which.min</span>(<span class='fu'>sapply</span>(<span class='no'>fits</span>, <span class='kw'>function</span>(<span class='no'>fit</span>) <span class='no'>fit</span>$<span class='no'>BIC_marginal</span>))]]
-<span class='no'>best_fit_BIC</span></div><div class='output co'>#&gt; disclapmixfit from 183 observations on 10 loci with 4 clusters.</div><div class='input'>
+<span class='no'>best_fit_BIC</span></div><div class='output co'>#&gt; disclapmixfit from 183 observations on 10 loci with 4 clusters.
+#&gt; 
+#&gt; EM converged:                                                       TRUE
+#&gt; Number of central haplotype changes:                                0
+#&gt; Total number of EM iterations:                                      15
+#&gt; Model observations (n*loci*clusters):                               1830
+#&gt; Model parameters ((clusters*loci)+(loci+clusters-1)+(clusters-1)):  56
+#&gt; GLM method:                                                         internal_coef
+#&gt; Initial central haplotypes supplied:                                FALSE
+#&gt; Method to find initial central haplotypes:                          pam</div><div class='input'>
 <span class='no'>ranked_contributors_BIC</span> <span class='kw'>&lt;-</span> <span class='fu'>rank_contributor_pairs</span>(<span class='no'>possible_contributors</span>, <span class='no'>best_fit_BIC</span>)
 <span class='no'>ranked_contributors_BIC</span></div><div class='output co'>#&gt; Mixture:
 #&gt;   DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439
