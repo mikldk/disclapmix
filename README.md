@@ -78,10 +78,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## License
 
-License: GPL (>= 2).
-
+License: GPL-2.
 
 ## Badges
+
+The Journal of Open Source Software:
+
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.00748/status.svg)](https://doi.org/10.21105/joss.00748)
 
 Zenodo: 
 
