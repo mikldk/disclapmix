@@ -1,3 +1,11 @@
+Changes in version 1.7.2
+  * Maintenance updates
+  * Remove Makevars files as not required by Rcpp >= 0.11.
+
+Changes in version 1.7.1
+  * Tag for the The Journal of Open Source Software paper: 
+    http://joss.theoj.org/papers/10.21105/joss.00748
+
 Changes in version 1.7
   * Moving to Github
   * Roxygen

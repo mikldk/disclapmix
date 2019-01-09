@@ -107,7 +107,9 @@ contributor_pairs <- function(mixture) {
   
   alleles_count <- unlist(lapply(mixture, length))
   
-  if (any(alleles_count < 1L || alleles_count > 2L)) stop("Elements of mixture must have one or two integer elements")
+  if (any(alleles_count < 1L | alleles_count > 2L)) {
+    stop("Elements of mixture must have one or two integer elements")
+  }
   
   org_mixture <- mixture
       
