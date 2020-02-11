@@ -4,8 +4,7 @@
 \alias{print.ranked_contrib_pairs}
 \title{Print ranked contributor pairs}
 \usage{
-\method{print}{ranked_contrib_pairs}(x, top = 5L,
-  hide_non_varying_loci = TRUE, ...)
+\method{print}{ranked_contrib_pairs}(x, top = 5L, hide_non_varying_loci = TRUE, ...)
 }
 \arguments{
 \item{x}{A \code{ranked_contrib_pairs} object.}
