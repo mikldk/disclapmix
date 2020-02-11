@@ -1,5 +1,8 @@
 context("mixtures")
 
+# https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494
+suppressWarnings(RNGversion("3.5.0"))
+
 data("danes")
 db <- as.matrix(danes[rep(1:nrow(danes), danes$n), 1:(ncol(danes)-1)])
 

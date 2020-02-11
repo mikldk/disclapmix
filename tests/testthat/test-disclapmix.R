@@ -1,5 +1,8 @@
 context("disclapmix")
 
+# https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494
+suppressWarnings(RNGversion("3.5.0"))
+
 ESTIMATION_TOL_DUE_TO_SAMPLING <- 1e-3
 
 ##################################################

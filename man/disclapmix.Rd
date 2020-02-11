@@ -3,14 +3,22 @@
 \docType{package}
 \name{disclapmix}
 \alias{disclapmix}
-\alias{disclapmix-package}
 \alias{disclapmixfit}
 \title{disclapmix}
 \usage{
-disclapmix(x, clusters, init_y = NULL, iterations = 100L,
-  eps = 0.001, verbose = 0L, glm_method = "internal_coef",
-  glm_control_maxit = 50L, glm_control_eps = 1e-06,
-  init_y_method = "pam", ...)
+disclapmix(
+  x,
+  clusters,
+  init_y = NULL,
+  iterations = 100L,
+  eps = 0.001,
+  verbose = 0L,
+  glm_method = "internal_coef",
+  glm_control_maxit = 50L,
+  glm_control_eps = 1e-06,
+  init_y_method = "pam",
+  ...
+)
 }
 \arguments{
 \item{x}{Dataset.}

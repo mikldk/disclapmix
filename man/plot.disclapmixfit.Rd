@@ -4,8 +4,7 @@
 \alias{plot.disclapmixfit}
 \title{Plot a disclapmixfit}
 \usage{
-\method{plot}{disclapmixfit}(x, which = 1L, clusdist = clusterdist(x),
-  ...)
+\method{plot}{disclapmixfit}(x, which = 1L, clusdist = clusterdist(x), ...)
 }
 \arguments{
 \item{x}{a \code{\link{disclapmixfit}} object, usually from a result of a

@@ -1,3 +1,7 @@
+Changes in version 1.7.3
+  * Adding suppressWarnings(RNGversion("3.5.0")) to tests as a result 
+    of https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494.
+
 Changes in version 1.7.2
   * Maintenance updates
   * Remove Makevars files as not required by Rcpp >= 0.11.

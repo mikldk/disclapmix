@@ -4,8 +4,7 @@
 \alias{plot.ranked_contrib_pairs}
 \title{Plot ranked contributor pairs}
 \usage{
-\method{plot}{ranked_contrib_pairs}(x, top = NULL, ..., xlab = "Rank",
-  ylab = "P(H1)P(H2)")
+\method{plot}{ranked_contrib_pairs}(x, top = NULL, ..., xlab = "Rank", ylab = "P(H1)P(H2)")
 }
 \arguments{
 \item{x}{A \code{ranked_contrib_pairs} object.}
