@@ -90,6 +90,9 @@
 #' \item{list("BIC_marginal_iterations")}{BIC based on marginal log likelihood
 #' of the models during the iterations (only calculated when \code{verbose =
 #' 2L}).} }
+#' \item{init_v}{Matrix with `nrow(x)` rows and `clusters` columns specifying 
+#' initial posterior probabilities to get EM started, if
+#' none specified, then `matrix(1/clusters, nrow = nrow(x), ncol = clusters)` is used.}
 #' @seealso \code{\link{disclapmix-package}} \code{\link{disclapmix}}
 #' \code{\link{disclapmixfit}} \code{\link{predict.disclapmixfit}}
 #' \code{\link{print.disclapmixfit}} \code{\link{summary.disclapmixfit}}
@@ -128,7 +131,11 @@
 #' 
 #' @export
 disclapmix <- function(x, clusters, init_y = NULL, iterations = 100L, eps = 0.001, verbose = 0L, 
-  glm_method = "internal_coef", glm_control_maxit = 50L, glm_control_eps = 1e-6, init_y_method = "pam", ...) {
+  glm_method = "internal_coef", 
+  glm_control_maxit = 50L, 
+  glm_control_eps = 1e-6, 
+  init_y_method = "pam", 
+  init_v = NULL, ...) {
   
   dots <- list(...)
   
@@ -285,6 +292,30 @@ disclapmix <- function(x, clusters, init_y = NULL, iterations = 100L, eps = 0.00
   }
   
   vic_matrix <- matrix(1/clusters, nrow = nrow(x), ncol = nrow(y))
+  
+  if (!is.null(init_v)) {
+    if (nrow(init_v) != nrow(x)) {
+      stop("nrow(init_v) != nrow(x)")
+    } else if (ncol(init_v) != nrow(y)) {
+      stop("ncol(init_v) != nrow(y)")
+    } else if (any(init_v < 0)) {
+      stop("any(init_v < 0)")
+    } else if (any(init_v > 1)) {
+      stop("any(init_v > 1)")
+    }
+    
+    init_v_sum <- apply(init_v, 1, sum)
+    if (any(abs(init_v_sum - 1) > 1e-6)) {
+      stop("any(abs(init_v_sum - 1) > 1e-6)")
+    }
+    
+    if (verbose >= 1L) {
+      cat(as.character(Sys.time()), ": Using user-specified init_v matrix.\n", sep = "")
+    }
+    
+    vic_matrix <- init_v
+  } 
+  
   #vic_matrix <- matrix(runif(nrow(x)*nrow(y), 0.2, 0.8), nrow = nrow(x), ncol = nrow(y))
   #vic_matrix <- vic_matrix / rowSums(vic_matrix)
   weight_vector <- rcpp_create_new_weight_vector(vic_matrix, ncol(y))

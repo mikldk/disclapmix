@@ -1,3 +1,6 @@
+Changes in version 1.7.4
+  * `disclapmix()` takes new agument: `init_v` (initial posterior probabilities to get EM started)
+  
 Changes in version 1.7.3
   * Adding suppressWarnings(RNGversion("3.5.0")) to tests as a result 
     of https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494.

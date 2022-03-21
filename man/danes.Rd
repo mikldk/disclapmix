@@ -4,12 +4,14 @@
 \name{danes}
 \alias{danes}
 \title{Y-STR haplotypes}
-\format{A data frame with 185 observations on the following 10 loci
+\format{
+A data frame with 185 observations on the following 10 loci
 (\code{n} is the number of times each haplotype has been observed)
 \describe{ \item{DYS19}{} \item{DYS389I}{}
 \item{DYS389II}{} \item{DYS390}{} \item{DYS391}{}
 \item{DYS392}{} \item{DYS393}{} \item{DYS437}{}
-\item{DYS438}{} \item{DYS439}{} \item{n}{} }}
+\item{DYS438}{} \item{DYS439}{} \item{n}{} }
+}
 \source{
 ''Y-chromosome STR haplotypes Danes'' by Hallenberg et al (2005),
 http://www.sciencedirect.com/science/article/pii/S0379073805000095

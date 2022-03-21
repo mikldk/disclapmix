@@ -17,6 +17,7 @@ disclapmix(
   glm_control_maxit = 50L,
   glm_control_eps = 1e-06,
   init_y_method = "pam",
+  init_v = NULL,
   ...
 )
 }
@@ -99,6 +100,9 @@ models during the iterations (only calculated when \code{verbose = 2L}).}
 \item{list("BIC_marginal_iterations")}{BIC based on marginal log likelihood
 of the models during the iterations (only calculated when \code{verbose =
 2L}).} }
+\item{init_v}{Matrix with `nrow(x)` rows and `clusters` columns specifying 
+initial posterior probabilities to get EM started, if
+none specified, then `matrix(1/clusters, nrow = nrow(x), ncol = clusters)` is used.}
 }
 \description{
 Discrete Laplace Mixture Inference using the EM Algorithm
