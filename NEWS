@@ -2,13 +2,10 @@ Changes in version 1.7.4
   * `disclapmix()` takes new agument: `init_v` (initial posterior probabilities to get EM started)
   * Added function `disclapmix_robust()` which is a wrapper 
     around `disclapmix()` that tries to avoid errors. 
-    If `disclapmix()` fails, it tries one iteration with `glm_method` = 'glm.fit' 
-    and uses the resulting `v_matrix` as `init_v` in the 
-    next `disclapmix()` with `glm_method = 'internal_coef'`.
     Can sometimes avoid errors with svd problems.
   * Added function `disclapmix_adaptive()` which is a wrapper around 
-    `disclapmix_robust()` that instead of fitting the model for a given 
-    number of clusters, fits it until the best model (lowest marginal BIC) 
+    `disclapmix_robust()` that instead of fitting one model for a given 
+    number of clusters, fits models until the best model (lowest marginal BIC) 
     is in the interior (with margin `M`) of all number of clusters tried. 
     E.g., the best model has 3 clusters and the margin `M = 5`, then 
     this function ensures that models with 1, 2, ..., 3+5 = 8 clusters 

@@ -15,9 +15,6 @@ disclapmix_robust(x, clusters, ...)
 }
 \description{
 A wrapper around `disclapmix()` that tries to avoid errors. 
-If `disclapmix()` fails, it tries one iteration with `glm_method` = 'glm.fit' 
-and uses the resulting `v_matrix` as `init_v` in the next `disclapmix()` 
-with `glm_method = 'internal_coef'`. 
 Can sometimes avoid errors with SVD problems happening with 
 `glm_method = 'internal_coef'` and `glm_method = 'internal_dev'`.
 }
