@@ -43,6 +43,7 @@
 #' @param init_y_method Which cluster method to use for finding initial central
 #' haplotypes, y: \code{pam} (recommended) or \code{clara}. Ignored if
 #' \code{init_y} is supplied.
+#' @param ret_x Return data `x`
 #' @param ... Used to detect obsolete usage (when using parameters
 #' \code{centers}, \code{use.parallel}, \code{calculate.logLs} or
 #' \code{plots.prefix}).
@@ -54,7 +55,8 @@
 #' choosing initial central haplotypes (only used if \code{init_y} is
 #' \code{NULL}).}
 #' \item{list("converged")}{Whether the estimation converged or not.}
-#' \item{list("x")}{Dataset used to fit the model.} \item{list("y")}{The
+#' \item{list("x")}{Dataset used to fit the model if `ret_x` is `TRUE`, else `NULL`.} 
+#' \item{list("y")}{The
 #' central haplotypes, \code{y}.} \item{list("tau")}{The prior probabilities of
 #' belonging to a cluster, \code{tau}.} \item{list("v_matrix")}{The matrix
 #' \code{v} of each observation's probability of belonging to a certain
@@ -130,12 +132,16 @@
 #' fit2$tau
 #' 
 #' @export
-disclapmix <- function(x, clusters, init_y = NULL, iterations = 100L, eps = 0.001, verbose = 0L, 
-  glm_method = "internal_coef", 
-  glm_control_maxit = 50L, 
-  glm_control_eps = 1e-6, 
-  init_y_method = "pam", 
-  init_v = NULL, ...) {
+disclapmix <- function(x, clusters, 
+                       init_y = NULL, 
+                       iterations = 100L, eps = 0.001, verbose = 0L, 
+                       glm_method = "internal_coef", 
+                       glm_control_maxit = 50L, 
+                       glm_control_eps = 1e-6, 
+                       init_y_method = "pam", 
+                       init_v = NULL, 
+                       ret_x = FALSE,
+                       ...) {
   
   dots <- list(...)
   
@@ -589,7 +595,16 @@ disclapmix <- function(x, clusters, init_y = NULL, iterations = 100L, eps = 0.00
       eps, " (only reached ", v_gain, ")", sep = "")
     warning(msg)
   }
+  
+  x_to_return <- if (length(ret_x) == 1L && 
+                     is.logical(ret_x) && 
+                     ret_x == TRUE) {
+    x
+  } else {
+    NULL
+  }
 
+  
   ans <- list(
     glm_method = glm_method,
 #    glm_control_maxit = glm_control_maxit,
@@ -601,7 +616,7 @@ disclapmix <- function(x, clusters, init_y = NULL, iterations = 100L, eps = 0.00
     #fit = fit,
 
     converged = converged,
-    x = x,
+    x = x_to_return,
 
     y = y,
     tau = tau_vector,

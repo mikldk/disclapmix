@@ -1,5 +1,6 @@
 Changes in version 1.7.4
   * `disclapmix()` takes new agument: `init_v` (initial posterior probabilities to get EM started)
+  * `disclapmix()` takes new agument: `ret_x` of whether to return data or not -- the default is not to (as opposed to earlier behaviour)
   * Added function `disclapmix_robust()` which is a wrapper 
     around `disclapmix()` that tries to avoid errors. 
     Can sometimes avoid errors with svd problems.

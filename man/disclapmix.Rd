@@ -18,6 +18,7 @@ disclapmix(
   glm_control_eps = 1e-06,
   init_y_method = "pam",
   init_v = NULL,
+  ret_x = FALSE,
   ...
 )
 }
@@ -54,6 +55,8 @@ otherwise.}
 haplotypes, y: \code{pam} (recommended) or \code{clara}. Ignored if
 \code{init_y} is supplied.}
 
+\item{ret_x}{Return data `x`}
+
 \item{...}{Used to detect obsolete usage (when using parameters
 \code{centers}, \code{use.parallel}, \code{calculate.logLs} or
 \code{plots.prefix}).}
@@ -67,7 +70,8 @@ A \code{\link{disclapmixfit}} object: \describe{
 choosing initial central haplotypes (only used if \code{init_y} is
 \code{NULL}).}
 \item{list("converged")}{Whether the estimation converged or not.}
-\item{list("x")}{Dataset used to fit the model.} \item{list("y")}{The
+\item{list("x")}{Dataset used to fit the model if `ret_x` is `TRUE`, else `NULL`.} 
+\item{list("y")}{The
 central haplotypes, \code{y}.} \item{list("tau")}{The prior probabilities of
 belonging to a cluster, \code{tau}.} \item{list("v_matrix")}{The matrix
 \code{v} of each observation's probability of belonging to a certain
