@@ -23,10 +23,13 @@ NULL
 
 #' disclapmix
 #' 
-#' Discrete Laplace Mixture Inference using the EM Algorithm
+#' Discrete Laplace Mixture Inference using the EM Algorithm. 
+#' A central function is \code{\link{disclapmix_adaptive}} (and the underlying \code{\link{disclapmixfit}}).
 #' 
 #' @docType package
-#' @author Mikkel Meyer Andersen <mikl@math.aau.dk> 
+#' @author Mikkel Meyer Andersen <mikl@math.aau.dk> and 
+#' Poul Svante Eriksen <svante@math.aau.dk>
+#' @rdname disclapmix-package
 #' @import Rcpp disclap
 #' @importFrom Rcpp evalCpp
 #' @importFrom cluster pam clara
@@ -36,6 +39,6 @@ NULL
 #' @importFrom methods is
 #' @importFrom utils head tail
 #' @useDynLib disclapmix
-#' @name disclapmix
+#' @name disclapmix-package
 NULL
 

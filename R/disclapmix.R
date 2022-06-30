@@ -43,6 +43,9 @@
 #' @param init_y_method Which cluster method to use for finding initial central
 #' haplotypes, y: \code{pam} (recommended) or \code{clara}. Ignored if
 #' \code{init_y} is supplied.
+#' @param init_v Matrix with `nrow(x)` rows and `clusters` columns specifying 
+#' initial posterior probabilities to get EM started, if
+#' none specified, then `matrix(1/clusters, nrow = nrow(x), ncol = clusters)` is used.
 #' @param ret_x Return data `x`
 #' @param ... Used to detect obsolete usage (when using parameters
 #' \code{centers}, \code{use.parallel}, \code{calculate.logLs} or
@@ -92,9 +95,6 @@
 #' \item{list("BIC_marginal_iterations")}{BIC based on marginal log likelihood
 #' of the models during the iterations (only calculated when \code{verbose =
 #' 2L}).} }
-#' \item{init_v}{Matrix with `nrow(x)` rows and `clusters` columns specifying 
-#' initial posterior probabilities to get EM started, if
-#' none specified, then `matrix(1/clusters, nrow = nrow(x), ncol = clusters)` is used.}
 #' @seealso \code{\link{disclapmix-package}} \code{\link{disclapmix}}
 #' \code{\link{disclapmixfit}} \code{\link{predict.disclapmixfit}}
 #' \code{\link{print.disclapmixfit}} \code{\link{summary.disclapmixfit}}

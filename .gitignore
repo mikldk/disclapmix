@@ -32,3 +32,5 @@ src/*.so
 .Rproj.user
 #
 paper.html
+/doc/
+/Meta/

@@ -1,7 +1,7 @@
 Package: disclapmix
 Type: Package
 Title: Discrete Laplace Mixture Inference using the EM Algorithm
-Version: 1.7.3.9012
+Version: 1.7.4
 Authors@R: c(
     person(given = "Mikkel Meyer", family = "Andersen", 
         email = "mikl@math.aau.dk", role = c("aut", "cre")),
@@ -21,6 +21,6 @@ BugReports: https://github.com/mikldk/disclapmix/issues
 VignetteBuilder: knitr
 SystemRequirements: C++11
 Encoding: UTF-8
-URL: http://dx.doi.org/10.1016/j.jtbi.2013.03.009 http://arxiv.org/abs/1304.2129
+URL: http://dx.doi.org/10.1016/j.jtbi.2013.03.009 https://arxiv.org/abs/1304.2129
 Roxygen: list(markdown = FALSE, roclets = c("rd", "collate", "namespace"))
 RoxygenNote: 7.2.0

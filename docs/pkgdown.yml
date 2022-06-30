@@ -1,7 +1,8 @@
-pandoc: 2.3.1
-pkgdown: 1.4.1
+pandoc: 2.17.1.1
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   introduction: introduction.html
   mixtures: mixtures.html
+last_built: 2022-06-30T08:02Z
 

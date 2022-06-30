@@ -16,7 +16,11 @@ knitr::opts_chunk$set(fig.width = 5, fig.height = 5)
 
 # Introduction
 
-This vignette shows how to use the R package `disclapmix` that implements the method described in [@AndersenDisclap2013]. For a more gentle introduction to the method, refer to [@AndersenDisclapIntroduction2013].
+This vignette shows how to use the R package `disclapmix` that implements the method described in [@AndersenDisclap2013]. 
+
+**The key function is `disclapmix_adaptive()`**.
+
+For a more gentle introduction to the method, refer to [@AndersenDisclapIntroduction2013].
 
 # Analysis
 
@@ -41,6 +45,45 @@ str(db)
 
 Also, note that the database is now an integer matrix.
 
+# Short version
+
+We fit models from 1 cluster up to as many necessary (see `?disclapmix_adaptive` 
+for how this is determined):
+
+```{r}
+fits <- disclapmix_adaptive(x = db)
+```
+
+We can extract how well each model fits the data (judged by the marginal BIC [@BIC]):
+
+```{r}
+BICs <- sapply(fits, function(x) x$BIC_marginal)
+bestfit <- fits[[which.min(BICs)]]
+bestfit
+```
+
+We can plot how well each model fits the data:
+
+```{r}
+clusters <- seq_along(fits) # or: sapply(fits, function(x) nrow(x$y))
+plot(clusters, BICs, type = "b")
+points(nrow(bestfit$y), bestfit$BIC_marginal, pch = 4, cex = 4, col = "red")
+```
+
+And use the model to predict haplotype frequencies:
+
+```{r}
+db_haplotypes <- as.matrix(danes[, seq_len(ncol(db))])
+p <- predict(bestfit, db_haplotypes)
+plot(log10(danes$n / sum(danes$n)), log10(p), 
+     xlab = "Observed relative frequency", 
+     ylab = "Discrete Laplace estimated probability")
+abline(0, 1)
+```
+
+
+# Longer version
+
 To fit a model using 2 clusters, the following command can be used (note the `L` postfix to emphasize that the number is an integer):
 
 ```{r, eval=FALSE}
@@ -48,7 +91,7 @@ fit <- disclapmix(x = db, clusters = 2L)
 ```
 
 The number of clusters is not known beforehand. 
-Here, the numbers 1 through 5 are tried and the best one according to the BIC criteria [@BIC] is taken:
+Here, the numbers 1 through 5 are tried and the best one according to the BIC [@BIC] is taken:
 
 ```{r}
 clusters <- 1L:5L
