@@ -4,7 +4,15 @@
 \alias{disclapmix_adaptive}
 \title{Adaptive fitting}
 \usage{
-disclapmix_adaptive(x, margin = 5L, criteria = "BIC_marginal", ...)
+disclapmix_adaptive(
+  x,
+  label = "DL",
+  margin = 5L,
+  criteria = "BIC_marginal",
+  init_y_generator = NULL,
+  init_v_generator = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{Dataset.}
@@ -12,6 +20,10 @@ disclapmix_adaptive(x, margin = 5L, criteria = "BIC_marginal", ...)
 \item{margin}{Fit models until there is at least this margin}
 
 \item{criteria}{The slot to chose the best model from (small values indicate better model)}
+
+\item{init_y_generator}{Function taking the number of clusters as input and returns `init_y` values}
+
+\item{init_v_generator}{Function taking the number of clusters as input and returns `init_v` values}
 
 \item{\dots}{Passed on to `disclapmix_robust()` (and further to `disclapmix()`)}
 }
@@ -45,5 +57,8 @@ best_k <- which.min(BICs)
 max_k
 best_k
 max_k - best_k # = margin = 5
+plot(ks, BICs, type = "b")
+
+fits_clara <- disclapmix_adaptive(db, margin = 5L, init_y_method = "clara")
 
 }

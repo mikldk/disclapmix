@@ -1,0 +1,109 @@
+---
+title: "Adaptive fitting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{adaptive-fitting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, include = FALSE}
+ggplot2dplyr_available <- requireNamespace("ggplot2", quietly = TRUE) && 
+  requireNamespace("dplyr", quietly = TRUE)
+```
+
+
+# Data
+
+```{r}
+library(disclapmix)
+data(danes)
+db <- as.matrix(danes[rep(1:nrow(danes), danes$n), 1:(ncol(danes)-1)])
+str(db)
+```
+
+
+# Using default parameters: partition around medoids (PAM)
+
+Using partition around medoids (PAM) cluster method to find initial clusters:
+
+```{r}
+default_fits <- disclapmix_adaptive(db, label = "PAM", margin = 5L)
+```
+
+The `label` argument is added to the resulting fits (the advantage is demonstrated later).
+
+# Using custom `init_y_method`: clustering large applications (CLARA)
+
+```{r}
+clara_fits <- disclapmix_adaptive(db, label = "CLARA", margin = 5L, init_y_method = "clara")
+```
+
+# Using custom `init_y`
+
+Note the argument `init_y_generator` for `disclapmix_adaptive()`:
+
+```{r}
+my_init_y_generator <- function(k) {
+  # Or cluster::pam() or something else
+  y_res <- cluster::clara(db, k = k, metric = "manhattan", 
+                          stand = FALSE, samples = 100, 
+                          sampsize = 50,
+                          medoids.x = TRUE, keep.data = FALSE,
+                          rngR = TRUE, pamLike = TRUE)
+  y_res$medoids
+}
+
+my_init_y_generator(1)
+my_init_y_generator(2)
+```
+
+```{r}
+custom_fits <- disclapmix_adaptive(db, label = "Custom", 
+                                   margin = 5L, 
+                                   init_y_generator = my_init_y_generator)
+```
+
+
+# Visualising
+
+First we put all fits into a single list:
+
+```{r}
+fits <- c(default_fits, clara_fits, custom_fits)
+```
+
+And then construct a data frame with summary results:
+
+```{r}
+d <- data.frame(
+  Label = sapply(fits, function(x) x$label),
+  BIC = sapply(fits, function(x) x$BIC_marginal),
+  Clusters = sapply(fits, function(x) nrow(x$y))
+)
+```
+
+
+```{r, eval = ggplot2dplyr_available, fig.width=5, fig.height=3}
+library(ggplot2)
+ggplot(d, aes(Clusters, BIC, color = Label)) + 
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks = unique(d$Clusters))
+```
+
+```{r, eval = ggplot2dplyr_available}
+library(dplyr)
+
+d %>% 
+  group_by(Label) %>% 
+  summarise(best_clusters = Clusters[which.min(BIC)])
+```
+

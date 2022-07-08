@@ -89,7 +89,7 @@ disclapmix_robust <- function(x, clusters, ...) {
     fit0 <- suppressWarnings(disclapmix::disclapmix(x, clusters = clusters, iterations = 1L,
                                                     verbose = verbose,
                                                     eps = 1e-3,
-                                                    init_y_method = "pam",
+                                                    init_y_method = "pam", 
                                                     glm_method = "glm.fit",
                                                     glm_control_maxit = 100L,
                                                     glm_control_eps = 1e-4))

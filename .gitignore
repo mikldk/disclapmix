@@ -34,3 +34,4 @@ src/*.so
 paper.html
 /doc/
 /Meta/
+inst/doc
