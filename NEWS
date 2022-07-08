@@ -1,6 +1,6 @@
 Changes in version 1.7.5
   * New vignette "Adaptive fitting"
-  * Allowing `disclapmix_adaptive()` to take generators 
+  * Allowing `disclapmix_adaptive()` to take `label` and generators 
     for `init_y` (`init_y_generator`) and 
     `init_v` (`init_v_generator`) - refer to the "Adaptive fitting" vignette.
 
