@@ -198,6 +198,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_simulate_cluster
+IntegerMatrix rcpp_simulate_cluster(int nsim, IntegerMatrix y, int cluster, NumericMatrix disclap_parameters);
+RcppExport SEXP _disclapmix_rcpp_simulate_cluster(SEXP nsimSEXP, SEXP ySEXP, SEXP clusterSEXP, SEXP disclap_parametersSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type nsim(nsimSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type y(ySEXP);
+    Rcpp::traits::input_parameter< int >::type cluster(clusterSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type disclap_parameters(disclap_parametersSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_simulate_cluster(nsim, y, cluster, disclap_parameters));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_find_haplotype_in_matrix
 int rcpp_find_haplotype_in_matrix(const IntegerMatrix subpop, const IntegerVector h);
 RcppExport SEXP _disclapmix_rcpp_find_haplotype_in_matrix(SEXP subpopSEXP, SEXP hSEXP) {
@@ -227,6 +241,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_disclapmix_rcpp_calculate_haplotype_probabilities_se", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_se, 6},
     {"_disclapmix_rcpp_calculate_haplotype_probabilities_clusterwise", (DL_FUNC) &_disclapmix_rcpp_calculate_haplotype_probabilities_clusterwise, 4},
     {"_disclapmix_rcpp_simulate", (DL_FUNC) &_disclapmix_rcpp_simulate, 4},
+    {"_disclapmix_rcpp_simulate_cluster", (DL_FUNC) &_disclapmix_rcpp_simulate_cluster, 4},
     {"_disclapmix_rcpp_find_haplotype_in_matrix", (DL_FUNC) &_disclapmix_rcpp_find_haplotype_in_matrix, 2},
     {NULL, NULL, 0}
 };

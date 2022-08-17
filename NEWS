@@ -3,6 +3,8 @@ Changes in version 1.7.5
   * Allowing `disclapmix_adaptive()` to take `label` and generators 
     for `init_y` (`init_y_generator`) and 
     `init_v` (`init_v_generator`) - refer to the "Adaptive fitting" vignette.
+  * Add `cluster` argument to `simulate()` to force simulating from a 
+    particular cluster
 
 Changes in version 1.7.4
   * `disclapmix()` takes new agument: `init_v` (initial posterior probabilities 

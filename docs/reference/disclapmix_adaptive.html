@@ -19,7 +19,7 @@ is in the interior (with margin `M`) of all number of clusters tried."><!-- math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">disclapmix</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.4.9002</span>
       </span>
     </div>
 
@@ -34,6 +34,9 @@ is in the interior (with margin `M`) of all number of clusters tried."><!-- math
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/adaptive-fitting.html">Adaptive fitting</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -67,7 +70,15 @@ is in the interior (with margin `M`) of all number of clusters tried.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">disclapmix_adaptive</span><span class="op">(</span><span class="va">x</span>, margin <span class="op">=</span> <span class="fl">5L</span>, criteria <span class="op">=</span> <span class="st">"BIC_marginal"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">disclapmix_adaptive</span><span class="op">(</span>
+  <span class="va">x</span>,
+  label <span class="op">=</span> <span class="st">"DL"</span>,
+  margin <span class="op">=</span> <span class="fl">5L</span>,
+  criteria <span class="op">=</span> <span class="st">"BIC_marginal"</span>,
+  init_y_generator <span class="op">=</span> <span class="cn">NULL</span>,
+  init_v_generator <span class="op">=</span> <span class="cn">NULL</span>,
+  <span class="va">...</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -78,6 +89,10 @@ is in the interior (with margin `M`) of all number of clusters tried.</p>
 <dd><p>Fit models until there is at least this margin</p></dd>
 <dt>criteria</dt>
 <dd><p>The slot to chose the best model from (small values indicate better model)</p></dd>
+<dt>init_y_generator</dt>
+<dd><p>Function taking the number of clusters as input and returns `init_y` values</p></dd>
+<dt>init_v_generator</dt>
+<dd><p>Function taking the number of clusters as input and returns `init_v` values</p></dd>
 <dt>...</dt>
 <dd><p>Passed on to `disclapmix_robust()` (and further to `disclapmix()`)</p></dd>
 </dl></div>
@@ -223,6 +238,10 @@ also models with up to 7+5 = 12 clusters are fitted.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
 <span class="r-in"><span class="va">max_k</span> <span class="op">-</span> <span class="va">best_k</span> <span class="co"># = margin = 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ks</span>, <span class="va">BICs</span>, type <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="disclapmix_adaptive-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">fits_clara</span> <span class="op">&lt;-</span> <span class="fu">disclapmix_adaptive</span><span class="op">(</span><span class="va">db</span>, margin <span class="op">=</span> <span class="fl">5L</span>, init_y_method <span class="op">=</span> <span class="st">"clara"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

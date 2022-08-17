@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">disclapmix</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.4.9002</span>
       </span>
     </div>
 
@@ -32,6 +32,9 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/adaptive-fitting.html">Adaptive fitting</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -64,7 +67,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for disclapmixfit</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">object</span>, nsim <span class="op">=</span> <span class="fl">1L</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">object</span>, nsim <span class="op">=</span> <span class="fl">1L</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, cluster <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -76,6 +79,9 @@ a call to <code>disclapmix</code>.</p></dd>
 <dd><p>number of haplotypes to generate.</p></dd>
 <dt>seed</dt>
 <dd><p>not used</p></dd>
+<dt>cluster</dt>
+<dd><p>which cluster to simulate from (if `NULL`, the default, take 
+a random according to the a priori probabilities)</p></dd>
 <dt>...</dt>
 <dd><p>not used</p></dd>
 </dl></div>

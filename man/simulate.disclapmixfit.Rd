@@ -4,7 +4,7 @@
 \alias{simulate.disclapmixfit}
 \title{Simulate from a disclapmixfit}
 \usage{
-\method{simulate}{disclapmixfit}(object, nsim = 1L, seed = NULL, ...)
+\method{simulate}{disclapmixfit}(object, nsim = 1L, seed = NULL, cluster = NULL, ...)
 }
 \arguments{
 \item{object}{a \code{\link{disclapmixfit}} object, usually from a result of
@@ -13,6 +13,9 @@ a call to \code{disclapmix}.}
 \item{nsim}{number of haplotypes to generate.}
 
 \item{seed}{not used}
+
+\item{cluster}{which cluster to simulate from (if `NULL`, the default, take 
+a random according to the a priori probabilities)}
 
 \item{...}{not used}
 }

@@ -457,6 +457,8 @@ function(x, which = 1L, clusdist = clusterdist(x), ...) {
 #' a call to \code{disclapmix}.
 #' @param nsim number of haplotypes to generate.
 #' @param seed not used
+#' @param cluster which cluster to simulate from (if `NULL`, the default, take 
+#'                a random according to the a priori probabilities)
 #' @param ... not used
 #' @return A matrix where the rows correspond to the simulated haplotypes.
 #' @seealso \code{\link{disclapmix}} \code{\link{disclapmixfit}}
@@ -465,7 +467,7 @@ function(x, which = 1L, clusdist = clusterdist(x), ...) {
 #' %\code{\link{haplotype_diversity}} \code{\link{clusterdist}}
 #' @keywords print
 #' @export
-simulate.disclapmixfit <- function(object, nsim = 1L, seed = NULL, ...) {
+simulate.disclapmixfit <- function(object, nsim = 1L, seed = NULL, cluster = NULL, ...) {
   if (!is(object, "disclapmixfit")) stop("object must be a disclapmixfit")
   
   if (!is.null(seed)) {
@@ -476,8 +478,15 @@ simulate.disclapmixfit <- function(object, nsim = 1L, seed = NULL, ...) {
     stop("nsim must be >= 1L (note the L postfix for integer)")
   }
   
-  tau_cumsum <- cumsum(object$tau)
-  res <- rcpp_simulate(nsim, object$y, tau_cumsum, object$disclap_parameters)
+  res <- if (is.null(cluster)) {
+    tau_cumsum <- cumsum(object$tau)
+    rcpp_simulate(        nsim, object$y, tau_cumsum, object$disclap_parameters)
+  } else if (length(cluster) == 1L && cluster >= 1 && cluster <= nrow(object$y)) {
+    cluster <- as.integer(cluster)
+    rcpp_simulate_cluster(nsim, object$y, cluster, object$disclap_parameters) 
+  } else {
+    stop("Unexpected")
+  }
 
   return(res)
 }

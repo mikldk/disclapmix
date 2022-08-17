@@ -61,6 +61,10 @@ rcpp_simulate <- function(nsim, y, tau_cumsum, disclap_parameters) {
     .Call('_disclapmix_rcpp_simulate', PACKAGE = 'disclapmix', nsim, y, tau_cumsum, disclap_parameters)
 }
 
+rcpp_simulate_cluster <- function(nsim, y, cluster, disclap_parameters) {
+    .Call('_disclapmix_rcpp_simulate_cluster', PACKAGE = 'disclapmix', nsim, y, cluster, disclap_parameters)
+}
+
 rcpp_find_haplotype_in_matrix <- function(subpop, h) {
     .Call('_disclapmix_rcpp_find_haplotype_in_matrix', PACKAGE = 'disclapmix', subpop, h)
 }

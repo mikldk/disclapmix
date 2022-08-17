@@ -240,6 +240,29 @@ IntegerMatrix rcpp_simulate(int nsim, IntegerMatrix y, NumericVector tau_cumsum,
   return res;
 }
 
+
+// [[Rcpp::export]]
+IntegerMatrix rcpp_simulate_cluster(int nsim, IntegerMatrix y, int cluster, NumericMatrix disclap_parameters) {
+  int loci = y.ncol();
+  int clusters = y.nrow();
+  
+  int origin = cluster - 1; // R is 1-based, C++ 0-based
+  
+  IntegerMatrix res(nsim, loci);
+  
+  for (int i = 0; i < nsim; i++) {
+    IntegerVector hap = y(origin, Rcpp::_);
+    
+    for (int k = 0; k < loci; k++) {
+      hap[k] += rdisclap_single(disclap_parameters(origin, k));
+    }
+    
+    res(i, Rcpp::_) = hap;
+  }
+  
+  return res;
+}
+
 // [[Rcpp::export]]
 int rcpp_find_haplotype_in_matrix(const IntegerMatrix subpop, const IntegerVector h) {
   int nrows = subpop.nrow();
