@@ -130,7 +130,7 @@ d <- data.frame(
 ```
 
 
-```{r, eval = ggplot2dplyr_available, fig.width=5, fig.height=3}
+```{r, eval = ggplot2dplyr_available, fig.width=8, fig.height=5}
 library(ggplot2)
 ggplot(d, aes(Clusters, BIC, color = Label)) + 
   geom_point() +
@@ -175,13 +175,13 @@ best_AIC <- d$Clusters[which.min(d$AIC)]
 best_AICc <- d$Clusters[which.min(d$AICc)]
 ```
 
-```{r, eval = ggplot2dplyr_available, fig.width=5, fig.height=3}
+```{r, eval = ggplot2dplyr_available, fig.width=8, fig.height=5}
 library(ggplot2)
 ggplot(d) + 
   
-  geom_vline(aes(Clusters, xintercept = best_BIC, color = "BIC"), linetype = "dashed") +
-  geom_vline(aes(Clusters, xintercept = best_AIC, color = "AIC"), linetype = "dashed") +
-  geom_vline(aes(Clusters, xintercept = best_AICc, color = "AICc"), linetype = "dashed") +
+  geom_vline(aes(xintercept = best_BIC, color = "BIC"), linetype = "dashed") +
+  geom_vline(aes(xintercept = best_AIC, color = "AIC"), linetype = "dashed") +
+  geom_vline(aes(xintercept = best_AICc, color = "AICc"), linetype = "dashed") +
   
   geom_line(aes(Clusters, BIC, color = "BIC")) +
   geom_line(aes(Clusters, AIC, color = "AIC")) +
