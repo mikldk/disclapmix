@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">disclapmix</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.4.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.5.9002</span>
       </span>
     </div>
 
@@ -66,7 +66,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rank_contributor_pairs</span><span class="op">(</span><span class="va">contrib_pairs</span>, <span class="va">fit</span>, max_rank <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rank_contributor_pairs</span><span class="op">(</span><span class="va">contrib_pairs</span>, <span class="va">fit</span>, max_rank <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,14 +74,21 @@
     <dl><dt>contrib_pairs</dt>
 <dd><p>A <code>contrib_pairs</code> object obtained from
 <code><a href="contributor_pairs.html">contributor_pairs</a></code>.</p></dd>
+
+
 <dt>fit</dt>
 <dd><p>A <code><a href="disclapmix.html">disclapmixfit</a></code> object.</p></dd>
+
+
 <dt>max_rank</dt>
 <dd><p>Not used. Reserved for future use.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>ranked_contrib_pairs</code> object that is basically an order
+    
+
+<p>A <code>ranked_contrib_pairs</code> object that is basically an order
 vector and the probabilities for each pair (in the same order as given in
 <code>contrib_pairs</code>), found by using <code>fit</code>. Note, that contributor
 order is disregarded so that each contributor pair is only present once (and
@@ -100,44 +107,44 @@ not twice as would be the case if taking order into consideration).</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">danes</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span>, <span class="va">danes</span><span class="op">$</span><span class="va">n</span><span class="op">)</span>, <span class="fl">1L</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">true_contribs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span>, <span class="fl">2L</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">h1</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="va">true_contribs</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">h2</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="va">true_contribs</span><span class="op">[</span><span class="fl">2L</span><span class="op">]</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">db_ref</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="op">-</span><span class="va">true_contribs</span>, <span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">h1h2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">h1</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">h2</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tab_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">db</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tab_db_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">db_ref</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tab_db</span><span class="op">[</span><span class="va">h1h2</span><span class="op">]</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">danes</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span>, <span class="va">danes</span><span class="op">$</span><span class="va">n</span><span class="op">)</span>, <span class="fl">1L</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">true_contribs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span>, <span class="fl">2L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">h1</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="va">true_contribs</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">h2</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="va">true_contribs</span><span class="op">[</span><span class="fl">2L</span><span class="op">]</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">db_ref</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="op">-</span><span class="va">true_contribs</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">h1h2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">h1</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">h2</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tab_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">db</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tab_db_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">db_ref</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tab_db</span><span class="op">[</span><span class="va">h1h2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14;12;28;22;10;11;13;16;10;11 16;13;30;25;10;11;13;14;11;10 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             9                             1 </span>
-<span class="r-in"><span class="va">tab_db_ref</span><span class="op">[</span><span class="va">h1h2</span><span class="op">]</span></span>
+<span class="r-in"><span><span class="va">tab_db_ref</span><span class="op">[</span><span class="va">h1h2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14;12;28;22;10;11;13;16;10;11                          &lt;NA&gt; </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             8                               </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span> <span class="co"># To avoid use by accident</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mixture</span> <span class="op">&lt;-</span> <span class="fu"><a href="generate_mixture.html">generate_mixture</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">h1</span>, <span class="va">h2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">possible_contributors</span> <span class="op">&lt;-</span> <span class="fu"><a href="contributor_pairs.html">contributor_pairs</a></span><span class="op">(</span><span class="va">mixture</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">possible_contributors</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span> <span class="co"># To avoid use by accident</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mixture</span> <span class="op">&lt;-</span> <span class="fu"><a href="generate_mixture.html">generate_mixture</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">h1</span>, <span class="va">h2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">possible_contributors</span> <span class="op">&lt;-</span> <span class="fu"><a href="contributor_pairs.html">contributor_pairs</a></span><span class="op">(</span><span class="va">mixture</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">possible_contributors</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixture:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 14,16   12,13    28,30  22,25     10     11     13  14,16  10,11  10,11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of possible contributor pairs = 64</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">:</span><span class="fl">5L</span>, <span class="kw">function</span><span class="op">(</span><span class="va">clus</span><span class="op">)</span> <span class="fu"><a href="disclapmix.html">disclapmix</a></span><span class="op">(</span><span class="va">db_ref</span>, clusters <span class="op">=</span> <span class="va">clus</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">best_fit_BIC</span> <span class="op">&lt;-</span> <span class="va">fits</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">fits</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span> <span class="va">fit</span><span class="op">$</span><span class="va">BIC_marginal</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">best_fit_BIC</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">:</span><span class="fl">5L</span>, <span class="kw">function</span><span class="op">(</span><span class="va">clus</span><span class="op">)</span> <span class="fu"><a href="disclapmix.html">disclapmix</a></span><span class="op">(</span><span class="va">db_ref</span>, clusters <span class="op">=</span> <span class="va">clus</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">best_fit_BIC</span> <span class="op">&lt;-</span> <span class="va">fits</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">fits</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span> <span class="va">fit</span><span class="op">$</span><span class="va">BIC_marginal</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">best_fit_BIC</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> disclapmixfit from 183 observations on 10 loci with 4 clusters.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> EM converged:                                                       TRUE</span>
@@ -148,9 +155,9 @@ not twice as would be the case if taking order into consideration).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GLM method:                                                         internal_coef</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Initial central haplotypes supplied:                                FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Method to find initial central haplotypes:                          pam</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ranked_contributors_BIC</span> <span class="op">&lt;-</span> <span class="fu">rank_contributor_pairs</span><span class="op">(</span><span class="va">possible_contributors</span>, <span class="va">best_fit_BIC</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ranked_contributors_BIC</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ranked_contributors_BIC</span> <span class="op">&lt;-</span> <span class="fu">rank_contributor_pairs</span><span class="op">(</span><span class="va">possible_contributors</span>, <span class="va">best_fit_BIC</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ranked_contributors_BIC</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixture:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 14,16   12,13    28,30  22,25     10     11     13  14,16  10,11  10,11</span>
@@ -202,13 +209,13 @@ not twice as would be the case if taking order into consideration).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H2 9.855081e-05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  (59 contributor pairs hidden.)</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ranked_contributors_BIC</span>, top <span class="op">=</span> <span class="fl">10L</span>, type <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ranked_contributors_BIC</span>, top <span class="op">=</span> <span class="fl">10L</span>, type <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="rank_contributor_pairs-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="get_rank.html">get_rank</a></span><span class="op">(</span><span class="va">ranked_contributors_BIC</span>, <span class="va">h1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="get_rank.html">get_rank</a></span><span class="op">(</span><span class="va">ranked_contributors_BIC</span>, <span class="va">h1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -223,7 +230,7 @@ not twice as would be the case if taking order into consideration).</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

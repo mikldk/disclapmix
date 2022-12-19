@@ -21,7 +21,7 @@ moved."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">disclapmix</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.4.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.5.9002</span>
       </span>
     </div>
 
@@ -74,70 +74,97 @@ moved.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">disclapmix</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">clusters</span>,
-  init_y <span class="op">=</span> <span class="cn">NULL</span>,
-  iterations <span class="op">=</span> <span class="fl">100L</span>,
-  eps <span class="op">=</span> <span class="fl">0.001</span>,
-  verbose <span class="op">=</span> <span class="fl">0L</span>,
-  glm_method <span class="op">=</span> <span class="st">"internal_coef"</span>,
-  glm_control_maxit <span class="op">=</span> <span class="fl">50L</span>,
-  glm_control_eps <span class="op">=</span> <span class="fl">1e-06</span>,
-  init_y_method <span class="op">=</span> <span class="st">"pam"</span>,
-  init_v <span class="op">=</span> <span class="cn">NULL</span>,
-  ret_x <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">disclapmix</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">clusters</span>,</span>
+<span>  init_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  iterations <span class="op">=</span> <span class="fl">100L</span>,</span>
+<span>  eps <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="fl">0L</span>,</span>
+<span>  glm_method <span class="op">=</span> <span class="st">"internal_coef"</span>,</span>
+<span>  glm_control_maxit <span class="op">=</span> <span class="fl">50L</span>,</span>
+<span>  glm_control_eps <span class="op">=</span> <span class="fl">1e-06</span>,</span>
+<span>  init_y_method <span class="op">=</span> <span class="st">"pam"</span>,</span>
+<span>  init_v <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ret_x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>Dataset.</p></dd>
+
+
 <dt>clusters</dt>
 <dd><p>The number of clusters/components to fit the model for.</p></dd>
+
+
 <dt>init_y</dt>
 <dd><p>Initial central haplotypes, if NULL, these will be estimated
 as described under the <code>init_y_method</code> argument.</p></dd>
+
+
 <dt>iterations</dt>
 <dd><p>Maximum number of iterations in the EM-algorithm.</p></dd>
+
+
 <dt>eps</dt>
 <dd><p>Convergence stop criteria in the EM algorithm which is compared
 to \(\frac{\max \{ v_{new} - v_{old} \}}{\max \{ v_{old} \}}\), where <code>v</code> is a matrix of each
 observation's probability of belonging to a certain center.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>from 0 to 2 (both including): 0 for silent, 2 for extra
 verbose.</p></dd>
+
+
 <dt>glm_method</dt>
 <dd><p><code>internal_coef</code>, <code>internal_dev</code> or
 <code>glm.fit</code>. Please see details.</p></dd>
+
+
 <dt>glm_control_maxit</dt>
 <dd><p>Integer giving the maximal number of IWLS
 iterations.</p></dd>
+
+
 <dt>glm_control_eps</dt>
 <dd><p>Positive convergence tolerance epsilon; the
 iterations converge when <code>|x - x_{old}|/(|x| + 0.1) &lt; epsilon</code>, where
 <code>x = beta_correction</code> for <code>internal_coef</code> and <code>x = deviance</code>
 otherwise.</p></dd>
+
+
 <dt>init_y_method</dt>
 <dd><p>Which cluster method to use for finding initial central
 haplotypes, y: <code>pam</code> (recommended) or <code>clara</code>. Ignored if
 <code>init_y</code> is supplied.</p></dd>
+
+
 <dt>init_v</dt>
 <dd><p>Matrix with `nrow(x)` rows and `clusters` columns specifying 
 initial posterior probabilities to get EM started, if
 none specified, then `matrix(1/clusters, nrow = nrow(x), ncol = clusters)` is used.</p></dd>
+
+
 <dt>ret_x</dt>
 <dd><p>Return data `x`</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Used to detect obsolete usage (when using parameters
 <code>centers</code>, <code>use.parallel</code>, <code>calculate.logLs</code> or
 <code>plots.prefix</code>).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>disclapmixfit</code> object:</p><dl><dt>list("glm_method")</dt>
+    
+
+<p>A <code>disclapmixfit</code> object:</p><dl><dt>list("glm_method")</dt>
 <dd><p>The supplied GLM method.</p></dd>
 
 <dt>list("init_y")</dt>
@@ -252,103 +279,103 @@ in R is used.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate sample database</span></span>
-<span class="r-in"><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu">disclap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/disclap/man/ddisclap.html" class="external-link">rdisclap</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0.3</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">250</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Add location parameters</span></span>
-<span class="r-in"><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">db</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span><span class="op">+</span><span class="fl">13</span><span class="op">+</span><span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate sample database</span></span></span>
+<span class="r-in"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu">disclap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/disclap/man/ddisclap.html" class="external-link">rdisclap</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0.3</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">250</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Add location parameters</span></span></span>
+<span class="r-in"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">db</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span><span class="op">+</span><span class="fl">13</span><span class="op">+</span><span class="va">i</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   14   15   15   15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   13   14   16   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   13   14   15   18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]   14   15   16   18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]   15   15   17   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]   13   15   15   17</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu">disclapmix</span><span class="op">(</span><span class="va">db</span>, clusters <span class="op">=</span> <span class="fl">1L</span>, verbose <span class="op">=</span> <span class="fl">1L</span>, glm_method <span class="op">=</span> <span class="st">"glm.fit"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting estimation for 1 clusters.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Estimating initial central haplotypes, y, using pam.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Initial central haplotypes, y, estimated.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting to generate model matrix.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Model matrix generated.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting to generate initial response vector.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Initial response vector done.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Model matrix and initial vectors has been generated.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting the EM algorithm using glm.fit IRLS method.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 1, max|vic - vic_old| / max(vic_old) = 0 / 0 = NaN (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Checking if the central haplotypes, y, are optimal.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Central haplotypes, y, were optimal, no need to more EM iterations.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Done.</span>
-<span class="r-in"><span class="va">fit1</span><span class="op">$</span><span class="va">disclap_parameters</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            locus1    locus2    locus3    locus4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cluster1 0.301767 0.3311952 0.3396904 0.2972043</span>
-<span class="r-in"><span class="va">fit1</span><span class="op">$</span><span class="va">y</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   14   17   17   17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   16   15   17   17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   13   16   15   19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]   14   15   17   16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]   15   14   15   17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]   14   15   14   17</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu">disclapmix</span><span class="op">(</span><span class="va">db</span>, clusters <span class="op">=</span> <span class="fl">1L</span>, verbose <span class="op">=</span> <span class="fl">1L</span>, glm_method <span class="op">=</span> <span class="st">"glm.fit"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting estimation for 1 clusters.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Estimating initial central haplotypes, y, using pam.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Initial central haplotypes, y, estimated.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting to generate model matrix.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Model matrix generated.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting to generate initial response vector.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Initial response vector done.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Model matrix and initial vectors has been generated.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting the EM algorithm using glm.fit IRLS method.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 1, max|vic - vic_old| / max(vic_old) = 0 / 0 = NaN (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Checking if the central haplotypes, y, are optimal.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Central haplotypes, y, were optimal, no need to more EM iterations.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Done.</span>
+<span class="r-in"><span><span class="va">fit1</span><span class="op">$</span><span class="va">disclap_parameters</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             locus1    locus2    locus3   locus4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cluster1 0.2848472 0.3239989 0.3107759 0.318165</span>
+<span class="r-in"><span><span class="va">fit1</span><span class="op">$</span><span class="va">y</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      locus1 locus2 locus3 locus4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]     14     15     16     17</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fit1b</span> <span class="op">&lt;-</span> <span class="fu">disclapmix</span><span class="op">(</span><span class="va">db</span>, clusters <span class="op">=</span> <span class="fl">1L</span>, verbose <span class="op">=</span> <span class="fl">1L</span>, glm_method <span class="op">=</span> <span class="st">"internal_coef"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting estimation for 1 clusters.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Estimating initial central haplotypes, y, using pam.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Initial central haplotypes, y, estimated.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: No need to generate model matrix when using internal_coef.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting to generate initial response vector.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Initial response vector done.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Model matrix and initial vectors has been generated.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting the EM algorithm using internal_coef IRLS method.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 1, max|vic - vic_old| / max(vic_old) = 0 / 0 = NaN (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Checking if the central haplotypes, y, are optimal.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Central haplotypes, y, were optimal, no need to more EM iterations.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Done.</span>
-<span class="r-in"><span class="va">fit1b</span><span class="op">$</span><span class="va">disclap_parameters</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            locus1    locus2    locus3    locus4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cluster1 0.301767 0.3311952 0.3396904 0.2972043</span>
-<span class="r-in"><span class="va">fit1b</span><span class="op">$</span><span class="va">y</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fit1b</span> <span class="op">&lt;-</span> <span class="fu">disclapmix</span><span class="op">(</span><span class="va">db</span>, clusters <span class="op">=</span> <span class="fl">1L</span>, verbose <span class="op">=</span> <span class="fl">1L</span>, glm_method <span class="op">=</span> <span class="st">"internal_coef"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting estimation for 1 clusters.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Estimating initial central haplotypes, y, using pam.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Initial central haplotypes, y, estimated.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: No need to generate model matrix when using internal_coef.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting to generate initial response vector.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Initial response vector done.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Model matrix and initial vectors has been generated.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting the EM algorithm using internal_coef IRLS method.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 1, max|vic - vic_old| / max(vic_old) = 0 / 0 = NaN (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Checking if the central haplotypes, y, are optimal.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Central haplotypes, y, were optimal, no need to more EM iterations.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Done.</span>
+<span class="r-in"><span><span class="va">fit1b</span><span class="op">$</span><span class="va">disclap_parameters</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             locus1    locus2    locus3   locus4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cluster1 0.2848472 0.3239989 0.3107759 0.318165</span>
+<span class="r-in"><span><span class="va">fit1b</span><span class="op">$</span><span class="va">y</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      locus1 locus2 locus3 locus4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]     14     15     16     17</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">$</span><span class="va">disclap_parameters</span> <span class="op">-</span> <span class="va">fit1b</span><span class="op">$</span><span class="va">disclap_parameters</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.11184e-10</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate another type of database</span></span>
-<span class="r-in"><span class="va">db2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu">disclap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/disclap/man/ddisclap.html" class="external-link">rdisclap</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">0.1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">500</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">db2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">db2</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">db2</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span><span class="op">+</span><span class="fl">14</span><span class="op">+</span><span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu">disclapmix</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">db</span>, <span class="va">db2</span><span class="op">)</span>, clusters <span class="op">=</span> <span class="fl">2L</span>, verbose <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting estimation for 2 clusters.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Estimating initial central haplotypes, y, using pam.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Initial central haplotypes, y, estimated.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: No need to generate model matrix when using internal_coef.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting to generate initial response vector.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Initial response vector done.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Model matrix and initial vectors has been generated.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Starting the EM algorithm using internal_coef IRLS method.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 1, max|vic - vic_old| / max(vic_old) = 0.4993107 / 0 = Inf (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 2, max|vic - vic_old| / max(vic_old) = 0.2177447 / 0.9993107 = 0.2178948 (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 3, max|vic - vic_old| / max(vic_old) = 0.08830593 / 0.9999992 = 0.088306 (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 4, max|vic - vic_old| / max(vic_old) = 0.02919951 / 0.9999997 = 0.02919952 (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 5, max|vic - vic_old| / max(vic_old) = 0.01052868 / 0.9999998 = 0.01052868 (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 6, max|vic - vic_old| / max(vic_old) = 0.003814948 / 0.9999998 = 0.003814949 (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 7, max|vic - vic_old| / max(vic_old) = 0.001383995 / 0.9999998 = 0.001383995 (eps = 0.001)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Iteration 8, max|vic - vic_old| / max(vic_old) = 0.0005023277 / 0.9999998 = 0.0005023278 (eps = 0.001)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">$</span><span class="va">disclap_parameters</span> <span class="op">-</span> <span class="va">fit1b</span><span class="op">$</span><span class="va">disclap_parameters</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4.244216e-12</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate another type of database</span></span></span>
+<span class="r-in"><span><span class="va">db2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu">disclap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/disclap/man/ddisclap.html" class="external-link">rdisclap</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">0.1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">500</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">db2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">db2</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">db2</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span><span class="op">+</span><span class="fl">14</span><span class="op">+</span><span class="va">i</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu">disclapmix</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">db</span>, <span class="va">db2</span><span class="op">)</span>, clusters <span class="op">=</span> <span class="fl">2L</span>, verbose <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting estimation for 2 clusters.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Estimating initial central haplotypes, y, using pam.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Initial central haplotypes, y, estimated.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: No need to generate model matrix when using internal_coef.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting to generate initial response vector.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Initial response vector done.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Model matrix and initial vectors has been generated.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Starting the EM algorithm using internal_coef IRLS method.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 1, max|vic - vic_old| / max(vic_old) = 0.4990921 / 0 = Inf (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 2, max|vic - vic_old| / max(vic_old) = 0.2225413 / 0.9990921 = 0.2227435 (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 3, max|vic - vic_old| / max(vic_old) = 0.09083715 / 0.9999965 = 0.09083746 (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 4, max|vic - vic_old| / max(vic_old) = 0.03120182 / 0.9999988 = 0.03120186 (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 5, max|vic - vic_old| / max(vic_old) = 0.01030749 / 0.9999991 = 0.0103075 (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 6, max|vic - vic_old| / max(vic_old) = 0.003361654 / 0.9999991 = 0.003361657 (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 7, max|vic - vic_old| / max(vic_old) = 0.001090934 / 0.9999992 = 0.001090935 (eps = 0.001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Iteration 8, max|vic - vic_old| / max(vic_old) = 0.000353397 / 0.9999992 = 0.0003533973 (eps = 0.001)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Stopping after 8 iterations due to convergence, 0.001 &gt; 0.0005023278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Stopping after 8 iterations due to convergence, 0.001 &gt; 0.0003533973</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Checking if the central haplotypes, y, are optimal.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Central haplotypes, y, were optimal, no need to more EM iterations.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-08-17 20:52:59: Done.</span>
-<span class="r-in"><span class="va">fit2</span><span class="op">$</span><span class="va">disclap_parameters</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             locus1    locus2    locus3    locus4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cluster1 0.3039363 0.3237512 0.3181707 0.3236126</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cluster2 0.1057971 0.1126944 0.1107519 0.1126462</span>
-<span class="r-in"><span class="va">fit2</span><span class="op">$</span><span class="va">y</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Checking if the central haplotypes, y, are optimal.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Central haplotypes, y, were optimal, no need to more EM iterations.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2022-12-19 15:17:38: Done.</span>
+<span class="r-in"><span><span class="va">fit2</span><span class="op">$</span><span class="va">disclap_parameters</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              locus1    locus2     locus3     locus4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cluster1 0.30558394 0.3337961 0.30231200 0.30865384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cluster2 0.09329936 0.1019130 0.09230038 0.09423664</span>
+<span class="r-in"><span><span class="va">fit2</span><span class="op">$</span><span class="va">y</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      locus1 locus2 locus3 locus4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]     14     15     16     17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]     15     16     17     18</span>
-<span class="r-in"><span class="va">fit2</span><span class="op">$</span><span class="va">tau</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3237823 0.6762177</span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="va">fit2</span><span class="op">$</span><span class="va">tau</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3338218 0.6661782</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -363,7 +390,7 @@ in R is used.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

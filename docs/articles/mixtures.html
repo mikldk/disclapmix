@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">disclapmix</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.4.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.5.9002</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
                         <h4 data-toc-skip class="author">Mikkel Meyer
 Andersen</h4>
             
-            <h4 data-toc-skip class="date">17 august, 2022</h4>
+            <h4 data-toc-skip class="date">19 december, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mikldk/disclapmix/blob/HEAD/vignettes/mixtures.Rmd" class="external-link"><code>vignettes/mixtures.Rmd</code></a></small>
       <div class="hidden name"><code>mixtures.Rmd</code></div>
@@ -109,104 +109,104 @@ haplotypes) at <span class="math inline">\(r=10\)</span> loci is
 available in the <code>danes</code> dataset. Let us load the package as
 well as the data:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://dx.doi.org/10.1016/j.jtbi.2013.03.009" class="external-link">disclapmix</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://dx.doi.org/10.1016/j.jtbi.2013.03.009" class="external-link">disclapmix</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span></span></code></pre></div>
 <p>The database is in compact format, i.e. one unique haplotype per row.
 To fit the model, we need one observation per row. This is done for
 example like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">danes</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span><span class="op">)</span>, <span class="va">danes</span><span class="op">$</span><span class="va">n</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##  int [1:185, 1:10] 13 13 13 13 13 13 14 14 14 14 ...</span>
-<span class="co">##  - attr(*, "dimnames")=List of 2</span>
-<span class="co">##   ..$ : chr [1:185] "1" "2" "3" "4" ...</span>
-<span class="co">##   ..$ : chr [1:10] "DYS19" "DYS389I" "DYS389II" "DYS390" ...</span></code></pre>
+<code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">danes</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span><span class="op">)</span>, <span class="va">danes</span><span class="op">$</span><span class="va">n</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">danes</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">db</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##  int [1:185, 1:10] 13 13 13 13 13 13 14 14 14 14 ...</span></span>
+<span><span class="co">##  - attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   ..$ : chr [1:185] "1" "2" "3" "4" ...</span></span>
+<span><span class="co">##   ..$ : chr [1:10] "DYS19" "DYS389I" "DYS389II" "DYS390" ...</span></span></code></pre>
 <p>Also, note that the database is now an integer matrix.</p>
 <p>Assume now that we have a mixture and that the reference database are
 without these two contributors:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">donor1</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>
-<span class="va">donor2</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="fl">20</span>, <span class="op">]</span>
-<span class="va">refdb</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">donor1</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span>
+<span><span class="va">donor2</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="fl">20</span>, <span class="op">]</span></span>
+<span><span class="va">refdb</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span><span class="op">)</span>, <span class="op">]</span></span></code></pre></div>
 <p>We now construct the mixture:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_mixture.html">generate_mixture</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">donor1</span>, <span class="va">donor2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_mixture.html">generate_mixture</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">donor1</span>, <span class="va">donor2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can then see some properties of possible pairs:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contributor_pairs.html">contributor_pairs</a></span><span class="op">(</span><span class="va">mix</span><span class="op">)</span>
-<span class="va">pairs</span></code></pre></div>
-<pre><code><span class="co">## Mixture:</span>
-<span class="co">##   DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
-<span class="co">## 1 13,14   13,14    29,30     22     10  13,15     13  14,15  11,12     12</span>
-<span class="co">## </span>
-<span class="co">## Number of possible contributor pairs = 32</span></code></pre>
+<code class="sourceCode R"><span><span class="va">pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contributor_pairs.html">contributor_pairs</a></span><span class="op">(</span><span class="va">mix</span><span class="op">)</span></span>
+<span><span class="va">pairs</span></span></code></pre></div>
+<pre><code><span><span class="co">## Mixture:</span></span>
+<span><span class="co">##   DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span></span>
+<span><span class="co">## 1 13,14   13,14    29,30     22     10  13,15     13  14,15  11,12     12</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Number of possible contributor pairs = 32</span></span></code></pre>
 <p>To do much more, we need a model assigning hpalotype probabilies. In
 the introduction vignette, we found that 4 clusters seemed fine, so let
 us fit this model:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/disclapmix.html">disclapmix</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">refdb</span>, clusters <span class="op">=</span> <span class="fl">4L</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/disclapmix.html">disclapmix</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">refdb</span>, clusters <span class="op">=</span> <span class="fl">4L</span><span class="op">)</span></span></code></pre></div>
 <p>We can now use this model to e.g. rank the contributor pairs:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ranked_pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rank_contributor_pairs.html">rank_contributor_pairs</a></span><span class="op">(</span><span class="va">pairs</span>, <span class="va">fit</span><span class="op">)</span>
-<span class="va">ranked_pairs</span></code></pre></div>
-<pre><code><span class="co">## Mixture:</span>
-<span class="co">##   DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
-<span class="co">## 1 13,14   13,14    29,30     22     10  13,15     13  14,15  11,12     12</span>
-<span class="co">## </span>
-<span class="co">## Contributor pairs = 32</span>
-<span class="co">## </span>
-<span class="co">## Sum of all (product of contributor pair haplotypes) = 2.263911e-14</span>
-<span class="co">## </span>
-<span class="co">## Showing rank 1-5:</span>
-<span class="co">## </span>
-<span class="co">## Rank 1 [ P(H1)*P(H2) = 2.929608e-15 ]:</span>
-<span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
-<span class="co">## H1    13      14       30      .      .     15      .     14     11      .</span>
-<span class="co">## H2    14      13       29      .      .     13      .     15     12      .</span>
-<span class="co">##            Prob</span>
-<span class="co">## H1 1.945729e-11</span>
-<span class="co">## H2 1.505661e-04</span>
-<span class="co">## </span>
-<span class="co">## Rank 2 [ P(H1)*P(H2) = 2.224515e-15 ]:</span>
-<span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
-<span class="co">## H1    13      13       29      .      .     13      .     15     12      .</span>
-<span class="co">## H2    14      14       30      .      .     15      .     14     11      .</span>
-<span class="co">##            Prob</span>
-<span class="co">## H1 2.216703e-05</span>
-<span class="co">## H2 1.003524e-10</span>
-<span class="co">## </span>
-<span class="co">## Rank 3 [ P(H1)*P(H2) = 1.722751e-15 ]:</span>
-<span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
-<span class="co">## H1    13      14       30      .      .     13      .     14     11      .</span>
-<span class="co">## H2    14      13       29      .      .     15      .     15     12      .</span>
-<span class="co">##            Prob</span>
-<span class="co">## H1 3.356602e-09</span>
-<span class="co">## H2 5.132425e-07</span>
-<span class="co">## </span>
-<span class="co">## Rank 4 [ P(H1)*P(H2) = 1.364569e-15 ]:</span>
-<span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
-<span class="co">## H1    13      13       29      .      .     15      .     15     12      .</span>
-<span class="co">## H2    14      14       30      .      .     13      .     14     11      .</span>
-<span class="co">##            Prob</span>
-<span class="co">## H1 7.556192e-08</span>
-<span class="co">## H2 1.805895e-08</span>
-<span class="co">## </span>
-<span class="co">## Rank 5 [ P(H1)*P(H2) = 1.060766e-15 ]:</span>
-<span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span>
-<span class="co">## H1    13      13       30      .      .     15      .     14     11      .</span>
-<span class="co">## H2    14      14       29      .      .     13      .     15     12      .</span>
-<span class="co">##            Prob</span>
-<span class="co">## H1 6.777397e-11</span>
-<span class="co">## H2 1.565152e-05</span>
-<span class="co">## </span>
-<span class="co">##  (27 contributor pairs hidden.)</span></code></pre>
+<code class="sourceCode R"><span><span class="va">ranked_pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rank_contributor_pairs.html">rank_contributor_pairs</a></span><span class="op">(</span><span class="va">pairs</span>, <span class="va">fit</span><span class="op">)</span></span>
+<span><span class="va">ranked_pairs</span></span></code></pre></div>
+<pre><code><span><span class="co">## Mixture:</span></span>
+<span><span class="co">##   DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span></span>
+<span><span class="co">## 1 13,14   13,14    29,30     22     10  13,15     13  14,15  11,12     12</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Contributor pairs = 32</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Sum of all (product of contributor pair haplotypes) = 2.263911e-14</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Showing rank 1-5:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Rank 1 [ P(H1)*P(H2) = 2.929608e-15 ]:</span></span>
+<span><span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span></span>
+<span><span class="co">## H1    13      14       30      .      .     15      .     14     11      .</span></span>
+<span><span class="co">## H2    14      13       29      .      .     13      .     15     12      .</span></span>
+<span><span class="co">##            Prob</span></span>
+<span><span class="co">## H1 1.945729e-11</span></span>
+<span><span class="co">## H2 1.505661e-04</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Rank 2 [ P(H1)*P(H2) = 2.224515e-15 ]:</span></span>
+<span><span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span></span>
+<span><span class="co">## H1    13      13       29      .      .     13      .     15     12      .</span></span>
+<span><span class="co">## H2    14      14       30      .      .     15      .     14     11      .</span></span>
+<span><span class="co">##            Prob</span></span>
+<span><span class="co">## H1 2.216703e-05</span></span>
+<span><span class="co">## H2 1.003524e-10</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Rank 3 [ P(H1)*P(H2) = 1.722751e-15 ]:</span></span>
+<span><span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span></span>
+<span><span class="co">## H1    13      14       30      .      .     13      .     14     11      .</span></span>
+<span><span class="co">## H2    14      13       29      .      .     15      .     15     12      .</span></span>
+<span><span class="co">##            Prob</span></span>
+<span><span class="co">## H1 3.356602e-09</span></span>
+<span><span class="co">## H2 5.132425e-07</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Rank 4 [ P(H1)*P(H2) = 1.364569e-15 ]:</span></span>
+<span><span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span></span>
+<span><span class="co">## H1    13      13       29      .      .     15      .     15     12      .</span></span>
+<span><span class="co">## H2    14      14       30      .      .     13      .     14     11      .</span></span>
+<span><span class="co">##            Prob</span></span>
+<span><span class="co">## H1 7.556192e-08</span></span>
+<span><span class="co">## H2 1.805895e-08</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Rank 5 [ P(H1)*P(H2) = 1.060766e-15 ]:</span></span>
+<span><span class="co">##    DYS19 DYS389I DYS389II DYS390 DYS391 DYS392 DYS393 DYS437 DYS438 DYS439</span></span>
+<span><span class="co">## H1    13      13       30      .      .     15      .     14     11      .</span></span>
+<span><span class="co">## H2    14      14       29      .      .     13      .     15     12      .</span></span>
+<span><span class="co">##            Prob</span></span>
+<span><span class="co">## H1 6.777397e-11</span></span>
+<span><span class="co">## H2 1.565152e-05</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##  (27 contributor pairs hidden.)</span></span></code></pre>
 <p>We can get the ranks for the donors:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_rank.html">get_rank</a></span><span class="op">(</span><span class="va">ranked_pairs</span>, <span class="va">donor1</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 13</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_rank.html">get_rank</a></span><span class="op">(</span><span class="va">ranked_pairs</span>, <span class="va">donor1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 13</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_rank.html">get_rank</a></span><span class="op">(</span><span class="va">ranked_pairs</span>, <span class="va">donor2</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 13</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_rank.html">get_rank</a></span><span class="op">(</span><span class="va">ranked_pairs</span>, <span class="va">donor2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 13</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -256,7 +256,7 @@ Danes.”</span> <em>Forensic Science International</em> 155 2-3: 205–10.
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
