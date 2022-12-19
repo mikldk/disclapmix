@@ -135,7 +135,8 @@ library(ggplot2)
 ggplot(d, aes(Clusters, BIC, color = Label)) + 
   geom_point() +
   geom_line() +
-  scale_x_continuous(breaks = unique(d$Clusters))
+  scale_x_continuous(breaks = unique(d$Clusters)) + 
+  theme_bw()
 ```
 
 ```{r, eval = ggplot2dplyr_available}
@@ -158,3 +159,37 @@ saveRDS(custom_fits_best, "obj-custom_fits_best.Rdata")
 ```
 
 
+# Multiple criteria
+
+```{r}
+fits <- disclapmix_adaptive(db, criteria = c("BIC", "AIC", "AICc"), margin = 5L)
+length(fits)
+d <- data.frame(
+  BIC = sapply(fits, function(x) x$BIC_marginal),
+  AIC = sapply(fits, function(x) x$AIC_marginal),
+  AICc = sapply(fits, function(x) x$AICc_marginal),
+  Clusters = sapply(fits, function(x) nrow(x$y))
+)
+best_BIC <- d$Clusters[which.min(d$BIC)]
+best_AIC <- d$Clusters[which.min(d$AIC)]
+best_AICc <- d$Clusters[which.min(d$AICc)]
+```
+
+```{r, eval = ggplot2dplyr_available, fig.width=5, fig.height=3}
+library(ggplot2)
+ggplot(d) + 
+  
+  geom_vline(aes(Clusters, xintercept = best_BIC, color = "BIC"), linetype = "dashed") +
+  geom_vline(aes(Clusters, xintercept = best_AIC, color = "AIC"), linetype = "dashed") +
+  geom_vline(aes(Clusters, xintercept = best_AICc, color = "AICc"), linetype = "dashed") +
+  
+  geom_line(aes(Clusters, BIC, color = "BIC")) +
+  geom_line(aes(Clusters, AIC, color = "AIC")) +
+  geom_line(aes(Clusters, AICc, color = "AICc")) +
+  
+  scale_x_continuous(breaks = unique(d$Clusters)) + 
+  
+  labs(y = "Information criteria value", color = "Information criteria") + 
+  
+  theme_bw()
+```

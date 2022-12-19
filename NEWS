@@ -1,3 +1,7 @@
+Changes in version 1.7.6
+  * Allowing `disclapmix_adaptive()` to take multiple `criteria`'s 
+  * `disclapmix_adaptive()`: Not necessary to supply `_marginal` suffix for `criteria`
+
 Changes in version 1.7.5
   * New vignette "Adaptive fitting"
   * Allowing `disclapmix_adaptive()` to take `label` and generators 

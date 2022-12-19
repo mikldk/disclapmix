@@ -13,7 +13,7 @@
 #' 
 #' @inheritParams disclapmix
 #' @param margin Fit models until there is at least this margin
-#' @param criteria The slot to chose the best model from (small values indicate better model)
+#' @param criteria The slot to chose the best model from (BIC/AIC/AICc)
 #' @param init_y_generator Function taking the number of clusters as input and returns `init_y` values
 #' @param init_v_generator Function taking the number of clusters as input and returns `init_v` values
 #' @param \dots Passed on to `disclapmix_robust()` (and further to `disclapmix()`)
@@ -42,10 +42,21 @@
 #' @export
 disclapmix_adaptive <- function(x, 
                                 label = "DL", 
-                                margin = 5L, criteria = 'BIC_marginal', 
+                                margin = 5L, 
+                                criteria = 'BIC', 
                                 init_y_generator = NULL, 
                                 init_v_generator = NULL, ...) {
   stopifnot(margin >= 1L)
+  
+  criteria <- gsub("_marginal", "", criteria, fixed = TRUE)
+  criteria <- paste0(criteria, "_marginal")
+  unknown_criteria <- setdiff(criteria, c("BIC_marginal", 
+                                          "AIC_marginal", 
+                                          "AICc_marginal"))
+  if (length(criteria) == 0L || length(unknown_criteria) > 0L) {
+    stop("Invalid criteria specification")
+  }
+  
   
   disclapmix_robust_call <- function(k, ...) {
     if (is.null(init_y_generator) && is.null(init_v_generator)) {
@@ -71,16 +82,39 @@ disclapmix_adaptive <- function(x,
   dl_fits <- lapply(old_ks, function(k) {
     disclapmix_robust_call(k = k, ...)
   })
-  dl_fits_BIC <- sapply(dl_fits, function(x) x[[criteria]])
-  best_k <- which.min(dl_fits_BIC)
+  
+  
+  calc_best_k <- function(dl_fits, criteria) {
+    crit <- criteria[1L]
+    dl_fits_IC <- sapply(dl_fits, function(x) x[[crit]])
+    best_k <- which.min(dl_fits_IC)
+    
+    if (length(criteria) > 1L) {
+      for (crit in criteria[-1L]) {
+        dl_fits_IC <- sapply(dl_fits, function(x) x[[crit]])
+        best_k_cand <- which.min(dl_fits_IC)
+        
+        # Taking the largest of the minimal IC 
+        # (as that is the one pushing the limit)
+        if (best_k_cand > best_k) {
+          best_k <- best_k_cand
+        }
+      }
+    }
+    
+    return(best_k)
+  }
+  
+  best_k <- calc_best_k(dl_fits, criteria)
+  
+  
   
   max_k <- tail(old_ks, 1)
   
   while (best_k > (max_k - margin)) {
     max_k <- max_k + 1L
     dl_fits[[max_k]] <- disclapmix_robust_call(k = max_k, ...)
-    dl_fits_BIC <- unlist(lapply(dl_fits, function(x) x[[criteria]]))
-    best_k <- which.min(dl_fits_BIC)
+    best_k <- calc_best_k(dl_fits, criteria)
   }
   
   # Check that the number of clusters are as expected:

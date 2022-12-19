@@ -8,7 +8,7 @@ disclapmix_adaptive(
   x,
   label = "DL",
   margin = 5L,
-  criteria = "BIC_marginal",
+  criteria = "BIC",
   init_y_generator = NULL,
   init_v_generator = NULL,
   ...
@@ -19,7 +19,7 @@ disclapmix_adaptive(
 
 \item{margin}{Fit models until there is at least this margin}
 
-\item{criteria}{The slot to chose the best model from (small values indicate better model)}
+\item{criteria}{The slot to chose the best model from (BIC/AIC/AICc)}
 
 \item{init_y_generator}{Function taking the number of clusters as input and returns `init_y` values}
 
