@@ -407,7 +407,10 @@ disclapmix <- function(x, clusters,
           control = glm.control(trace = (verbose >= 2L), epsilon = glm_control_eps, maxit = glm_control_maxit))
         disclap_parameters <- convert_coef_to_disclap_parameters(fit$coefficients, clusters)
         
-        covmat <- solve(t(model_matrix) %*% diag(fit$weights) %*% model_matrix) # assumens dispersion is 1 # Intercept is missing
+        # 1.7.5: 2023-01-24
+        #covmat <- solve(t(model_matrix) %*% diag(fit$weights) %*% model_matrix) # assumens dispersion is 1 # Intercept is missing
+        covmat <- solve(t.default(model_matrix) %*% (fit$weights * model_matrix)) # assumens dispersion is 1 # Intercept is missing
+        
         #covmat <- chol2inv(fit$qr$qr) 
         covmat_nms <- c(paste0("cluster", 1L:clusters), colnames(x)[-1L])
         #colnames(covmat) <- rownames(covmat) <- covmat_nms
