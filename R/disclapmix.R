@@ -41,7 +41,7 @@
 #' \code{x = beta_correction} for \code{internal_coef} and \code{x = deviance}
 #' otherwise.
 #' @param init_y_method Which cluster method to use for finding initial central
-#' haplotypes, y: \code{pam} (recommended) or \code{clara}. Ignored if
+#' haplotypes, y: \code{pam} (recommended), \code{clara} or \code{hclust}. Ignored if
 #' \code{init_y} is supplied.
 #' @param init_v Matrix with `nrow(x)` rows and `clusters` columns specifying 
 #' initial posterior probabilities to get EM started, if
@@ -219,7 +219,9 @@ disclapmix <- function(x, clusters,
   ##
   
   if (is.null(init_y) && (
-        is.null(init_y_method) || !is.character(init_y_method) || length(init_y_method) != 1L || (init_y_method != "pam" && init_y_method != "clara")
+        is.null(init_y_method) || !is.character(init_y_method) || length(init_y_method) != 1L || (init_y_method != "pam" && 
+                                                                                                  init_y_method != "clara" && 
+                                                                                                  init_y_method != "hclust")
      )) {
     stop("The specified init_y_method is not valid, please refer to the documentation.")
   }

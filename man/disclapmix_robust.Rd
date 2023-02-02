@@ -4,12 +4,22 @@
 \alias{disclapmix_robust}
 \title{Robust fitting}
 \usage{
-disclapmix_robust(x, clusters, ...)
+disclapmix_robust(
+  x,
+  clusters,
+  rnd_obs = min(5L * clusters, round(nrow(x)/2)),
+  rnd_tries = 10,
+  ...
+)
 }
 \arguments{
 \item{x}{Dataset.}
 
 \item{clusters}{The number of clusters/components to fit the model for.}
+
+\item{rnd_obs}{Number of random observations in subset if initial fit fails}
+
+\item{rnd_tries}{Number of tries with random subset if initial fit fails}
 
 \item{\dots}{Passed on to `disclapmix()`}
 }
@@ -17,6 +27,7 @@ disclapmix_robust(x, clusters, ...)
 A wrapper around `disclapmix()` that tries to avoid errors. 
 Can sometimes avoid errors with SVD problems happening with 
 `glm_method = 'internal_coef'` and `glm_method = 'internal_dev'`.
+This is done by taking a random subset of observations.
 }
 \examples{
 data(danes)

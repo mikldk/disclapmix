@@ -4,6 +4,10 @@ check_x <- function(x) {
   } else if (nrow(x) <= 1) {
     stop("x must have more than one row")
   }
+  
+  if (any(is.na(x))) {
+    stop("x contains NA's")
+  }
 }
 
 check_y <- function(y, clusters, loci) {
@@ -50,6 +54,8 @@ create_response_vector <- function(x, y) {
   return(response)
 }
 
+#' @importFrom stats dist hclust cutree
+#' @importFrom cluster medoids
 create_initial_y <- function(x, clusters, init_y_method = "pam") {  
   if (is.null(init_y_method) | !is.character(init_y_method) | length(init_y_method) != 1) {
     stop("Invalid init_y_method argument.")
@@ -61,24 +67,30 @@ create_initial_y <- function(x, clusters, init_y_method = "pam") {
     y <- matrix(as.integer(round(apply(x, 2L, median))), nrow = 1L)
   } else {
     centers.result <- NULL
-        
+    
     if (init_y_method == "pam") {      
       centers.result <- cluster::pam(x, k = clusters, diss = FALSE, stand = FALSE, metric = "manhattan", do.swap = TRUE)
       y <- centers.result$medoids
     } else if (init_y_method == "clara") {
       centers.result <- cluster::clara(x, k = clusters, metric = "manhattan", 
-        stand = FALSE, samples = 100, 
-        sampsize = min(ceiling(nrow(x)/2), 100 + 2*clusters),
-        medoids.x = TRUE, keep.data = FALSE,
-        rngR = TRUE, pamLike = TRUE)
+                                       stand = FALSE, samples = 100, 
+                                       sampsize = min(ceiling(nrow(x)/2), 100 + 2*clusters),
+                                       medoids.x = TRUE, keep.data = FALSE,
+                                       rngR = TRUE, pamLike = TRUE)
       y <- centers.result$medoids
+    } else if (init_y_method == "hclust") {
+      # FIXME: Re-use d...
+      d <- stats::dist(x, method = "manhattan")
+      wc <- stats::hclust(d, method = "ward.D2")
+      cl <- stats::cutree(wc, clusters)
+      y <- x[cluster::medoids(x, cl), ]
     } else {
       stop("Unsupported init_y_method chosen")
     }
-
+    
     y <- as.matrix(apply(y, 2L, function(r) as.integer(round(r))))
   }
-
+  
   return(y)
 }
 
@@ -120,7 +132,7 @@ move_centers <- function(x, y, v_matrix) {
     } else {
       indices <- apply(res, 1L, which.min)
     }
-
+    
     return(ycls[indices])
   })
   
@@ -157,16 +169,16 @@ get_loglikelihood_marginal <- function(x, y, disclap_parameters, tau_vector) {
 }
 
 get_AIC <- function(logL, individuals, clusters, loci) {
-        # coord             # glm                  # tau (sums to 1)
+  # coord             # glm                  # tau (sums to 1)
   k <- (clusters * loci) + (loci + clusters - 1) + (clusters - 1)
-
+  
   return(2*k - 2*logL)
 }
 
 get_AICc <- function(logL, individuals, clusters, loci) {
-        # coord             # glm                  # tau (sums to 1)
+  # coord             # glm                  # tau (sums to 1)
   k <- (clusters * loci) + (loci + clusters - 1) + (clusters - 1)
-
+  
   # Our observations is individuals' haplotype
   # We have a model for the haplotype
   n <- individuals*loci
@@ -178,9 +190,9 @@ get_AICc <- function(logL, individuals, clusters, loci) {
 }
 
 get_BIC <- function(logL, individuals, clusters, loci) {
-        # coord             # glm                  # tau (sums to 1)
+  # coord             # glm                  # tau (sums to 1)
   k <- (clusters * loci) + (loci + clusters - 1) + (clusters - 1)
-
+  
   return(log(individuals*loci)*k - 2*logL)
 }
 
@@ -204,17 +216,17 @@ get_BIC <- function(logL, individuals, clusters, loci) {
 #' @keywords predict
 #' @export
 predict.disclapmixfit <-
-function(object, newdata, ...) {
-  if (!is(object, "disclapmixfit")) stop("object must be a disclapmixfit")
-
-  probs <- rcpp_calculate_haplotype_probabilities(newdata, object$y, object$disclap_parameters, object$tau)
-  return(probs)
-  
-  #if (se.fit && !(object$glm_method %in% c("internal_coef", "internal_dev"))) {
-  #  stop("Cannot predict se when fitting with other than internal_coef or internal_dev")
-  #}
-  #return(NA)
-}
+  function(object, newdata, ...) {
+    if (!is(object, "disclapmixfit")) stop("object must be a disclapmixfit")
+    
+    probs <- rcpp_calculate_haplotype_probabilities(newdata, object$y, object$disclap_parameters, object$tau)
+    return(probs)
+    
+    #if (se.fit && !(object$glm_method %in% c("internal_coef", "internal_dev"))) {
+    #  stop("Cannot predict se when fitting with other than internal_coef or internal_dev")
+    #}
+    #return(NA)
+  }
 
 
 #predict_increase_at_alleles <-
@@ -253,13 +265,13 @@ function(object, newdata, ...) {
 #' @keywords print
 #' @export
 print.disclapmixfit <-
-function(x, ...) {
-  if (!is(x, "disclapmixfit")) stop("x must be a disclapmixfit")
-  
-  summary.disclapmixfit(x)
-  
-  return(invisible(x))
-}
+  function(x, ...) {
+    if (!is(x, "disclapmixfit")) stop("x must be a disclapmixfit")
+    
+    summary.disclapmixfit(x)
+    
+    return(invisible(x))
+  }
 
 
 
@@ -277,29 +289,29 @@ function(x, ...) {
 #' @keywords print
 #' @export
 summary.disclapmixfit <-
-function(object, ...) {
-  if (!is(object, "disclapmixfit")) stop("object must be a disclapmixfit")
-  
-  cat("disclapmixfit from ", 
-    formatC(nrow(object$v_matrix)), " observations on ", 
-    formatC(ncol(object$y)), " loci with ", 
-    formatC(nrow(object$y)), " clusters.\n", sep = "")
-  
-  cat("\n")
-  cat("EM converged:                                                       ", object$converged, "\n", sep = "")
-  cat("Number of central haplotype changes:                                ", length(object$changed_center), "\n", sep = "")
-  cat("Total number of EM iterations:                                      ", formatC(object$iterations), "\n", sep = "")
-  cat("Model observations (n*loci*clusters):                               ", formatC(object$model_observations), "\n", sep = "")
-  cat("Model parameters ((clusters*loci)+(loci+clusters-1)+(clusters-1)):  ", formatC(object$model_parameters), "\n", sep = "")
-  cat("GLM method:                                                         ", formatC(object$glm_method), "\n", sep = "")
-  cat("Initial central haplotypes supplied:                                ", !is.null(object$init_y), "\n", sep = "")
-  
-  if (is.null(object$init_y)) {
-  cat("Method to find initial central haplotypes:                          ", object$init_y_method, "\n", sep = "")
+  function(object, ...) {
+    if (!is(object, "disclapmixfit")) stop("object must be a disclapmixfit")
+    
+    cat("disclapmixfit from ", 
+        formatC(nrow(object$v_matrix)), " observations on ", 
+        formatC(ncol(object$y)), " loci with ", 
+        formatC(nrow(object$y)), " clusters.\n", sep = "")
+    
+    cat("\n")
+    cat("EM converged:                                                       ", object$converged, "\n", sep = "")
+    cat("Number of central haplotype changes:                                ", length(object$changed_center), "\n", sep = "")
+    cat("Total number of EM iterations:                                      ", formatC(object$iterations), "\n", sep = "")
+    cat("Model observations (n*loci*clusters):                               ", formatC(object$model_observations), "\n", sep = "")
+    cat("Model parameters ((clusters*loci)+(loci+clusters-1)+(clusters-1)):  ", formatC(object$model_parameters), "\n", sep = "")
+    cat("GLM method:                                                         ", formatC(object$glm_method), "\n", sep = "")
+    cat("Initial central haplotypes supplied:                                ", !is.null(object$init_y), "\n", sep = "")
+    
+    if (is.null(object$init_y)) {
+      cat("Method to find initial central haplotypes:                          ", object$init_y_method, "\n", sep = "")
+    }
+    
+    return(invisible(object))
   }
-
-  return(invisible(object))
-}
 
 
 
@@ -331,120 +343,120 @@ function(object, ...) {
 #' 
 #' @export
 plot.disclapmixfit <-
-function(x, which = 1L, clusdist = clusterdist(x), ...) {
-  if (!is(x, "disclapmixfit")) stop("x must be a disclapmixfit")
-  
-  object <- x
-  
-  #--
-  
-  prob_masses <- do.call(rbind, lapply(1L:ncol(object$disclap_parameters), function(locus_index) {
-    ps <- object$disclap_parameters[, locus_index]
-    ys <- object$y[, locus_index]
-    xs <- (-1L):1L
-    xs_probs <- lapply(ps, ddisclap, x = xs)
+  function(x, which = 1L, clusdist = clusterdist(x), ...) {
+    if (!is(x, "disclapmixfit")) stop("x must be a disclapmixfit")
     
-    while (any(unlist(lapply(xs_probs, sum)) < 0.99)) {
-      xs <- c(min(xs) - 1L, xs, max(xs) + 1L)
+    object <- x
+    
+    #--
+    
+    prob_masses <- do.call(rbind, lapply(1L:ncol(object$disclap_parameters), function(locus_index) {
+      ps <- object$disclap_parameters[, locus_index]
+      ys <- object$y[, locus_index]
+      xs <- (-1L):1L
       xs_probs <- lapply(ps, ddisclap, x = xs)
+      
+      while (any(unlist(lapply(xs_probs, sum)) < 0.99)) {
+        xs <- c(min(xs) - 1L, xs, max(xs) + 1L)
+        xs_probs <- lapply(ps, ddisclap, x = xs)
+      }
+      
+      #rownames(xs_probs) <- names(ps)
+      #colnames(xs_probs) <- xs
+      
+      df <- vector("list", length(ps)) 
+      
+      for (df_i in seq_along(ps)) {
+        df[[df_i]] <- data.frame(x = xs + ys[df_i], probX = xs_probs[[df_i]], cluster = rownames(object$disclap_parameters)[df_i], locus = colnames(object$disclap_parameters)[locus_index])
+      }
+      
+      df <- do.call(rbind, df)
+      
+      return(df)
+    }))
+    
+    #--
+    
+    packages_needed <- c("ggplot2", "gridExtra", "ggdendro", "scales", "seriation")
+    missing <- c()
+    
+    for (pkg in packages_needed) {
+      #pkgAvail <- require(pkg, character.only = TRUE)
+      pkgAvail <- requireNamespace(pkg, quietly = TRUE)  
+      
+      if (!pkgAvail) {
+        missing <- c(missing, pkg)
+      }
     }
     
-    #rownames(xs_probs) <- names(ps)
-    #colnames(xs_probs) <- xs
-    
-    df <- vector("list", length(ps)) 
-    
-    for (df_i in seq_along(ps)) {
-      df[[df_i]] <- data.frame(x = xs + ys[df_i], probX = xs_probs[[df_i]], cluster = rownames(object$disclap_parameters)[df_i], locus = colnames(object$disclap_parameters)[locus_index])
+    if (length(missing) != 0L) {
+      warning(paste("Packages ", paste(missing, collapse = ", "), " are not available, hence the plot cannot be created.\nPlease install these if you wish to plot using this function.\nAlternatively, you can use the return value of this function to obtain the necesary data needed to create your own plot function if you for some reason do not want to install the packages.", sep = ""))
+      return(invisible(prob_masses))
     }
     
-    df <- do.call(rbind, df)
-
-    return(df)
-  }))
-  
-  #--
-  
-  packages_needed <- c("ggplot2", "gridExtra", "ggdendro", "scales", "seriation")
-  missing <- c()
-  
-  for (pkg in packages_needed) {
-    #pkgAvail <- require(pkg, character.only = TRUE)
-    pkgAvail <- requireNamespace(pkg, quietly = TRUE)  
-   
-    if (!pkgAvail) {
-      missing <- c(missing, pkg)
+    #--
+    
+    integer_breaks <- function(n = 5, ...) {
+      breaker <- scales::pretty_breaks(n, ...)
+      function(x) {
+        breaks <- breaker(x)
+        breaks[breaks == floor(breaks)]
+      }
     }
-  }
-  
-  if (length(missing) != 0L) {
-    warning(paste("Packages ", paste(missing, collapse = ", "), " are not available, hence the plot cannot be created.\nPlease install these if you wish to plot using this function.\nAlternatively, you can use the return value of this function to obtain the necesary data needed to create your own plot function if you for some reason do not want to install the packages.", sep = ""))
+    
+    # To satisfy R CMD check
+    probX <- NULL  
+    #--
+    
+    if (nrow(object$y) == 1L) {
+      p_dists <- ggplot2::ggplot(prob_masses, ggplot2::aes(x = x, y = probX)) + 
+        ggplot2::geom_bar(stat = "identity") + 
+        ggplot2::facet_grid(~ locus, scales = "free_x") + 
+        ggplot2::scale_x_continuous(breaks = integer_breaks()) +
+        ggplot2::labs(x = "X", y = "P(X)") 
+      
+      print(p_dists)
+    } else {
+      hc <- hclust(clusdist, method = "complete")
+      
+      if (nrow(object$y) > 2L) {
+        #y_ser_vec <- seriation::seriate(clusdist, margin = 1, method = "OLO", hclust = hc)
+        y_ser_vec <- seriation::seriate(clusdist, method = "OLO", hclust = hc)
+        y_order <- seriation::get_order(y_ser_vec)
+        hc_reordered <- y_ser_vec[[1L]]
+      } else {
+        hc_reordered <- hc
+        y_order <- 1L:nrow(object$y)
+      }
+      
+      prob_masses$ordered_cluster <- factor(prob_masses$cluster,
+                                            levels = rev(levels(prob_masses$cluster)[y_order]))
+      
+      p_dists <- ggplot2::ggplot(prob_masses, ggplot2::aes(x = x, y = probX)) + 
+        ggplot2::geom_bar(stat = "identity") + 
+        ggplot2::facet_grid(ordered_cluster ~ locus, scales = "free_x") + 
+        ggplot2::scale_x_continuous(breaks = integer_breaks()) +
+        ggplot2::labs(x = "X", y = "P(X)") 
+      
+      # same ^
+      
+      #clusdist <- clusterdist(object)
+      
+      hcdata <- ggdendro::dendro_data(hc_reordered, type = "rectangle")
+      
+      hcdata$labels$label <- ''
+      p_dendo <- ggdendro::ggdendrogram(hcdata, rotate = TRUE, leaf_labels = FALSE)
+      
+      #--
+      
+      gridExtra::grid.arrange(ggplot2::ggplotGrob(p_dists), ggplot2::ggplotGrob(p_dendo), 
+                              ncol = 2, widths = c(4, 2))
+      
+      #--
+    }
+    
     return(invisible(prob_masses))
   }
-  
-  #--
-  
-  integer_breaks <- function(n = 5, ...) {
-    breaker <- scales::pretty_breaks(n, ...)
-    function(x) {
-       breaks <- breaker(x)
-       breaks[breaks == floor(breaks)]
-    }
-  }
- 
-  # To satisfy R CMD check
-  probX <- NULL  
-  #--
-  
-  if (nrow(object$y) == 1L) {
-    p_dists <- ggplot2::ggplot(prob_masses, ggplot2::aes(x = x, y = probX)) + 
-      ggplot2::geom_bar(stat = "identity") + 
-      ggplot2::facet_grid(~ locus, scales = "free_x") + 
-      ggplot2::scale_x_continuous(breaks = integer_breaks()) +
-      ggplot2::labs(x = "X", y = "P(X)") 
-      
-    print(p_dists)
-  } else {
-    hc <- hclust(clusdist, method = "complete")
-    
-    if (nrow(object$y) > 2L) {
-      #y_ser_vec <- seriation::seriate(clusdist, margin = 1, method = "OLO", hclust = hc)
-      y_ser_vec <- seriation::seriate(clusdist, method = "OLO", hclust = hc)
-      y_order <- seriation::get_order(y_ser_vec)
-      hc_reordered <- y_ser_vec[[1L]]
-    } else {
-      hc_reordered <- hc
-      y_order <- 1L:nrow(object$y)
-    }
-    
-    prob_masses$ordered_cluster <- factor(prob_masses$cluster,
-         levels = rev(levels(prob_masses$cluster)[y_order]))
-
-    p_dists <- ggplot2::ggplot(prob_masses, ggplot2::aes(x = x, y = probX)) + 
-      ggplot2::geom_bar(stat = "identity") + 
-      ggplot2::facet_grid(ordered_cluster ~ locus, scales = "free_x") + 
-      ggplot2::scale_x_continuous(breaks = integer_breaks()) +
-      ggplot2::labs(x = "X", y = "P(X)") 
-  
-    # same ^
-  
-    #clusdist <- clusterdist(object)
-
-    hcdata <- ggdendro::dendro_data(hc_reordered, type = "rectangle")
-
-    hcdata$labels$label <- ''
-    p_dendo <- ggdendro::ggdendrogram(hcdata, rotate = TRUE, leaf_labels = FALSE)
-    
-    #--
-    
-    gridExtra::grid.arrange(ggplot2::ggplotGrob(p_dists), ggplot2::ggplotGrob(p_dendo), 
-      ncol = 2, widths = c(4, 2))
-
-    #--
-  }
-   
-  return(invisible(prob_masses))
-}
 
 
 
@@ -487,28 +499,28 @@ simulate.disclapmixfit <- function(object, nsim = 1L, seed = NULL, cluster = NUL
   } else {
     stop("Unexpected")
   }
-
+  
   return(res)
 }
 
 INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, apriori_probs, weight_vector, vmat, 
-  verbose = FALSE, stop_by_deviance = TRUE, epsilon = 1e-4, maxit = 25L) {
+                            verbose = FALSE, stop_by_deviance = TRUE, epsilon = 1e-4, maxit = 25L) {
   
   converged <- FALSE
   devold <- Inf
   dev <- 0
-
+  
   ks <- 1:loci
   js <- 1:clusters
   
   mi <- min(loci, clusters)
   di <- max(loci, clusters) - mi
-    
+  
   ############################################################
   # Initialisation
   ############################################################
   tmp_d <- array(response_vector, c(loci, clusters, individuals))
- 
+  
   RkSj <- matrix(0, nrow = loci, ncol = clusters)
   for (k in ks) {
     for (j in js) {
@@ -525,10 +537,10 @@ INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, aprior
   beta <- c(rep(0.5, loci), rep(-1, clusters))
   beta_correction <- beta
   beta_correction_old <- beta
-
+  
   lin.pred <- rep(beta[ks], clusters * individuals)
   lin.pred <- lin.pred + rep(rep(beta[-(ks)], each = loci), individuals)
-
+  
   for (iter in 1L:maxit) {
     if (stop_by_deviance) {
       mu_m <- disclapglm_linkinv(lin.pred)
@@ -563,7 +575,7 @@ INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, aprior
         converged <- TRUE
         break
       }
-
+      
       beta_correction_old <- beta_correction
     }
     ############################################################################
@@ -581,7 +593,7 @@ INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, aprior
     }
     
     apriori_probs_indv <- apriori_probs * individuals
-
+    
     offD <- matrix(0, nrow = loci, ncol = clusters)
     mu_generic_apriori_probs <- matrix(0, nrow = loci, ncol = clusters)
     for (k in ks) {
@@ -598,7 +610,7 @@ INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, aprior
     H <- t(D2^-.5*t(H))
     
     dec <- svd(H, loci, clusters)
-
+    
     OD <- 1-dec$d^2
     OD[1] <- 0.25
     
@@ -622,7 +634,7 @@ INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, aprior
     if (length(dia) > 1) { # > 1 cluster
       dia <- diag(dia)
     }
-
+    
     K <- matrix(0, loci, clusters)
     
     if (loci <= clusters) {
@@ -638,11 +650,11 @@ INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, aprior
     if (length(ds) > 1) {
       ds <- diag(ds)
     }
-
+    
     mI <- matrix(0, loci+clusters, loci+clusters)
     U <- D1^-.5*dec$u
     V <- D2^-.5*dec$v
-
+    
     mI[ks, ks] <- U %*% dr %*% t(U)
     mI[ks, (loci+1):(loci+clusters)] <- U %*% K %*% t(V)
     mI[(loci+1):(loci+clusters), ks] <- t(mI[ks,(loci+1):(loci+clusters)])
@@ -655,9 +667,9 @@ INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, aprior
     lin.pred <- lin.pred + lin_pred_correction
     ##################
   }
-
+  
   coefficients <- as.numeric(beta)
-
+  
   if (stop_by_deviance == FALSE) {
     mu_m <- disclapglm_linkinv(lin.pred)
     dev <- disclapglm_deviance(d_vec, mu_m, weight_vector)
@@ -670,7 +682,7 @@ INTERNAL_glmfit <- function(loci, clusters, individuals, response_vector, aprior
     linear.predictors = lin.pred,
     P = mI
   )
-
+  
   return(ans)
 }
 

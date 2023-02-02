@@ -51,7 +51,7 @@ iterations converge when \code{|x - x_{old}|/(|x| + 0.1) < epsilon}, where
 otherwise.}
 
 \item{init_y_method}{Which cluster method to use for finding initial central
-haplotypes, y: \code{pam} (recommended) or \code{clara}. Ignored if
+haplotypes, y: \code{pam} (recommended), \code{clara} or \code{hclust}. Ignored if
 \code{init_y} is supplied.}
 
 \item{init_v}{Matrix with `nrow(x)` rows and `clusters` columns specifying 

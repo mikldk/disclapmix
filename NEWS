@@ -8,6 +8,9 @@ Changes in version 1.7.5
   * Add `cluster` argument to `simulate()` to force simulating from a 
     particular cluster
   * `disclapmix()` for `glm_method` `glm.fit`: `covmat` calculated more efficiently
+  * Parameters for `disclapmix_robust()` controlling retries with random subsets
+  * Include check for if data contains `NA`'s
+  * New `init_y_method`: `hclust`
 
 Changes in version 1.7.4
   * `disclapmix()` takes new agument: `init_v` (initial posterior probabilities 
