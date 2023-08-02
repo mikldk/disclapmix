@@ -150,6 +150,10 @@ NumericVector rcpp_calculate_haplotype_probabilities(IntegerMatrix new_data, Int
       double component_prob = tau(c);
       
       for (int l = 0; l < loci; l++) {
+        if (Rcpp::IntegerVector::is_na(h(l))) {
+          continue;
+        }
+        
         double pcl = p(c, l);
         component_prob *= pow(pcl, abs(h(l) - yhap(l)))*((1-pcl)/(1+pcl));
       }

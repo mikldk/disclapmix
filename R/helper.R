@@ -203,10 +203,14 @@ get_BIC <- function(logL, individuals, clusters, loci) {
 #' Is able to predict haplotype frequencies using a \code{\link{disclapmixfit}}
 #' object.
 #' 
+#' Note that `NA` values give rise to an error unless the `marginalise` argument 
+#' is set to `TRUE`.
 #' 
 #' @param object a \code{\link{disclapmixfit}} object
 #' @param newdata the haplotypes in matrix format to estimate haplotype
 #' probabilities for
+#' @param marginalise Should loci with `NA` be dealt with by marginalising out 
+#'                    that locus?
 #' @param ... not used
 #' @seealso \code{\link{disclapmix}} \code{\link{disclapmixfit}}
 #' \code{\link{print.disclapmixfit}} \code{\link{summary.disclapmixfit}}
@@ -216,8 +220,15 @@ get_BIC <- function(logL, individuals, clusters, loci) {
 #' @keywords predict
 #' @export
 predict.disclapmixfit <-
-  function(object, newdata, ...) {
-    if (!is(object, "disclapmixfit")) stop("object must be a disclapmixfit")
+  function(object, newdata, marginalise = FALSE, ...) {
+    if (!is(object, "disclapmixfit")) {
+      stop("object must be a disclapmixfit")
+    }
+    
+    if (marginalise == FALSE && any(is.na(newdata))) {
+      stop("newdata contains NA values - if you meant to marginalising out ", 
+           "those, you need to set marginalise = TRUE")
+    }
     
     probs <- rcpp_calculate_haplotype_probabilities(newdata, object$y, object$disclap_parameters, object$tau)
     return(probs)

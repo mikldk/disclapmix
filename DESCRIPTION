@@ -1,7 +1,7 @@
 Package: disclapmix
 Type: Package
 Title: Discrete Laplace Mixture Inference using the EM Algorithm
-Version: 1.7.4.9902
+Version: 1.7.4.9910
 Authors@R: c(
     person(given = "Mikkel Meyer", family = "Andersen", 
         email = "mikl@math.aau.dk", role = c("aut", "cre")),

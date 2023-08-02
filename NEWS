@@ -11,6 +11,8 @@ Changes in version 1.7.5
   * Parameters for `disclapmix_robust()` controlling retries with random subsets
   * Include check for if data contains `NA`'s
   * New `init_y_method`: `hclust`
+  * `predict` can now accept NA values, in which case that locus is 
+    ignored (corresponding to marginalising over that locus).
 
 Changes in version 1.7.4
   * `disclapmix()` takes new agument: `init_v` (initial posterior probabilities 

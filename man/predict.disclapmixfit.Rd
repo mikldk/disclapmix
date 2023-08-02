@@ -4,7 +4,7 @@
 \alias{predict.disclapmixfit}
 \title{Predict from a disclapmixfit}
 \usage{
-\method{predict}{disclapmixfit}(object, newdata, ...)
+\method{predict}{disclapmixfit}(object, newdata, marginalise = FALSE, ...)
 }
 \arguments{
 \item{object}{a \code{\link{disclapmixfit}} object}
@@ -12,11 +12,18 @@
 \item{newdata}{the haplotypes in matrix format to estimate haplotype
 probabilities for}
 
+\item{marginalise}{Should loci with `NA` be dealt with by marginalising out 
+that locus?}
+
 \item{...}{not used}
 }
 \description{
 Is able to predict haplotype frequencies using a \code{\link{disclapmixfit}}
 object.
+}
+\details{
+Note that `NA` values give rise to an error unless the `marginalise` argument 
+is set to `TRUE`.
 }
 \seealso{
 \code{\link{disclapmix}} \code{\link{disclapmixfit}}
