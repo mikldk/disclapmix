@@ -26,7 +26,7 @@ test_that("predict", {
   
   expect_error(predict(fit, newx_dropout))
 
-  # Manual marginalisation
+  # Manual marginalisation: One locus
   for (i in seq_len(nrow(newx_dropout))) {
     h <- newx_dropout[i, ]
     ido <- drop_idx[i]
@@ -40,6 +40,22 @@ test_that("predict", {
     ph_marg <- sum(predict(fit, dh))
     ph_do <- predict(fit, hm, marginalise = TRUE)
     stopifnot(isTRUE(all.equal(ph_marg, ph_do)))
+  }
+  
+  # Manual marginalisation: Two locus
+  #for (i in seq_len(nrow(x))) {
+  for (i in 1:10) {
+    dh <- expand.grid(L1 = 15+(-30):30, 
+                      L2 = x[i, 2], 
+                      L3 = 15+(-30):30) |> 
+      as.matrix()
+    
+    hm <- x[i, , drop = FALSE]
+    hm[c(1, 3)] <- NA_integer_
+    
+    ph_marg <- sum(predict(fit, dh))
+    ph_do <- predict(fit, hm, marginalise = TRUE)
+    stopifnot(isTRUE(all.equal(ph_marg, ph_do, tolerance = 1e-6)))
   }
 })
 
