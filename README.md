@@ -92,5 +92,5 @@ Zenodo:
 
 Travis CI:
 
-[![Travis-CI Build Status](https://travis-ci.org/mikldk/disclapmix.svg?branch=master)](https://travis-ci.org/mikldk/disclapmix)
+[![Travis-CI Build Status](https://app.travis-ci.com/mikldk/disclapmix.svg?branch=master)](https://app.travis-ci.com/mikldk/disclapmix)
 

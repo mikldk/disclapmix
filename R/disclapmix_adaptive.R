@@ -12,6 +12,7 @@
 #' Note that models with 1-5 clusters are always fitted.
 #' 
 #' @inheritParams disclapmix
+#' @param label A label
 #' @param margin Fit models until there is at least this margin
 #' @param criteria The slot to chose the best model from (BIC/AIC/AICc)
 #' @param init_y_generator Function taking the number of clusters as input and returns `init_y` values

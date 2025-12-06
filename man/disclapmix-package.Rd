@@ -8,6 +8,15 @@
 Discrete Laplace Mixture Inference using the EM Algorithm. 
 A central function is \code{\link{disclapmix_adaptive}} (and the underlying \code{\link{disclapmixfit}}).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \doi{10.1016/j.jtbi.2013.03.009}
+  \item \url{https://arxiv.org/abs/1304.2129}
+  \item Report bugs at \url{https://github.com/mikldk/disclapmix/issues}
+}
+
+}
 \author{
 Mikkel Meyer Andersen <mikl@math.aau.dk> and 
 Poul Svante Eriksen <svante@math.aau.dk>

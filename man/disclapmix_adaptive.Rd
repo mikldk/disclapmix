@@ -17,6 +17,8 @@ disclapmix_adaptive(
 \arguments{
 \item{x}{Dataset.}
 
+\item{label}{A label}
+
 \item{margin}{Fit models until there is at least this margin}
 
 \item{criteria}{The slot to chose the best model from (BIC/AIC/AICc)}
